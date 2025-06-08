@@ -4110,3 +4110,41 @@ _**User**_
 
 ---
 
+_**Assistant**_
+
+```diff
+  
+      <main class="container mx-auto px-4 py-8">
+-         <div class="flex justify-center items-center mb-8" style="overflow:hidden;">
+-             <iframe src="https://html-classic.itch.zone/html/2820951/index.html" width="900" height="600" style="max-width:100%;border:0;display:block;overflow:hidden;" allowfullscreen title="Minesweeper Game"></iframe>
+-         </div>
++         <iframe src="https://html-classic.itch.zone/html/2820951/index.html" width="900" height="600" style="display:block;margin-left:auto;margin-right:auto;max-width:100%;border:0;overflow:hidden;" allowfullscreen title="Minesweeper Game"></iframe>
+          <section class="max-w-4xl mx-auto">
+              <h2 class="text-2xl font-bold mb-4">How to Play</h2>
+```
+
+---
+
+你说得对，其实“父容器”只是为了方便布局，但如果你不需要多余的div容器，完全可以直接让iframe在网页上居中显示。
+
+我已经自动帮你把`game-minesweeper.html`里的iframe外层div全部去掉，现在iframe直接放在页面上，并通过如下样式实现真正的网页居中和无滚动条：
+- `display:block;margin-left:auto;margin-right:auto;max-width:100%;border:0;overflow:hidden;`
+
+这样，游戏区会直接居中显示在网页上，没有任何多余的容器，也不会再有右侧滚动条，体验和视觉都更简洁。
+
+你只需刷新页面即可看到效果。如果还有其他细节想调整，随时告诉我！
+
+---
+
+_**User**_
+
+我想把代码放到github上，怎么做，详细步骤给我
+
+---
+
+_**Assistant**_
+
+
+
+---
+
