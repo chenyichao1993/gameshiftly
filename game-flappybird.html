@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bird - Play Online | GameShiftly</title>
+    <meta name="description" content="Play Flappy Bird online for free! Tap or click to keep the bird flying and avoid the pipes. How far can you go?">
+    <link rel="canonical" href="https://gameshiftly.online/game-flappybird">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'apple-blue': '#007AFF',
+                        'apple-gray': '#1d1d1f',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-apple-gray">
+    <header class="container mx-auto px-4 py-8 flex flex-col items-center">
+        <a href="index.html" class="self-start mb-4 bg-gray-200 hover:bg-gray-300 text-apple-gray px-4 py-2 rounded-full font-semibold transition">&larr; Back to Home</a>
+        <img src="https://upload.wikimedia.org/wikipedia/en/0/0a/Flappy_Bird_icon.png" alt="Flappy Bird Logo" class="w-32 h-32 mb-4 rounded-lg object-cover bg-white">
+        <h1 class="text-4xl md:text-5xl font-bold text-center mb-4">Flappy Bird</h1>
+        <p class="text-xl text-center text-gray-600 max-w-2xl mx-auto mb-2">
+            Tap or click to keep the bird flying and avoid the pipes. How far can you go?
+        </p>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="aspect-w-16 aspect-h-9 max-w-4xl mx-auto mb-8">
+            <iframe 
+                src="flappybird/index.html"
+                class="w-full h-[900px] border-0 rounded-lg shadow-lg"
+                allowfullscreen
+                loading="lazy"
+                title="Flappy Bird Game"
+            ></iframe>
+        </div>
+        <section class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold mb-4">How to Play</h2>
+            <ul class="list-disc pl-6 mb-6">
+                <li>Click or tap to make the bird flap its wings.</li>
+                <li>Avoid hitting the pipes or the ground.</li>
+                <li>Try to achieve the highest score possible!</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="bg-gray-100 py-8 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 GameShiftly. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html> 
