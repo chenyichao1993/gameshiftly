@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048 - Play Online | GameShiftly</title>
+    <meta name="description" content="Play 2048 online for free! Join the numbers and get to the 2048 tile in this addictive puzzle game.">
+    <link rel="canonical" href="https://gameshiftly.online/game-2048">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'apple-blue': '#007AFF',
+                        'apple-gray': '#1d1d1f',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-apple-gray">
+    <header class="container mx-auto px-4 py-8 flex flex-col items-center">
+        <a href="index.html" class="self-start mb-4 bg-gray-200 hover:bg-gray-300 text-apple-gray px-4 py-2 rounded-full font-semibold transition">&larr; Back to Home</a>
+        <h1 class="text-4xl md:text-5xl font-bold text-center mb-4">2048</h1>
+        <p class="text-xl text-center text-gray-600 max-w-2xl mx-auto mb-2">
+            Join the numbers and get to the 2048 tile! A simple yet addictive puzzle game.
+        </p>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="aspect-w-16 aspect-h-9 max-w-4xl mx-auto mb-8">
+            <iframe 
+                src="https://play2048.co/"
+                class="w-full h-[600px] border-0 rounded-lg shadow-lg"
+                allowfullscreen
+                loading="lazy"
+                title="2048 Game"
+            ></iframe>
+        </div>
+        <section class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold mb-4">How to Play</h2>
+            <ul class="list-disc pl-6 mb-6">
+                <li>Use your arrow keys to move the tiles.</li>
+                <li>When two tiles with the same number touch, they merge into one!</li>
+                <li>Try to reach the 2048 tile to win the game.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="bg-gray-100 py-8 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 GameShiftly. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html> 
