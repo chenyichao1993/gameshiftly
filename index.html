@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play Free Online Games | GameShiftly</title>
+    <title>GameShiftly - Play Free Online Games</title>
     <meta name="description" content="Preview and play classic free online games like 2048, Snake, Tetris, Minesweeper, and Flappy Bird. Click to enter each game!">
     <link rel="canonical" href="https://gameshiftly.online/free-online-games">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="./output.css" rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZPVFP3K52R"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -18,6 +21,11 @@
                 }
             }
         }
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-ZPVFP3K52R');
     </script>
 </head>
 <body class="bg-white text-apple-gray">
