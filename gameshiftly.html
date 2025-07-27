@@ -18,7 +18,7 @@
             display: none;
         }
         
-        /* 游戏卡片固定大小和悬停效果 */
+        /* 游戏卡片固定尺寸 */
         .game-card {
             transition: all 0.3s ease;
             width: 160px;
@@ -28,19 +28,11 @@
             min-height: 200px;
             max-height: 200px;
         }
-        .game-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-        
-        /* 游戏卡片图片固定大小 */
         .game-card img {
             width: 160px;
             height: 120px;
             object-fit: cover;
         }
-        
-        /* 游戏卡片内容区域固定大小 */
         .game-card-content {
             height: 80px;
             display: flex;
@@ -108,12 +100,52 @@
             }
         }
         
-        /* 分类卡片效果 */
+        /* 分类卡片统一宽度和高度 */
         .category-card {
-            transition: all 0.3s ease;
+            width: 280px;
+            min-width: 280px;
+            max-width: 280px;
+            height: 200px;
+            min-height: 200px;
+            max-height: 200px;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            box-sizing: border-box;
         }
-        .category-card:hover {
-            transform: scale(1.02);
+        
+        /* 分类卡片内容样式调整 */
+        .category-card .header-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .category-card h2 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin: 0;
+            line-height: 1.2;
+        }
+        
+        .category-card i {
+            font-size: 1.5rem;
+        }
+        
+        .category-card p {
+            font-size: 0.875rem;
+            margin: 0 0 1.5rem 0;
+            opacity: 0.9;
+        }
+        
+        .category-card button {
+            font-size: 0.875rem;
+            padding: 0.75rem 1.5rem;
+            margin-top: auto;
+            align-self: flex-start;
+            font-weight: 600;
+            border-radius: 0.5rem;
         }
         
         /* 导航箭头样式 */
@@ -169,6 +201,9 @@
             }
             
             .mobile-category-card {
+                width: 100%;
+                min-width: 100%;
+                max-width: 100%;
                 background: linear-gradient(135deg, var(--card-color-1), var(--card-color-2));
                 color: white;
                 border-radius: 12px;
@@ -266,13 +301,13 @@
                 <h3>Driving</h3>
                 <p>1,945 games</p>
                 <button>Explore</button>
-            </div>
+                        </div>
             <div class="mobile-category-card" style="--card-color-1: #DC2626; --card-color-2: #B91C1C;">
                 <i class="fas fa-crosshairs"></i>
                 <h3>Shooting</h3>
                 <p>1,903 games</p>
                 <button>Explore</button>
-            </div>
+                        </div>
             <div class="mobile-category-card" style="--card-color-1: #EC4899; --card-color-2: #BE185D;">
                 <i class="fas fa-heart"></i>
                 <h3>For Girls</h3>
@@ -338,17 +373,17 @@
         <section class="mb-6 lg:mb-8">
             <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
                 <!-- 左侧分类卡片 -->
-                <div class="category-card bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <i class="fas fa-car text-xl lg:text-2xl"></i>
-                        <h2 class="text-xl lg:text-2xl font-bold">Driving</h2>
+                                <div class="category-card bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-xl mb-4 lg:mb-0 shadow-lg hidden lg:block">
+                    <div class="header-section">
+                        <i class="fas fa-car"></i>
+                        <h2>Driving</h2>
                     </div>
-                    <p class="text-blue-100 mb-4 lg:mb-6 text-sm lg:text-base">1,945 games</p>
-                    <button class="w-full bg-white text-blue-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-blue-50 transition text-sm lg:text-base">
+                    <p>1,945 games</p>
+                    <button class="bg-white text-blue-600 hover:bg-blue-50 transition">
                         Explore
                     </button>
                 </div>
-                
+                    
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
                     <div class="flex items-center space-x-2 lg:space-x-4">
@@ -369,9 +404,9 @@
                                             <div class="rating">
                                                 <i class="fas fa-star"></i>
                                                 <span>8.3</span>
-                                            </div>
+                        </div>
                                             <span class="category-tag">Driving</span>
-                                        </div>
+                        </div>
                                     </div>
                                 </div>
                                 
@@ -454,17 +489,17 @@
         <section class="mb-6 lg:mb-8">
             <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
                 <!-- 左侧分类卡片 -->
-                <div class="category-card bg-gradient-to-br from-red-500 to-red-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <i class="fas fa-crosshairs text-xl lg:text-2xl"></i>
-                        <h2 class="text-xl lg:text-2xl font-bold">Shooting</h2>
+                                <div class="category-card bg-gradient-to-br from-red-500 to-red-600 text-white rounded-xl mb-4 lg:mb-0 shadow-lg hidden lg:block">
+                    <div class="header-section">
+                        <i class="fas fa-crosshairs"></i>
+                        <h2>Shooting</h2>
                     </div>
-                    <p class="text-red-100 mb-4 lg:mb-6 text-sm lg:text-base">1,903 games</p>
-                    <button class="w-full bg-white text-red-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-red-50 transition text-sm lg:text-base">
+                    <p>1,903 games</p>
+                    <button class="bg-white text-red-600 hover:bg-red-50 transition">
                         Explore
                     </button>
                 </div>
-                
+                    
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
                     <div class="flex items-center space-x-2 lg:space-x-4">
@@ -485,9 +520,9 @@
                                             <div class="rating">
                                                 <i class="fas fa-star"></i>
                                                 <span>8.4</span>
-                                            </div>
+                        </div>
                                             <span class="category-tag">Shooting</span>
-                                        </div>
+                        </div>
                                     </div>
                                 </div>
                                 
@@ -570,17 +605,17 @@
         <section class="mb-6 lg:mb-8">
             <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
                 <!-- 左侧分类卡片 -->
-                <div class="category-card bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <i class="fas fa-heart text-xl lg:text-2xl"></i>
-                        <h2 class="text-xl lg:text-2xl font-bold">For Girls</h2>
+                                <div class="category-card bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-xl mb-4 lg:mb-0 shadow-lg hidden lg:block">
+                    <div class="header-section">
+                        <i class="fas fa-heart"></i>
+                        <h2>For Girls</h2>
                     </div>
-                    <p class="text-pink-100 mb-4 lg:mb-6 text-sm lg:text-base">3,944 games</p>
-                    <button class="w-full bg-white text-pink-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-pink-50 transition text-sm lg:text-base">
+                    <p>3,944 games</p>
+                    <button class="bg-white text-pink-600 hover:bg-pink-50 transition">
                         Explore
                     </button>
                 </div>
-                
+                    
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
                     <div class="flex items-center space-x-2 lg:space-x-4">
@@ -601,9 +636,9 @@
                                             <div class="rating">
                                                 <i class="fas fa-star"></i>
                                                 <span>8.0</span>
-                                            </div>
+                        </div>
                                             <span class="category-tag">For Girls</span>
-                                        </div>
+                        </div>
                                     </div>
                                 </div>
                                 
@@ -686,17 +721,17 @@
         <section class="mb-6 lg:mb-8">
             <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
                 <!-- 左侧分类卡片 -->
-                <div class="category-card bg-gradient-to-br from-green-600 to-green-700 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <i class="fas fa-fist-raised text-xl lg:text-2xl"></i>
-                        <h2 class="text-xl lg:text-2xl font-bold">Fighting</h2>
+                                <div class="category-card bg-gradient-to-br from-green-600 to-green-700 text-white rounded-xl mb-4 lg:mb-0 shadow-lg hidden lg:block">
+                    <div class="header-section">
+                        <i class="fas fa-fist-raised"></i>
+                        <h2>Fighting</h2>
                     </div>
-                    <p class="text-green-100 mb-4 lg:mb-6 text-sm lg:text-base">357 games</p>
-                    <button class="w-full bg-white text-green-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-green-50 transition text-sm lg:text-base">
+                    <p>357 games</p>
+                    <button class="bg-white text-green-600 hover:bg-green-50 transition">
                         Explore
                     </button>
                 </div>
-                
+                    
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
                     <div class="flex items-center space-x-2 lg:space-x-4">
@@ -717,9 +752,9 @@
                                             <div class="rating">
                                                 <i class="fas fa-star"></i>
                                                 <span>8.5</span>
-                                            </div>
+                        </div>
                                             <span class="category-tag">Fighting</span>
-                                        </div>
+                        </div>
                                     </div>
                                 </div>
                                 
@@ -802,17 +837,17 @@
         <section class="mb-6 lg:mb-8">
             <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
                 <!-- 左侧分类卡片 -->
-                <div class="category-card bg-gradient-to-br from-yellow-500 to-yellow-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <i class="fas fa-brain text-xl lg:text-2xl"></i>
-                        <h2 class="text-xl lg:text-2xl font-bold">Thinking</h2>
+                                <div class="category-card bg-gradient-to-br from-yellow-500 to-yellow-600 text-white rounded-xl mb-4 lg:mb-0 shadow-lg hidden lg:block">
+                    <div class="header-section">
+                        <i class="fas fa-brain"></i>
+                        <h2>Thinking</h2>
                     </div>
-                    <p class="text-yellow-100 mb-4 lg:mb-6 text-sm lg:text-base">3,766 games</p>
-                    <button class="w-full bg-white text-yellow-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-yellow-50 transition text-sm lg:text-base">
+                    <p>3,766 games</p>
+                    <button class="bg-white text-yellow-600 hover:bg-yellow-50 transition">
                         Explore
                     </button>
                 </div>
-                
+                    
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
                     <div class="flex items-center space-x-2 lg:space-x-4">
@@ -833,9 +868,9 @@
                                             <div class="rating">
                                                 <i class="fas fa-star"></i>
                                                 <span>8.7</span>
-                                            </div>
+                        </div>
                                             <span class="category-tag">Thinking</span>
-                                        </div>
+                        </div>
                                     </div>
                                 </div>
                                 
@@ -918,17 +953,17 @@
         <section class="mb-6 lg:mb-8">
             <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
                 <!-- 左侧分类卡片 -->
-                <div class="category-card bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <i class="fas fa-city text-xl lg:text-2xl"></i>
-                        <h2 class="text-xl lg:text-2xl font-bold">Management & Sim</h2>
+                                <div class="category-card bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-xl mb-4 lg:mb-0 shadow-lg hidden lg:block">
+                    <div class="header-section">
+                        <i class="fas fa-city"></i>
+                        <h2>Management & Sim</h2>
                     </div>
-                    <p class="text-orange-100 mb-4 lg:mb-6 text-sm lg:text-base">567 games</p>
-                    <button class="w-full bg-white text-orange-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-orange-50 transition text-sm lg:text-base">
+                    <p>567 games</p>
+                    <button class="bg-white text-orange-600 hover:bg-orange-50 transition">
                         Explore
                     </button>
                 </div>
-                
+            
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
                     <div class="flex items-center space-x-2 lg:space-x-4">
@@ -949,7 +984,7 @@
                                             <div class="rating">
                                                 <i class="fas fa-star"></i>
                                                 <span>8.4</span>
-                                            </div>
+                        </div>
                                             <span class="category-tag">Management</span>
                                         </div>
                                     </div>
@@ -961,12 +996,12 @@
                                         <h3>Farm Simulator</h3>
                                         <div class="flex items-center justify-between">
                                             <div class="rating">
-                                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                                                 <span>8.2</span>
-                                            </div>
+                            </div>
                                             <span class="category-tag">Management</span>
-                                        </div>
-                                    </div>
+                        </div>
+                    </div>
                                 </div>
                                 
                                 <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
@@ -980,9 +1015,9 @@
                                             </div>
                                             <span class="category-tag">Management</span>
                                         </div>
-                                    </div>
-                                </div>
-                                
+                    </div>
+                </div>
+                
                                 <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
                                     <img src="https://via.placeholder.com/160x120/A16207/FFFFFF?text=Hotel+Manager" alt="Hotel Manager">
                                     <div class="game-card-info">
@@ -991,7 +1026,7 @@
                                             <div class="rating">
                                                 <i class="fas fa-star"></i>
                                                 <span>7.7</span>
-                                            </div>
+                        </div>
                                             <span class="category-tag">Management</span>
                                         </div>
                                     </div>
@@ -1003,12 +1038,12 @@
                                         <h3>Business Empire</h3>
                                         <div class="flex items-center justify-between">
                                             <div class="rating">
-                                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                                                 <span>8.1</span>
-                                            </div>
+                            </div>
                                             <span class="category-tag">Management</span>
-                                        </div>
-                                    </div>
+                        </div>
+                    </div>
                                 </div>
                                 
                                 <!-- More Games 按钮 -->
@@ -1034,13 +1069,13 @@
         <section class="mb-6 lg:mb-8">
             <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
                 <!-- 左侧分类卡片 -->
-                <div class="category-card bg-gradient-to-br from-cyan-500 to-cyan-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <i class="fas fa-bullseye text-xl lg:text-2xl"></i>
-                        <h2 class="text-xl lg:text-2xl font-bold">Skill</h2>
+                                <div class="category-card bg-gradient-to-br from-cyan-500 to-cyan-600 text-white rounded-xl mb-4 lg:mb-0 shadow-lg hidden lg:block">
+                    <div class="header-section">
+                        <i class="fas fa-bullseye"></i>
+                        <h2>Skill</h2>
                     </div>
-                    <p class="text-cyan-100 mb-4 lg:mb-6 text-sm lg:text-base">2,345 games</p>
-                    <button class="w-full bg-white text-cyan-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-cyan-50 transition text-sm lg:text-base">
+                    <p>2,345 games</p>
+                    <button class="bg-white text-cyan-600 hover:bg-cyan-50 transition">
                         Explore
                     </button>
                 </div>
@@ -1063,12 +1098,12 @@
                                         <h3>Darts Master</h3>
                                         <div class="flex items-center justify-between">
                                             <div class="rating">
-                                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                                                 <span>8.6</span>
-                                            </div>
+                            </div>
                                             <span class="category-tag">Skill</span>
-                                        </div>
-                                    </div>
+                        </div>
+                    </div>
                                 </div>
                                 
                                 <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
@@ -1082,9 +1117,9 @@
                                             </div>
                                             <span class="category-tag">Skill</span>
                                         </div>
-                                    </div>
-                                </div>
-                                
+                    </div>
+                </div>
+                
                                 <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
                                     <img src="https://via.placeholder.com/160x120/155E75/FFFFFF?text=Golf+Champion" alt="Golf Champion">
                                     <div class="game-card-info">
@@ -1093,7 +1128,7 @@
                                             <div class="rating">
                                                 <i class="fas fa-star"></i>
                                                 <span>7.9</span>
-                                            </div>
+                        </div>
                                             <span class="category-tag">Skill</span>
                                         </div>
                                     </div>
@@ -1105,12 +1140,12 @@
                                         <h3>Pool Master</h3>
                                         <div class="flex items-center justify-between">
                                             <div class="rating">
-                                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                                                 <span>8.1</span>
-                                            </div>
+                            </div>
                                             <span class="category-tag">Skill</span>
-                                        </div>
-                                    </div>
+                        </div>
+                    </div>
                                 </div>
                                 
                                 <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
@@ -1150,13 +1185,13 @@
         <section class="mb-6 lg:mb-8">
             <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
                 <!-- 左侧分类卡片 -->
-                <div class="category-card bg-gradient-to-br from-teal-500 to-teal-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <i class="fas fa-running text-xl lg:text-2xl"></i>
-                        <h2 class="text-xl lg:text-2xl font-bold">Action & Adventure</h2>
+                                <div class="category-card bg-gradient-to-br from-teal-500 to-teal-600 text-white rounded-xl mb-4 lg:mb-0 shadow-lg hidden lg:block">
+                    <div class="header-section">
+                        <i class="fas fa-running"></i>
+                        <h2>Action & Adventure</h2>
                     </div>
-                    <p class="text-teal-100 mb-4 lg:mb-6 text-sm lg:text-base">4,251 games</p>
-                    <button class="w-full bg-white text-teal-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-teal-50 transition text-sm lg:text-base">
+                    <p>4,251 games</p>
+                    <button class="bg-white text-teal-600 hover:bg-teal-50 transition">
                         Explore
                     </button>
                 </div>
@@ -1179,12 +1214,12 @@
                                         <h3>Adventure Quest</h3>
                                         <div class="flex items-center justify-between">
                                             <div class="rating">
-                                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                                                 <span>8.8</span>
-                                            </div>
+                            </div>
                                             <span class="category-tag">Action</span>
-                                        </div>
-                                    </div>
+                        </div>
+                    </div>
                                 </div>
                                 
                                 <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
@@ -1266,13 +1301,13 @@
         <section class="mb-6 lg:mb-8">
             <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
                 <!-- 左侧分类卡片 -->
-                <div class="category-card bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <i class="fas fa-chess text-xl lg:text-2xl"></i>
-                        <h2 class="text-xl lg:text-2xl font-bold">Strategy & RPG</h2>
+                                <div class="category-card bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl mb-4 lg:mb-0 shadow-lg hidden lg:block">
+                    <div class="header-section">
+                        <i class="fas fa-chess"></i>
+                        <h2>Strategy & RPG</h2>
                     </div>
-                    <p class="text-purple-100 mb-4 lg:mb-6 text-sm lg:text-base">1,234 games</p>
-                    <button class="w-full bg-white text-purple-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-purple-50 transition text-sm lg:text-base">
+                    <p>1,234 games</p>
+                    <button class="bg-white text-purple-600 hover:bg-purple-50 transition">
                         Explore
                     </button>
                 </div>
@@ -1295,12 +1330,12 @@
                                         <h3>Fantasy RPG</h3>
                                         <div class="flex items-center justify-between">
                                             <div class="rating">
-                                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                                                 <span>8.9</span>
-                                            </div>
+                            </div>
                                             <span class="category-tag">Strategy</span>
-                                        </div>
-                                    </div>
+                        </div>
+                    </div>
                                 </div>
                                 
                                 <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
@@ -1382,13 +1417,13 @@
         <section class="mb-6 lg:mb-8">
             <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
                 <!-- 左侧分类卡片 -->
-                <div class="category-card bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <i class="fas fa-futbol text-xl lg:text-2xl"></i>
-                        <h2 class="text-xl lg:text-2xl font-bold">Sports</h2>
+                                <div class="category-card bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-xl mb-4 lg:mb-0 shadow-lg hidden lg:block">
+                    <div class="header-section">
+                        <i class="fas fa-futbol"></i>
+                        <h2>Sports</h2>
                     </div>
-                    <p class="text-emerald-100 mb-4 lg:mb-6 text-sm lg:text-base">1,006 games</p>
-                    <button class="w-full bg-white text-emerald-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-emerald-50 transition text-sm lg:text-base">
+                    <p>1,006 games</p>
+                    <button class="bg-white text-emerald-600 hover:bg-emerald-50 transition">
                         Explore
                     </button>
                 </div>
@@ -1411,12 +1446,12 @@
                                         <h3>Soccer Champion</h3>
                                         <div class="flex items-center justify-between">
                                             <div class="rating">
-                                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                                                 <span>8.7</span>
-                                            </div>
+                            </div>
                                             <span class="category-tag">Sports</span>
-                                        </div>
-                                    </div>
+                        </div>
+                    </div>
                                 </div>
                                 
                                 <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
@@ -1498,13 +1533,13 @@
         <section class="mb-6 lg:mb-8">
             <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
                 <!-- 左侧分类卡片 -->
-                <div class="category-card bg-gradient-to-br from-sky-500 to-sky-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <i class="fas fa-laugh text-xl lg:text-2xl"></i>
-                        <h2 class="text-xl lg:text-2xl font-bold">Fun & Crazy</h2>
+                                <div class="category-card bg-gradient-to-br from-sky-500 to-sky-600 text-white rounded-xl mb-4 lg:mb-0 shadow-lg hidden lg:block">
+                    <div class="header-section">
+                        <i class="fas fa-laugh"></i>
+                        <h2>Fun & Crazy</h2>
                     </div>
-                    <p class="text-sky-100 mb-4 lg:mb-6 text-sm lg:text-base">2,789 games</p>
-                    <button class="w-full bg-white text-sky-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-sky-50 transition text-sm lg:text-base">
+                    <p>2,789 games</p>
+                    <button class="bg-white text-sky-600 hover:bg-sky-50 transition">
                         Explore
                     </button>
                 </div>
@@ -1527,12 +1562,12 @@
                                         <h3>Wacky Race</h3>
                                         <div class="flex items-center justify-between">
                                             <div class="rating">
-                                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                                                 <span>8.5</span>
-                                            </div>
+                            </div>
                                             <span class="category-tag">Fun</span>
-                                        </div>
-                                    </div>
+                        </div>
+                    </div>
                                 </div>
                                 
                                 <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
@@ -1614,17 +1649,17 @@
         <section class="mb-6 lg:mb-8">
             <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
                 <!-- 左侧分类卡片 -->
-                <div class="category-card bg-gradient-to-br from-indigo-500 to-indigo-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <i class="fas fa-gamepad text-xl lg:text-2xl"></i>
-                        <h2 class="text-xl lg:text-2xl font-bold">Arcade & Classic</h2>
+                                <div class="category-card bg-gradient-to-br from-indigo-500 to-indigo-600 text-white rounded-xl mb-4 lg:mb-0 shadow-lg hidden lg:block">
+                    <div class="header-section">
+                        <i class="fas fa-gamepad"></i>
+                        <h2>Arcade & Classic</h2>
                     </div>
-                    <p class="text-indigo-100 mb-4 lg:mb-6 text-sm lg:text-base">3,456 games</p>
-                    <button class="w-full bg-white text-indigo-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-indigo-50 transition text-sm lg:text-base">
+                    <p>3,456 games</p>
+                    <button class="bg-white text-indigo-600 hover:bg-indigo-50 transition">
                         Explore
                     </button>
                 </div>
-                
+            
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
                     <div class="flex items-center space-x-2 lg:space-x-4">
@@ -1645,9 +1680,9 @@
                                             <div class="rating">
                                                 <i class="fas fa-star"></i>
                                                 <span>9.1</span>
-                                            </div>
+                        </div>
                                             <span class="category-tag">Arcade</span>
-                                        </div>
+                    </div>
                                     </div>
                                 </div>
                                 
