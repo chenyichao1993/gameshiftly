@@ -1,14 +1,63 @@
-<title>Pacman Game - GameShiftly</title>
-<link rel="canonical" href="https://gameshiftly.online/game-pacman.html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game - GameShiftly</title>
+    <meta name="description" content="Play Pacman online for free! Enjoy the classic arcade game in your browser.">
+    <link rel="canonical" href="https://gameshiftly.online/game-snake.html">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZPVFP3K52R"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZPVFP3K52R"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-ZPVFP3K52R');
-</script>
+      gtag('config', 'G-ZPVFP3K52R');
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'apple-blue': '#007AFF',
+                        'apple-gray': '#1d1d1f',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body> 
+<body class="bg-white text-apple-gray">
+    <header class="container mx-auto px-4 py-8 flex flex-col items-center">
+        <a href="index.html" class="self-start mb-4 bg-gray-200 hover:bg-gray-300 text-apple-gray px-4 py-2 rounded-full font-semibold transition">&larr; Back to Home</a>
+        <img src="img/Pacman.jpg" alt="Pacman Logo" class="w-32 h-32 mb-4 rounded-lg object-cover bg-white">
+        <h1 class="text-4xl md:text-5xl font-bold text-center mb-4">Pacman</h1>
+        <p class="text-xl text-center text-gray-600 max-w-2xl mx-auto mb-2">
+            Enjoy the classic Pacman arcade game! Eat all the dots, avoid the ghosts, and chase the high score.
+        </p>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="flex justify-center mb-8">
+            <iframe src="https://html-classic.itch.zone/html/3946506/index.html" width="900" height="600" style="max-width:100%;border:0;display:block;" allowfullscreen title="Pacman Game"></iframe>
+        </div>
+        <section class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold mb-4">How to Play</h2>
+            <ul class="list-disc pl-6 mb-6">
+                <li>Use arrow keys to move Pacman around the maze.</li>
+                <li>Eat all the dots to complete the level.</li>
+                <li>Avoid the ghosts or eat power pellets to turn the tables!</li>
+                <li>Try to achieve the highest score possible!</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="bg-gray-100 py-8 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 GameShiftly. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html> 
