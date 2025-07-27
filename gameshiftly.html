@@ -143,9 +143,10 @@
             font-size: 0.875rem;
             padding: 0.75rem 1.5rem;
             margin-top: auto;
-            align-self: flex-start;
+            align-self: center; /* 居中显示 */
             font-weight: 600;
             border-radius: 0.5rem;
+            width: 100%; /* 恢复之前的宽度 */
         }
         
         /* 导航箭头样式 */
@@ -204,44 +205,49 @@
                 width: 100%;
                 min-width: 100%;
                 max-width: 100%;
-                background: linear-gradient(135deg, var(--card-color-1), var(--card-color-2));
-                color: white;
-                border-radius: 12px;
                 padding: 1.5rem;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
                 text-align: center;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                transition: transform 0.2s ease;
             }
             
-            .mobile-category-card:active {
-                transform: scale(0.95);
+            .mobile-category-card .header-section {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .mobile-category-card h2 {
+                font-size: 1.25rem;
+                font-weight: bold;
+                margin: 0;
+                line-height: 1.2;
+                text-align: center;
             }
             
             .mobile-category-card i {
-                font-size: 2rem;
-                margin-bottom: 0.5rem;
-            }
-            
-            .mobile-category-card h3 {
-                font-size: 1.25rem;
-                font-weight: bold;
-                margin-bottom: 0.25rem;
+                font-size: 1.5rem;
             }
             
             .mobile-category-card p {
                 font-size: 0.875rem;
+                margin: 0 0 1.5rem 0;
                 opacity: 0.9;
-                margin-bottom: 1rem;
+                text-align: center;
             }
             
             .mobile-category-card button {
-                background: rgba(255, 255, 255, 0.2);
-                color: white;
-                border: none;
-                padding: 0.5rem 1rem;
-                border-radius: 6px;
-                font-weight: 600;
                 font-size: 0.875rem;
+                padding: 0.75rem 1.5rem;
+                margin-top: auto;
+                font-weight: 600;
+                border-radius: 0.5rem;
+                width: 100%;
+                text-align: center;
             }
         }
     </style>
@@ -296,77 +302,101 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-8">
         <!-- 移动端分类卡片网格 -->
         <div class="mobile-categories lg:hidden">
-            <div class="mobile-category-card" style="--card-color-1: #3B82F6; --card-color-2: #1D4ED8;">
-                <i class="fas fa-car"></i>
-                <h3>Driving</h3>
+            <div class="mobile-category-card bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-xl shadow-lg">
+                <div class="header-section">
+                    <i class="fas fa-car"></i>
+                    <h2>Driving</h2>
+                </div>
                 <p>1,945 games</p>
-                <button>Explore</button>
-                        </div>
-            <div class="mobile-category-card" style="--card-color-1: #DC2626; --card-color-2: #B91C1C;">
-                <i class="fas fa-crosshairs"></i>
-                <h3>Shooting</h3>
+                <button class="bg-white text-blue-600 hover:bg-blue-50 transition">Explore</button>
+            </div>
+            <div class="mobile-category-card bg-gradient-to-br from-red-500 to-red-600 text-white rounded-xl shadow-lg">
+                <div class="header-section">
+                    <i class="fas fa-crosshairs"></i>
+                    <h2>Shooting</h2>
+                </div>
                 <p>1,903 games</p>
-                <button>Explore</button>
-                        </div>
-            <div class="mobile-category-card" style="--card-color-1: #EC4899; --card-color-2: #BE185D;">
-                <i class="fas fa-heart"></i>
-                <h3>For Girls</h3>
+                <button class="bg-white text-red-600 hover:bg-red-50 transition">Explore</button>
+            </div>
+            <div class="mobile-category-card bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-xl shadow-lg">
+                <div class="header-section">
+                    <i class="fas fa-heart"></i>
+                    <h2>For Girls</h2>
+                </div>
                 <p>3,944 games</p>
-                <button>Explore</button>
+                <button class="bg-white text-pink-600 hover:bg-pink-50 transition">Explore</button>
             </div>
-            <div class="mobile-category-card" style="--card-color-1: #10B981; --card-color-2: #059669;">
-                <i class="fas fa-fist-raised"></i>
-                <h3>Fighting</h3>
+            <div class="mobile-category-card bg-gradient-to-br from-green-600 to-green-700 text-white rounded-xl shadow-lg">
+                <div class="header-section">
+                    <i class="fas fa-fist-raised"></i>
+                    <h2>Fighting</h2>
+                </div>
                 <p>357 games</p>
-                <button>Explore</button>
+                <button class="bg-white text-green-600 hover:bg-green-50 transition">Explore</button>
             </div>
-            <div class="mobile-category-card" style="--card-color-1: #F59E0B; --card-color-2: #D97706;">
-                <i class="fas fa-brain"></i>
-                <h3>Thinking</h3>
+            <div class="mobile-category-card bg-gradient-to-br from-yellow-500 to-yellow-600 text-white rounded-xl shadow-lg">
+                <div class="header-section">
+                    <i class="fas fa-brain"></i>
+                    <h2>Thinking</h2>
+                </div>
                 <p>3,766 games</p>
-                <button>Explore</button>
+                <button class="bg-white text-yellow-600 hover:bg-yellow-50 transition">Explore</button>
             </div>
-            <div class="mobile-category-card" style="--card-color-1: #EA580C; --card-color-2: #C2410C;">
-                <i class="fas fa-city"></i>
-                <h3>Management</h3>
+            <div class="mobile-category-card bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-xl shadow-lg">
+                <div class="header-section">
+                    <i class="fas fa-city"></i>
+                    <h2>Management & Sim</h2>
+                </div>
                 <p>567 games</p>
-                <button>Explore</button>
+                <button class="bg-white text-orange-600 hover:bg-orange-50 transition">Explore</button>
             </div>
-            <div class="mobile-category-card" style="--card-color-1: #0891B2; --card-color-2: #0E7490;">
-                <i class="fas fa-bullseye"></i>
-                <h3>Skill</h3>
+            <div class="mobile-category-card bg-gradient-to-br from-cyan-500 to-cyan-600 text-white rounded-xl shadow-lg">
+                <div class="header-section">
+                    <i class="fas fa-bullseye"></i>
+                    <h2>Skill</h2>
+                </div>
                 <p>2,345 games</p>
-                <button>Explore</button>
+                <button class="bg-white text-cyan-600 hover:bg-cyan-50 transition">Explore</button>
             </div>
-            <div class="mobile-category-card" style="--card-color-1: #0D9488; --card-color-2: #0F766E;">
-                <i class="fas fa-running"></i>
-                <h3>Action</h3>
+            <div class="mobile-category-card bg-gradient-to-br from-teal-500 to-teal-600 text-white rounded-xl shadow-lg">
+                <div class="header-section">
+                    <i class="fas fa-running"></i>
+                    <h2>Action & Adventure</h2>
+                </div>
                 <p>4,251 games</p>
-                <button>Explore</button>
+                <button class="bg-white text-teal-600 hover:bg-teal-50 transition">Explore</button>
             </div>
-            <div class="mobile-category-card" style="--card-color-1: #7C3AED; --card-color-2: #6D28D9;">
-                <i class="fas fa-chess"></i>
-                <h3>Strategy</h3>
+            <div class="mobile-category-card bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl shadow-lg">
+                <div class="header-section">
+                    <i class="fas fa-chess"></i>
+                    <h2>Strategy & RPG</h2>
+                </div>
                 <p>1,234 games</p>
-                <button>Explore</button>
+                <button class="bg-white text-purple-600 hover:bg-purple-50 transition">Explore</button>
             </div>
-            <div class="mobile-category-card" style="--card-color-1: #10B981; --card-color-2: #059669;">
-                <i class="fas fa-futbol"></i>
-                <h3>Sports</h3>
+            <div class="mobile-category-card bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-xl shadow-lg">
+                <div class="header-section">
+                    <i class="fas fa-futbol"></i>
+                    <h2>Sports</h2>
+                </div>
                 <p>1,006 games</p>
-                <button>Explore</button>
+                <button class="bg-white text-emerald-600 hover:bg-emerald-50 transition">Explore</button>
             </div>
-            <div class="mobile-category-card" style="--card-color-1: #0EA5E9; --card-color-2: #0284C7;">
-                <i class="fas fa-laugh"></i>
-                <h3>Fun & Crazy</h3>
+            <div class="mobile-category-card bg-gradient-to-br from-sky-500 to-sky-600 text-white rounded-xl shadow-lg">
+                <div class="header-section">
+                    <i class="fas fa-laugh"></i>
+                    <h2>Fun & Crazy</h2>
+                </div>
                 <p>2,789 games</p>
-                <button>Explore</button>
+                <button class="bg-white text-sky-600 hover:bg-sky-50 transition">Explore</button>
             </div>
-            <div class="mobile-category-card" style="--card-color-1: #6366F1; --card-color-2: #5855EB;">
-                <i class="fas fa-gamepad"></i>
-                <h3>Arcade</h3>
+            <div class="mobile-category-card bg-gradient-to-br from-indigo-500 to-indigo-600 text-white rounded-xl shadow-lg">
+                <div class="header-section">
+                    <i class="fas fa-gamepad"></i>
+                    <h2>Arcade & Classic</h2>
+                </div>
                 <p>3,456 games</p>
-                <button>Explore</button>
+                <button class="bg-white text-indigo-600 hover:bg-indigo-50 transition">Explore</button>
             </div>
         </div>
         <!-- 游戏分类行 - Driving -->
@@ -380,9 +410,9 @@
                     </div>
                     <p>1,945 games</p>
                     <button class="bg-white text-blue-600 hover:bg-blue-50 transition">
-                        Explore
-                    </button>
-                </div>
+                            Explore
+                        </button>
+                    </div>
                     
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
@@ -496,9 +526,9 @@
                     </div>
                     <p>1,903 games</p>
                     <button class="bg-white text-red-600 hover:bg-red-50 transition">
-                        Explore
-                    </button>
-                </div>
+                            Explore
+                        </button>
+                    </div>
                     
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
@@ -612,9 +642,9 @@
                     </div>
                     <p>3,944 games</p>
                     <button class="bg-white text-pink-600 hover:bg-pink-50 transition">
-                        Explore
-                    </button>
-                </div>
+                            Explore
+                        </button>
+                    </div>
                     
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
@@ -728,9 +758,9 @@
                     </div>
                     <p>357 games</p>
                     <button class="bg-white text-green-600 hover:bg-green-50 transition">
-                        Explore
-                    </button>
-                </div>
+                            Explore
+                        </button>
+                    </div>
                     
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
@@ -844,9 +874,9 @@
                     </div>
                     <p>3,766 games</p>
                     <button class="bg-white text-yellow-600 hover:bg-yellow-50 transition">
-                        Explore
-                    </button>
-                </div>
+                            Explore
+                        </button>
+                    </div>
                     
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
@@ -962,7 +992,7 @@
                     <button class="bg-white text-orange-600 hover:bg-orange-50 transition">
                         Explore
                     </button>
-                </div>
+            </div>
             
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
@@ -1073,7 +1103,7 @@
                     <div class="header-section">
                         <i class="fas fa-bullseye"></i>
                         <h2>Skill</h2>
-                    </div>
+                        </div>
                     <p>2,345 games</p>
                     <button class="bg-white text-cyan-600 hover:bg-cyan-50 transition">
                         Explore
@@ -1189,7 +1219,7 @@
                     <div class="header-section">
                         <i class="fas fa-running"></i>
                         <h2>Action & Adventure</h2>
-                    </div>
+                        </div>
                     <p>4,251 games</p>
                     <button class="bg-white text-teal-600 hover:bg-teal-50 transition">
                         Explore
@@ -1305,7 +1335,7 @@
                     <div class="header-section">
                         <i class="fas fa-chess"></i>
                         <h2>Strategy & RPG</h2>
-                    </div>
+                        </div>
                     <p>1,234 games</p>
                     <button class="bg-white text-purple-600 hover:bg-purple-50 transition">
                         Explore
@@ -1421,7 +1451,7 @@
                     <div class="header-section">
                         <i class="fas fa-futbol"></i>
                         <h2>Sports</h2>
-                    </div>
+                        </div>
                     <p>1,006 games</p>
                     <button class="bg-white text-emerald-600 hover:bg-emerald-50 transition">
                         Explore
@@ -1537,7 +1567,7 @@
                     <div class="header-section">
                         <i class="fas fa-laugh"></i>
                         <h2>Fun & Crazy</h2>
-                    </div>
+                        </div>
                     <p>2,789 games</p>
                     <button class="bg-white text-sky-600 hover:bg-sky-50 transition">
                         Explore
@@ -1653,12 +1683,12 @@
                     <div class="header-section">
                         <i class="fas fa-gamepad"></i>
                         <h2>Arcade & Classic</h2>
-                    </div>
+                </div>
                     <p>3,456 games</p>
                     <button class="bg-white text-indigo-600 hover:bg-indigo-50 transition">
                         Explore
                     </button>
-                </div>
+            </div>
             
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
