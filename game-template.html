@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Traffic Jam 3D - GameShiftly</title>
+    <title>Game Template - GameShiftly</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="footer.js"></script>
     <style>
         .game-canvas-container {
             position: relative;
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -21,7 +22,7 @@
         .game-canvas {
             width: 100%;
             height: 500px;
-            background: #000;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -106,195 +107,236 @@
         .related-game img {
             width: 80px;
             height: 60px;
-            object-fit: cover;
             border-radius: 6px;
+            object-fit: cover;
         }
         
-        @media (max-width: 768px) {
-            .game-canvas {
-                height: 300px;
-            }
-            
-            .game-controls {
-                flex-wrap: wrap;
-            }
-            
-            .control-btn {
-                flex: 1;
-                min-width: 120px;
-            }
+        .game-stats {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #dc2626;
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 0.25rem;
+        }
+        
+        .game-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            background: white;
+            color: #374151;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .action-btn:hover {
+            background: #f9fafb;
+            border-color: #d1d5db;
         }
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- 头部导航 -->
-    <header class="bg-white shadow-sm">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+            <div class="flex items-center justify-between h-16">
                 <!-- Logo -->
-                <div class="flex items-center">
-                    <a href="gameshiftly.html" class="flex items-center space-x-2">
-                        <div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
-                            <span class="text-white font-bold text-sm">GS</span>
-                        </div>
-                        <div>
-                            <div class="text-red-600 font-bold text-lg">GameShiftly</div>
-                            <div class="text-gray-500 text-xs">Free Online Games</div>
-                        </div>
-                    </a>
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">GS</span>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold">GameShiftly</span>
+                        <div class="text-sm text-gray-500">Free Online Games</div>
+                    </div>
                 </div>
                 
-                <!-- 搜索栏 -->
-                <div class="hidden md:flex flex-1 max-w-md mx-8">
-                    <div class="relative w-full">
+                <!-- Search Bar -->
+                <div class="flex-1 max-w-lg mx-8">
+                    <div class="relative">
                         <input type="text" placeholder="Search our 90,000 Games" 
-                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
                         <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
                     </div>
                 </div>
                 
-                <!-- 用户操作 -->
+                <!-- Auth Buttons -->
                 <div class="flex items-center space-x-4">
-                    <button class="text-gray-600 hover:text-gray-900">Log in</button>
+                    <button class="text-gray-700 hover:text-gray-900">Log in</button>
                     <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Register</button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- 主要内容 -->
+    <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <!-- 游戏标题和操作 -->
-        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
-            <div>
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">Traffic Jam 3D</h1>
-                <div class="flex items-center space-x-4 text-sm text-gray-600">
-                    <div class="flex items-center">
-                        <i class="fas fa-star text-yellow-400 mr-1"></i>
-                        <span>8.3</span>
-                    </div>
-                    <div class="flex items-center">
-                        <i class="fas fa-gamepad mr-1"></i>
-                        <span>Driving</span>
-                    </div>
-                    <div class="flex items-center">
-                        <i class="fas fa-play mr-1"></i>
-                        <span>1.2M plays</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="flex items-center space-x-2 mt-4 lg:mt-0">
-                <button class="control-btn secondary">
-                    <i class="fas fa-share"></i>
-                    Share
-                </button>
-                <button class="control-btn secondary">
-                    <i class="fas fa-heart"></i>
-                    Favorite
-                </button>
-                <button class="control-btn secondary">
-                    <i class="fas fa-expand"></i>
-                    Fullscreen
-                </button>
-            </div>
-        </div>
-
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            <!-- 游戏区域 -->
+            <!-- Game Area -->
             <div class="lg:col-span-3">
-                <!-- 游戏画布 -->
-                <div class="game-canvas-container">
-                    <div class="game-canvas" id="gameCanvas">
-                        <div class="text-center">
-                            <i class="fas fa-gamepad text-4xl mb-4"></i>
-                            <p>游戏加载中...</p>
-                            <p class="text-sm text-gray-400 mt-2">点击开始按钮开始游戏</p>
+                <!-- Game Title and Stats -->
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900 mb-2">Game Title</h1>
+                        <div class="flex items-center space-x-4 text-sm text-gray-600">
+                            <span class="flex items-center">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                8.5
+                            </span>
+                            <span class="flex items-center">
+                                <i class="fas fa-gamepad mr-1"></i>
+                                Category
+                            </span>
+                            <span class="flex items-center">
+                                <i class="fas fa-play mr-1"></i>
+                                1.2M plays
+                            </span>
                         </div>
                     </div>
                     
-                    <!-- 游戏控制按钮 -->
+                    <!-- Game Actions -->
+                    <div class="game-actions">
+                        <button class="action-btn" onclick="shareGame()">
+                            <i class="fas fa-share"></i>
+                            Share
+                        </button>
+                        <button class="action-btn" onclick="toggleFavorite()">
+                            <i class="fas fa-heart" id="favoriteIcon"></i>
+                            <span id="favoriteText">Favorite</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleFullscreen()">
+                            <i class="fas fa-expand" id="fullscreenIcon"></i>
+                            <span id="fullscreenText">Fullscreen</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Game Canvas -->
+                <div class="game-canvas-container">
+                    <div class="game-canvas" id="gameCanvas">
+                        <div class="text-center relative z-10">
+                            <i class="fas fa-gamepad text-6xl mb-4 text-white"></i>
+                            <h2 class="text-2xl font-bold mb-2">Game Title</h2>
+                            <p class="text-lg mb-4">Game description goes here</p>
+                            <button class="control-btn primary text-lg px-8 py-3" onclick="startGame()">
+                                <i class="fas fa-play mr-2"></i>
+                                Start Game
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Game Control Buttons -->
                     <div class="game-controls">
-                        <button class="control-btn primary" id="startBtn">
+                        <button class="control-btn primary" id="startBtn" onclick="toggleGame()">
                             <i class="fas fa-play"></i>
                             Start
                         </button>
-                        <button class="control-btn secondary" id="pauseBtn">
-                            <i class="fas fa-pause"></i>
-                            Pause
-                        </button>
-                        <button class="control-btn secondary" id="restartBtn">
+                        <button class="control-btn secondary" id="restartBtn" onclick="restartGame()">
                             <i class="fas fa-redo"></i>
                             Restart
                         </button>
-                        <button class="control-btn secondary" id="fullscreenBtn">
+                        <button class="control-btn secondary" onclick="toggleFullscreen()">
                             <i class="fas fa-expand"></i>
                             Fullscreen
                         </button>
                     </div>
                 </div>
+                
+                <!-- Game Statistics -->
+                <div class="game-stats mt-6">
+                    <div class="stat-item">
+                        <div class="stat-value" id="score">0</div>
+                        <div class="stat-label">Score</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="level">1</div>
+                        <div class="stat-label">Level</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="lives">3</div>
+                        <div class="stat-label">Lives</div>
+                    </div>
+                </div>
             </div>
 
-            <!-- 侧边栏 -->
+            <!-- Sidebar -->
             <div class="lg:col-span-1">
-                <!-- 游戏信息 -->
+                <!-- Game Information -->
                 <div class="game-info-card">
-                    <h3 class="text-lg font-semibold mb-3">游戏信息</h3>
+                    <h3 class="text-lg font-semibold mb-3">Game Information</h3>
                     <p class="text-gray-600 mb-4">
-                        在繁忙的交通中驾驶你的车辆，避开障碍物，到达目的地。这是一个充满挑战的3D驾驶游戏！
+                        Game description goes here. This is a placeholder for the actual game description.
                     </p>
                     
                     <div class="mb-4">
-                        <h4 class="font-medium mb-2">游戏标签</h4>
+                        <h4 class="font-medium mb-2">Game Tags</h4>
                         <div>
-                            <span class="game-tag">Driving</span>
-                            <span class="game-tag">3D</span>
-                            <span class="game-tag">Adventure</span>
+                            <span class="game-tag">Category</span>
+                            <span class="game-tag">Type</span>
+                            <span class="game-tag">Style</span>
                             <span class="game-tag">Skill</span>
                         </div>
                     </div>
                     
                     <div class="mb-4">
-                        <h4 class="font-medium mb-2">操作说明</h4>
+                        <h4 class="font-medium mb-2">Controls</h4>
                         <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• 使用方向键或WASD控制车辆</li>
-                            <li>• 避开其他车辆和障碍物</li>
-                            <li>• 收集路上的奖励</li>
-                            <li>• 到达终点获得胜利</li>
+                            <li>• Use arrow keys or WASD to control</li>
+                            <li>• Follow the game instructions</li>
+                            <li>• Collect items and avoid obstacles</li>
+                            <li>• Complete objectives to win</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- 相关游戏 -->
+                <!-- Related Games -->
                 <div class="game-info-card">
-                    <h3 class="text-lg font-semibold mb-3">相关游戏</h3>
+                    <h3 class="text-lg font-semibold mb-3">Related Games</h3>
                     <div class="space-y-2">
-                        <div class="related-game">
-                            <img src="https://via.placeholder.com/80x60/3b82f6/ffffff?text=Game" alt="Turbo Moto Racer">
+                        <div class="related-game" onclick="goToGame('related-game-1')">
+                            <img src="https://via.placeholder.com/80x60/3b82f6/ffffff?text=Game" alt="Related Game 1">
                             <div>
-                                <div class="font-medium">Turbo Moto Racer</div>
-                                <div class="text-sm text-gray-500">Driving</div>
+                                <div class="font-medium">Related Game 1</div>
+                                <div class="text-sm text-gray-500">Category</div>
                             </div>
                         </div>
-                        <div class="related-game">
-                            <img src="https://via.placeholder.com/80x60/10b981/ffffff?text=Game" alt="Airplane Parking">
+                        <div class="related-game" onclick="goToGame('related-game-2')">
+                            <img src="https://via.placeholder.com/80x60/10b981/ffffff?text=Game" alt="Related Game 2">
                             <div>
-                                <div class="font-medium">Airplane Parking Academy</div>
-                                <div class="text-sm text-gray-500">Driving</div>
+                                <div class="font-medium">Related Game 2</div>
+                                <div class="text-sm text-gray-500">Category</div>
                             </div>
                         </div>
-                        <div class="related-game">
-                            <img src="https://via.placeholder.com/80x60/f59e0b/ffffff?text=Game" alt="Highway Racing">
+                        <div class="related-game" onclick="goToGame('related-game-3')">
+                            <img src="https://via.placeholder.com/80x60/f59e0b/ffffff?text=Game" alt="Related Game 3">
                             <div>
-                                <div class="font-medium">Highway Road Racing</div>
-                                <div class="text-sm text-gray-500">Driving</div>
-                            </div>
-                        </div>
-                        <div class="related-game">
-                            <img src="https://via.placeholder.com/80x60/8b5cf6/ffffff?text=Game" alt="Bus Simulator">
-                            <div>
-                                <div class="font-medium">Uphill Bus Simulator</div>
-                                <div class="text-sm text-gray-500">Driving</div>
+                                <div class="font-medium">Related Game 3</div>
+                                <div class="text-sm text-gray-500">Category</div>
                             </div>
                         </div>
                     </div>
@@ -303,170 +345,205 @@
         </div>
     </main>
 
-    <!-- 页脚 -->
-    <footer class="bg-gray-800 text-white mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
-                            <span class="text-white font-bold text-sm">GS</span>
-                        </div>
-                        <span class="text-xl font-bold">GameShiftly</span>
-                    </div>
-                    <p class="text-gray-400">免费在线游戏平台，提供数千款精彩游戏。</p>
-                </div>
-                
-                <div>
-                    <h3 class="font-semibold mb-4">游戏分类</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white">动作游戏</a></li>
-                        <li><a href="#" class="hover:text-white">益智游戏</a></li>
-                        <li><a href="#" class="hover:text-white">体育游戏</a></li>
-                        <li><a href="#" class="hover:text-white">策略游戏</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="font-semibold mb-4">关于我们</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white">关于GameShiftly</a></li>
-                        <li><a href="#" class="hover:text-white">联系我们</a></li>
-                        <li><a href="#" class="hover:text-white">隐私政策</a></li>
-                        <li><a href="#" class="hover:text-white">服务条款</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="font-semibold mb-4">关注我们</h3>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-facebook text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-twitter text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-instagram text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-youtube text-xl"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 GameShiftly. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <!-- Footer Container -->
+    <div id="footer-container"></div>
 
     <script>
-        // 游戏控制功能
-        document.addEventListener('DOMContentLoaded', function() {
-            const startBtn = document.getElementById('startBtn');
-            const pauseBtn = document.getElementById('pauseBtn');
-            const restartBtn = document.getElementById('restartBtn');
-            const fullscreenBtn = document.getElementById('fullscreenBtn');
+        // Game state management
+        let gameState = {
+            isPlaying: false,
+            isPaused: false,
+            score: 0,
+            level: 1,
+            lives: 3,
+            isFavorite: false,
+            isFullscreen: false
+        };
+        
+        // Game control functions
+        function startGame() {
+            gameState.isPlaying = true;
+            gameState.isPaused = false;
+            updateGameDisplay();
+            startGameLoop();
+        }
+        
+        function toggleGame() {
+            if (!gameState.isPlaying) {
+                startGame();
+            } else if (gameState.isPaused) {
+                resumeGame();
+            } else {
+                pauseGame();
+            }
+        }
+        
+        function pauseGame() {
+            if (gameState.isPlaying && !gameState.isPaused) {
+                gameState.isPaused = true;
+                updateGameDisplay();
+            }
+        }
+        
+        function resumeGame() {
+            if (gameState.isPlaying && gameState.isPaused) {
+                gameState.isPaused = false;
+                updateGameDisplay();
+                startGameLoop();
+            }
+        }
+        
+        function restartGame() {
+            gameState.isPlaying = false;
+            gameState.isPaused = false;
+            gameState.score = 0;
+            gameState.level = 1;
+            gameState.lives = 3;
+            updateGameDisplay();
+            resetGameCanvas();
+        }
+        
+        function updateGameDisplay() {
             const gameCanvas = document.getElementById('gameCanvas');
+            const startBtn = document.getElementById('startBtn');
             
-            let gameStarted = false;
-            let gamePaused = false;
-            
-            // 开始游戏
-            startBtn.addEventListener('click', function() {
-                if (!gameStarted) {
-                    gameStarted = true;
-                    gameCanvas.innerHTML = `
-                        <div class="text-center">
-                            <i class="fas fa-car text-4xl mb-4 text-green-400"></i>
-                            <p>游戏进行中...</p>
-                            <p class="text-sm text-gray-400 mt-2">使用方向键或WASD控制车辆</p>
-                        </div>
-                    `;
-                    startBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
-                    startBtn.classList.remove('primary');
-                    startBtn.classList.add('secondary');
-                } else {
-                    // 暂停/继续游戏
-                    if (gamePaused) {
-                        gamePaused = false;
-                        startBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
-                        gameCanvas.innerHTML = `
-                            <div class="text-center">
-                                <i class="fas fa-car text-4xl mb-4 text-green-400"></i>
-                                <p>游戏进行中...</p>
-                                <p class="text-sm text-gray-400 mt-2">使用方向键或WASD控制车辆</p>
-                            </div>
-                        `;
-                    } else {
-                        gamePaused = true;
-                        startBtn.innerHTML = '<i class="fas fa-play"></i> Resume';
-                        gameCanvas.innerHTML = `
-                            <div class="text-center">
-                                <i class="fas fa-pause text-4xl mb-4 text-yellow-400"></i>
-                                <p>游戏已暂停</p>
-                                <p class="text-sm text-gray-400 mt-2">点击继续按钮恢复游戏</p>
-                            </div>
-                        `;
-                    }
-                }
-            });
-            
-            // 重新开始游戏
-            restartBtn.addEventListener('click', function() {
-                gameStarted = false;
-                gamePaused = false;
+            // Update game canvas display
+            if (!gameState.isPlaying) {
+                gameCanvas.innerHTML = `
+                    <div class="text-center relative z-10">
+                        <i class="fas fa-gamepad text-6xl mb-4 text-white"></i>
+                        <h2 class="text-2xl font-bold mb-2">Game Title</h2>
+                        <p class="text-lg mb-4">Game description goes here</p>
+                        <button class="control-btn primary text-lg px-8 py-3" onclick="startGame()">
+                            <i class="fas fa-play mr-2"></i>
+                            Start Game
+                        </button>
+                    </div>
+                `;
                 startBtn.innerHTML = '<i class="fas fa-play"></i> Start';
                 startBtn.classList.remove('secondary');
                 startBtn.classList.add('primary');
+            } else if (gameState.isPaused) {
                 gameCanvas.innerHTML = `
-                    <div class="text-center">
-                        <i class="fas fa-gamepad text-4xl mb-4"></i>
-                        <p>游戏加载中...</p>
-                        <p class="text-sm text-gray-400 mt-2">点击开始按钮开始游戏</p>
+                    <div class="text-center relative z-10">
+                        <i class="fas fa-pause text-6xl mb-4 text-yellow-400"></i>
+                        <h2 class="text-2xl font-bold mb-2">Game Paused</h2>
+                        <p class="text-lg mb-4">Click continue to resume the game</p>
+                        <button class="control-btn primary text-lg px-8 py-3" onclick="resumeGame()">
+                            <i class="fas fa-play mr-2"></i>
+                            Continue Game
+                        </button>
                     </div>
                 `;
-            });
+                startBtn.innerHTML = '<i class="fas fa-play"></i> Resume';
+            } else {
+                gameCanvas.innerHTML = `
+                    <div class="text-center relative z-10">
+                        <i class="fas fa-gamepad text-6xl mb-4 text-green-400"></i>
+                        <h2 class="text-2xl font-bold mb-2">Game in Progress</h2>
+                        <p class="text-lg mb-4">Use arrow keys or WASD to control</p>
+                        <div class="text-sm text-gray-300">
+                            Score: ${gameState.score} | Level: ${gameState.level} | Lives: ${gameState.lives}
+                        </div>
+                    </div>
+                `;
+                startBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                startBtn.classList.remove('primary');
+                startBtn.classList.add('secondary');
+            }
             
-            // 全屏模式
-            fullscreenBtn.addEventListener('click', function() {
-                const container = gameCanvas.parentElement;
-                if (document.fullscreenElement) {
-                    document.exitFullscreen();
-                } else {
-                    container.requestFullscreen();
-                }
-            });
+            // Update statistics display
+            document.getElementById('score').textContent = gameState.score;
+            document.getElementById('level').textContent = gameState.level;
+            document.getElementById('lives').textContent = gameState.lives;
+        }
+        
+        function resetGameCanvas() {
+            const gameCanvas = document.getElementById('gameCanvas');
+            gameCanvas.innerHTML = `
+                <div class="text-center relative z-10">
+                    <i class="fas fa-gamepad text-6xl mb-4 text-white"></i>
+                    <h2 class="text-2xl font-bold mb-2">Game Title</h2>
+                    <p class="text-lg mb-4">Game description goes here</p>
+                    <button class="control-btn primary text-lg px-8 py-3" onclick="startGame()">
+                        <i class="fas fa-play mr-2"></i>
+                        Start Game
+                    </button>
+                </div>
+            `;
+        }
+        
+        function startGameLoop() {
+            if (!gameState.isPlaying || gameState.isPaused) return;
             
-            // 键盘控制
-            document.addEventListener('keydown', function(e) {
-                if (!gameStarted || gamePaused) return;
-                
-                switch(e.key) {
-                    case 'ArrowUp':
-                    case 'w':
-                    case 'W':
-                        console.log('向前移动');
-                        break;
-                    case 'ArrowDown':
-                    case 's':
-                    case 'S':
-                        console.log('向后移动');
-                        break;
-                    case 'ArrowLeft':
-                    case 'a':
-                    case 'A':
-                        console.log('向左移动');
-                        break;
-                    case 'ArrowRight':
-                    case 'd':
-                    case 'D':
-                        console.log('向右移动');
-                        break;
-                }
-            });
+            // Simulate game logic
+            gameState.score += 10;
+            if (gameState.score % 100 === 0) {
+                gameState.level++;
+            }
+            
+            updateGameDisplay();
+            
+            // Continue game loop
+            setTimeout(startGameLoop, 1000);
+        }
+        
+        // Fullscreen functionality
+        function toggleFullscreen() {
+            const container = document.querySelector('.game-canvas-container');
+            const icon = document.getElementById('fullscreenIcon');
+            const text = document.getElementById('fullscreenText');
+            
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+                icon.className = 'fas fa-expand';
+                text.textContent = 'Fullscreen';
+            } else {
+                container.requestFullscreen();
+                icon.className = 'fas fa-compress';
+                text.textContent = 'Exit Fullscreen';
+            }
+        }
+        
+        // Favorite functionality
+        function toggleFavorite() {
+            gameState.isFavorite = !gameState.isFavorite;
+            const icon = document.getElementById('favoriteIcon');
+            const text = document.getElementById('favoriteText');
+            
+            if (gameState.isFavorite) {
+                icon.className = 'fas fa-heart text-red-500';
+                text.textContent = 'Favorited';
+            } else {
+                icon.className = 'fas fa-heart';
+                text.textContent = 'Favorite';
+            }
+        }
+        
+        // Share functionality
+        function shareGame() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Game Title - GameShiftly',
+                    text: 'Check out this awesome game!',
+                    url: window.location.href
+                });
+            } else {
+                // Copy link to clipboard
+                navigator.clipboard.writeText(window.location.href);
+                alert('Game link copied to clipboard!');
+            }
+        }
+        
+        // Navigation function
+        function goToGame(gameName) {
+            // This function should be customized for each game
+            console.log('Navigating to game:', gameName);
+        }
+        
+        // Initialize game when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            updateGameDisplay();
         });
     </script>
 </body>
