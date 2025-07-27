@@ -266,10 +266,6 @@
                             <i class="fas fa-play"></i>
                             Start
                         </button>
-                        <button class="control-btn secondary" id="pauseBtn" onclick="pauseGame()">
-                            <i class="fas fa-pause"></i>
-                            Pause
-                        </button>
                         <button class="control-btn secondary" id="restartBtn" onclick="restartGame()">
                             <i class="fas fa-redo"></i>
                             Restart
@@ -392,14 +388,26 @@
         function toggleGame() {
             if (!gameState.isPlaying) {
                 startGame();
+            } else if (gameState.isPaused) {
+                resumeGame();
             } else {
                 pauseGame();
             }
         }
         
         function pauseGame() {
-            gameState.isPaused = !gameState.isPaused;
-            updateGameDisplay();
+            if (gameState.isPlaying && !gameState.isPaused) {
+                gameState.isPaused = true;
+                updateGameDisplay();
+            }
+        }
+        
+        function resumeGame() {
+            if (gameState.isPlaying && gameState.isPaused) {
+                gameState.isPaused = false;
+                updateGameDisplay();
+                startGameLoop();
+            }
         }
         
         function restartGame() {
@@ -415,7 +423,6 @@
         function updateGameDisplay() {
             const gameCanvas = document.getElementById('gameCanvas');
             const startBtn = document.getElementById('startBtn');
-            const pauseBtn = document.getElementById('pauseBtn');
             
             // Update game canvas display
             if (!gameState.isPlaying) {
@@ -439,7 +446,7 @@
                         <i class="fas fa-pause text-6xl mb-4 text-yellow-400"></i>
                         <h2 class="text-2xl font-bold mb-2">Game Paused</h2>
                         <p class="text-lg mb-4">Click continue to resume the game</p>
-                        <button class="control-btn primary text-lg px-8 py-3" onclick="pauseGame()">
+                        <button class="control-btn primary text-lg px-8 py-3" onclick="resumeGame()">
                             <i class="fas fa-play mr-2"></i>
                             Continue Game
                         </button>

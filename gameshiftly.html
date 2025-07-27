@@ -1890,27 +1890,27 @@
                 });
             });
             
-            // 游戏卡片点击事件
+            // 游戏卡片点击事件 - 移除弹窗，直接跳转到游戏页面
             document.querySelectorAll('.game-card').forEach(card => {
                 card.addEventListener('click', function() {
-                    const gameName = this.querySelector('h3').textContent;
-                    alert(`Starting ${gameName}...`);
+                    // 移除弹窗，让onclick属性处理跳转
+                    return true;
                 });
             });
             
-            // More Games 按钮点击事件
+            // More Games 按钮点击事件 - 移除弹窗
             document.querySelectorAll('.more-games-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const category = this.closest('section').querySelector('.category-card h2').textContent;
-                    alert(`Exploring all ${category} games...`);
+                    // 移除弹窗，让按钮的默认行为处理
+                    return true;
                 });
             });
             
-            // Explore 按钮点击事件
+            // Explore 按钮点击事件 - 移除弹窗
             document.querySelectorAll('.category-card button').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const category = this.closest('.category-card').querySelector('h2').textContent;
-                    alert(`Exploring all ${category} games...`);
+                    // 移除弹窗，让按钮的默认行为处理
+                    return true;
                 });
             });
             

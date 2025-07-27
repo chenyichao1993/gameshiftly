@@ -260,15 +260,11 @@
                         </div>
                     </div>
                     
-                    <!-- 游戏控制按钮 -->
+                    <!-- Game Control Buttons -->
                     <div class="game-controls">
                         <button class="control-btn primary" id="startBtn" onclick="toggleGame()">
                             <i class="fas fa-play"></i>
                             Start
-                        </button>
-                        <button class="control-btn secondary" id="pauseBtn" onclick="pauseGame()">
-                            <i class="fas fa-pause"></i>
-                            Pause
                         </button>
                         <button class="control-btn secondary" id="restartBtn" onclick="restartGame()">
                             <i class="fas fa-redo"></i>
@@ -392,14 +388,26 @@
         function toggleGame() {
             if (!gameState.isPlaying) {
                 startGame();
+            } else if (gameState.isPaused) {
+                resumeGame();
             } else {
                 pauseGame();
             }
         }
         
         function pauseGame() {
-            gameState.isPaused = !gameState.isPaused;
-            updateGameDisplay();
+            if (gameState.isPlaying && !gameState.isPaused) {
+                gameState.isPaused = true;
+                updateGameDisplay();
+            }
+        }
+        
+        function resumeGame() {
+            if (gameState.isPlaying && gameState.isPaused) {
+                gameState.isPaused = false;
+                updateGameDisplay();
+                startGameLoop();
+            }
         }
         
         function restartGame() {
@@ -436,11 +444,11 @@
                 gameCanvas.innerHTML = `
                     <div class="text-center relative z-10">
                         <i class="fas fa-pause text-6xl mb-4 text-yellow-400"></i>
-                        <h2 class="text-2xl font-bold mb-2">游戏已暂停</h2>
-                        <p class="text-lg mb-4">点击继续按钮恢复游戏</p>
-                        <button class="control-btn primary text-lg px-8 py-3" onclick="pauseGame()">
+                        <h2 class="text-2xl font-bold mb-2">Game Paused</h2>
+                        <p class="text-lg mb-4">Click continue to resume the game</p>
+                        <button class="control-btn primary text-lg px-8 py-3" onclick="resumeGame()">
                             <i class="fas fa-play mr-2"></i>
-                            继续游戏
+                            Continue Game
                         </button>
                     </div>
                 `;
@@ -449,10 +457,10 @@
                 gameCanvas.innerHTML = `
                     <div class="text-center relative z-10">
                         <i class="fas fa-motorcycle text-6xl mb-4 text-green-400"></i>
-                        <h2 class="text-2xl font-bold mb-2">游戏进行中</h2>
-                        <p class="text-lg mb-4">使用方向键或WASD控制摩托车</p>
+                        <h2 class="text-2xl font-bold mb-2">Game in Progress</h2>
+                        <p class="text-lg mb-4">Use arrow keys or WASD to control the motorcycle</p>
                         <div class="text-sm text-gray-300">
-                            分数: ${gameState.score} | 关卡: ${gameState.level} | 生命: ${gameState.lives}
+                            Score: ${gameState.score} | Level: ${gameState.level} | Lives: ${gameState.lives}
                         </div>
                     </div>
                 `;
@@ -473,10 +481,10 @@
                 <div class="text-center relative z-10">
                     <i class="fas fa-motorcycle text-6xl mb-4 text-white"></i>
                     <h2 class="text-2xl font-bold mb-2">Turbo Moto Racer</h2>
-                    <p class="text-lg mb-4">体验极速摩托车竞速的快感</p>
+                    <p class="text-lg mb-4">Experience the thrill of extreme speed motorcycle racing</p>
                     <button class="control-btn primary text-lg px-8 py-3" onclick="startGame()">
                         <i class="fas fa-play mr-2"></i>
-                        开始游戏
+                        Start Game
                     </button>
                 </div>
             `;
@@ -534,13 +542,13 @@
             if (navigator.share) {
                 navigator.share({
                     title: 'Turbo Moto Racer - GameShiftly',
-                    text: '来体验极速摩托车竞速的快感！',
+                    text: 'Experience the thrill of extreme speed motorcycle racing!',
                     url: window.location.href
                 });
             } else {
                 // 复制链接到剪贴板
                 navigator.clipboard.writeText(window.location.href);
-                alert('游戏链接已复制到剪贴板！');
+                alert('Game link copied to clipboard!');
             }
         }
         
