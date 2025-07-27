@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turbo Moto Racer - GameShiftly</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="footer.js"></script>
+    <style>
+        .game-canvas-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .game-canvas {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            position: relative;
+        }
+        
+        .game-canvas::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .game-controls {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .control-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .control-btn.primary {
+            background: #dc2626;
+            color: white;
+        }
+        
+        .control-btn.primary:hover {
+            background: #b91c1c;
+        }
+        
+        .control-btn.secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .control-btn.secondary:hover {
+            background: #e5e7eb;
+        }
+        
+        .game-info-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+        
+        .game-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #e5e7eb;
+            color: #374151;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .related-game {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 0.5rem;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .related-game:hover {
+            transform: translateY(-2px);
+        }
+        
+        .related-game img {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        
+        .game-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #7c3aed;
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 0.25rem;
+        }
+        
+        @media (max-width: 768px) {
+            .game-canvas {
+                height: 300px;
+            }
+            
+            .game-controls {
+                flex-wrap: wrap;
+            }
+            
+            .control-btn {
+                flex: 1;
+                min-width: 120px;
+            }
+            
+            .game-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 头部导航 -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="gameshiftly.html" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">GS</span>
+                        </div>
+                        <div>
+                            <div class="text-red-600 font-bold text-lg">GameShiftly</div>
+                            <div class="text-gray-500 text-xs">Free Online Games</div>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- 搜索栏 -->
+                <div class="hidden md:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <input type="text" placeholder="Search our 90,000 Games" 
+                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                </div>
+                
+                <!-- 用户操作 -->
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-600 hover:text-gray-900">Log in</button>
+                    <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Register</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- 游戏标题和操作 -->
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Turbo Moto Racer</h1>
+                <div class="flex items-center space-x-4 text-sm text-gray-600">
+                    <div class="flex items-center">
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <span>8.2</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-gamepad mr-1"></i>
+                        <span>Driving</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-play mr-1"></i>
+                        <span>856K plays</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-2 mt-4 lg:mt-0">
+                <button class="control-btn secondary" onclick="shareGame()">
+                    <i class="fas fa-share"></i>
+                    Share
+                </button>
+                <button class="control-btn secondary" onclick="toggleFavorite()">
+                    <i class="fas fa-heart" id="favoriteIcon"></i>
+                    <span id="favoriteText">Favorite</span>
+                </button>
+                <button class="control-btn secondary" onclick="toggleFullscreen()">
+                    <i class="fas fa-expand" id="fullscreenIcon"></i>
+                    <span id="fullscreenText">Fullscreen</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- 游戏区域 -->
+            <div class="lg:col-span-3">
+                <!-- 游戏画布 -->
+                <div class="game-canvas-container">
+                    <div class="game-canvas" id="gameCanvas">
+                        <div class="text-center relative z-10">
+                            <i class="fas fa-motorcycle text-6xl mb-4 text-white"></i>
+                            <h2 class="text-2xl font-bold mb-2">Turbo Moto Racer</h2>
+                            <p class="text-lg mb-4">Experience the thrill of high-speed motorcycle racing</p>
+                            <button class="control-btn primary text-lg px-8 py-3" onclick="startGame()">
+                                <i class="fas fa-play mr-2"></i>
+                                Start Game
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 游戏控制按钮 -->
+                    <div class="game-controls">
+                        <button class="control-btn primary" id="startBtn" onclick="toggleGame()">
+                            <i class="fas fa-play"></i>
+                            Start
+                        </button>
+                        <button class="control-btn secondary" id="pauseBtn" onclick="pauseGame()">
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                        <button class="control-btn secondary" id="restartBtn" onclick="restartGame()">
+                            <i class="fas fa-redo"></i>
+                            Restart
+                        </button>
+                        <button class="control-btn secondary" onclick="toggleFullscreen()">
+                            <i class="fas fa-expand"></i>
+                            Fullscreen
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Game Statistics -->
+                <div class="game-stats mt-6">
+                    <div class="stat-item">
+                        <div class="stat-value" id="score">0</div>
+                        <div class="stat-label">Score</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="level">1</div>
+                        <div class="stat-label">Level</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="lives">3</div>
+                        <div class="stat-label">Lives</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 侧边栏 -->
+            <div class="lg:col-span-1">
+                <!-- 游戏信息 -->
+                <div class="game-info-card">
+                    <h3 class="text-lg font-semibold mb-3">Game Information</h3>
+                    <p class="text-gray-600 mb-4">
+                        Drive your motorcycle on the track, surpass opponents, and become the fastest racer! Experience the thrill and excitement of extreme speed racing.
+                    </p>
+                    
+                    <div class="mb-4">
+                        <h4 class="font-medium mb-2">Game Tags</h4>
+                        <div>
+                            <span class="game-tag">Driving</span>
+                            <span class="game-tag">Racing</span>
+                            <span class="game-tag">Motorcycle</span>
+                            <span class="game-tag">Speed</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h4 class="font-medium mb-2">Controls</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Use arrow keys or WASD to control the motorcycle</li>
+                            <li>• Accelerate to overtake other racers</li>
+                            <li>• Collect speed boost items on the track</li>
+                            <li>• Avoid collisions and falls</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Related Games -->
+                <div class="game-info-card">
+                    <h3 class="text-lg font-semibold mb-3">Related Games</h3>
+                    <div class="space-y-2">
+                        <div class="related-game" onclick="goToGame('traffic-jam-3d')">
+                            <img src="https://via.placeholder.com/80x60/3b82f6/ffffff?text=Game" alt="Traffic Jam 3D">
+                            <div>
+                                <div class="font-medium">Traffic Jam 3D</div>
+                                <div class="text-sm text-gray-500">Driving</div>
+                            </div>
+                        </div>
+                        <div class="related-game" onclick="goToGame('airplane-parking')">
+                            <img src="https://via.placeholder.com/80x60/10b981/ffffff?text=Game" alt="Airplane Parking">
+                            <div>
+                                <div class="font-medium">Airplane Parking Academy</div>
+                                <div class="text-sm text-gray-500">Driving</div>
+                            </div>
+                        </div>
+                        <div class="related-game" onclick="goToGame('highway-racing')">
+                            <img src="https://via.placeholder.com/80x60/f59e0b/ffffff?text=Game" alt="Highway Racing">
+                            <div>
+                                <div class="font-medium">Highway Road Racing</div>
+                                <div class="text-sm text-gray-500">Driving</div>
+                            </div>
+                        </div>
+                        <div class="related-game" onclick="goToGame('bus-simulator')">
+                            <img src="https://via.placeholder.com/80x60/8b5cf6/ffffff?text=Game" alt="Bus Simulator">
+                            <div>
+                                <div class="font-medium">Uphill Bus Simulator</div>
+                                <div class="text-sm text-gray-500">Driving</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Container -->
+    <div id="footer-container"></div>
+
+    <script>
+        // 游戏状态
+        let gameState = {
+            isPlaying: false,
+            isPaused: false,
+            score: 0,
+            level: 1,
+            lives: 3,
+            isFavorite: false,
+            isFullscreen: false
+        };
+        
+        // 游戏控制功能
+        function startGame() {
+            gameState.isPlaying = true;
+            gameState.isPaused = false;
+            updateGameDisplay();
+            startGameLoop();
+        }
+        
+        function toggleGame() {
+            if (!gameState.isPlaying) {
+                startGame();
+            } else {
+                pauseGame();
+            }
+        }
+        
+        function pauseGame() {
+            gameState.isPaused = !gameState.isPaused;
+            updateGameDisplay();
+        }
+        
+        function restartGame() {
+            gameState.isPlaying = false;
+            gameState.isPaused = false;
+            gameState.score = 0;
+            gameState.level = 1;
+            gameState.lives = 3;
+            updateGameDisplay();
+            resetGameCanvas();
+        }
+        
+        function updateGameDisplay() {
+            const gameCanvas = document.getElementById('gameCanvas');
+            const startBtn = document.getElementById('startBtn');
+            
+            // 更新游戏画布显示
+            if (!gameState.isPlaying) {
+                gameCanvas.innerHTML = `
+                    <div class="text-center relative z-10">
+                        <i class="fas fa-motorcycle text-6xl mb-4 text-white"></i>
+                        <h2 class="text-2xl font-bold mb-2">Turbo Moto Racer</h2>
+                        <p class="text-lg mb-4">体验极速摩托车竞速的快感</p>
+                        <button class="control-btn primary text-lg px-8 py-3" onclick="startGame()">
+                            <i class="fas fa-play mr-2"></i>
+                            开始游戏
+                        </button>
+                    </div>
+                `;
+                startBtn.innerHTML = '<i class="fas fa-play"></i> Start';
+                startBtn.classList.remove('secondary');
+                startBtn.classList.add('primary');
+            } else if (gameState.isPaused) {
+                gameCanvas.innerHTML = `
+                    <div class="text-center relative z-10">
+                        <i class="fas fa-pause text-6xl mb-4 text-yellow-400"></i>
+                        <h2 class="text-2xl font-bold mb-2">游戏已暂停</h2>
+                        <p class="text-lg mb-4">点击继续按钮恢复游戏</p>
+                        <button class="control-btn primary text-lg px-8 py-3" onclick="pauseGame()">
+                            <i class="fas fa-play mr-2"></i>
+                            继续游戏
+                        </button>
+                    </div>
+                `;
+                startBtn.innerHTML = '<i class="fas fa-play"></i> Resume';
+            } else {
+                gameCanvas.innerHTML = `
+                    <div class="text-center relative z-10">
+                        <i class="fas fa-motorcycle text-6xl mb-4 text-green-400"></i>
+                        <h2 class="text-2xl font-bold mb-2">游戏进行中</h2>
+                        <p class="text-lg mb-4">使用方向键或WASD控制摩托车</p>
+                        <div class="text-sm text-gray-300">
+                            分数: ${gameState.score} | 关卡: ${gameState.level} | 生命: ${gameState.lives}
+                        </div>
+                    </div>
+                `;
+                startBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                startBtn.classList.remove('primary');
+                startBtn.classList.add('secondary');
+            }
+            
+            // 更新统计显示
+            document.getElementById('score').textContent = gameState.score;
+            document.getElementById('level').textContent = gameState.level;
+            document.getElementById('lives').textContent = gameState.lives;
+        }
+        
+        function resetGameCanvas() {
+            const gameCanvas = document.getElementById('gameCanvas');
+            gameCanvas.innerHTML = `
+                <div class="text-center relative z-10">
+                    <i class="fas fa-motorcycle text-6xl mb-4 text-white"></i>
+                    <h2 class="text-2xl font-bold mb-2">Turbo Moto Racer</h2>
+                    <p class="text-lg mb-4">体验极速摩托车竞速的快感</p>
+                    <button class="control-btn primary text-lg px-8 py-3" onclick="startGame()">
+                        <i class="fas fa-play mr-2"></i>
+                        开始游戏
+                    </button>
+                </div>
+            `;
+        }
+        
+        function startGameLoop() {
+            if (!gameState.isPlaying || gameState.isPaused) return;
+            
+            // 模拟游戏逻辑
+            gameState.score += 15;
+            if (gameState.score % 150 === 0) {
+                gameState.level++;
+            }
+            
+            updateGameDisplay();
+            
+            // 继续游戏循环
+            setTimeout(startGameLoop, 1000);
+        }
+        
+        // 全屏功能
+        function toggleFullscreen() {
+            const container = document.querySelector('.game-canvas-container');
+            const icon = document.getElementById('fullscreenIcon');
+            const text = document.getElementById('fullscreenText');
+            
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+                icon.className = 'fas fa-expand';
+                text.textContent = 'Fullscreen';
+            } else {
+                container.requestFullscreen();
+                icon.className = 'fas fa-compress';
+                text.textContent = 'Exit Fullscreen';
+            }
+        }
+        
+        // 收藏功能
+        function toggleFavorite() {
+            gameState.isFavorite = !gameState.isFavorite;
+            const icon = document.getElementById('favoriteIcon');
+            const text = document.getElementById('favoriteText');
+            
+            if (gameState.isFavorite) {
+                icon.className = 'fas fa-heart text-red-500';
+                text.textContent = 'Favorited';
+            } else {
+                icon.className = 'fas fa-heart';
+                text.textContent = 'Favorite';
+            }
+        }
+        
+        // 分享功能
+        function shareGame() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Turbo Moto Racer - GameShiftly',
+                    text: '来体验极速摩托车竞速的快感！',
+                    url: window.location.href
+                });
+            } else {
+                // 复制链接到剪贴板
+                navigator.clipboard.writeText(window.location.href);
+                alert('游戏链接已复制到剪贴板！');
+            }
+        }
+        
+        // 跳转到其他游戏
+        function goToGame(gameName) {
+            // 这里可以跳转到其他游戏页面
+            alert(`即将跳转到 ${gameName} 游戏页面`);
+        }
+        
+        // 键盘控制
+        document.addEventListener('keydown', function(e) {
+            if (!gameState.isPlaying || gameState.isPaused) return;
+            
+            switch(e.key) {
+                case 'ArrowUp':
+                case 'w':
+                case 'W':
+                    console.log('加速前进');
+                    gameState.score += 8;
+                    updateGameDisplay();
+                    break;
+                case 'ArrowDown':
+                case 's':
+                case 'S':
+                    console.log('减速后退');
+                    break;
+                case 'ArrowLeft':
+                case 'a':
+                case 'A':
+                    console.log('向左转向');
+                    break;
+                case 'ArrowRight':
+                case 'd':
+                case 'D':
+                    console.log('向右转向');
+                    break;
+                case ' ':
+                    e.preventDefault();
+                    pauseGame();
+                    break;
+            }
+        });
+        
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            updateGameDisplay();
+        });
+    </script>
+</body>
+</html> 
