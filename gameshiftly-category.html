@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driving Games - GameShiftly | Free Online Games</title>
+    <meta name="description" content="Play the best driving games for free at GameShiftly. Race cars, drive trucks, and experience exciting driving adventures!">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .game-card {
+            transition: all 0.3s ease;
+        }
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .rating-stars {
+            color: #ffd700;
+        }
+        
+        .filter-option {
+            transition: all 0.2s ease;
+        }
+        .filter-option:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .filter-option.active {
+            background-color: #ef4444;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- 顶部导航栏 -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-8">
+                    <button class="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-xl">GS</span>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold text-red-600">GameShiftly</h1>
+                            <p class="text-xs text-gray-500">Free Online Games</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex-1 max-w-2xl mx-8 hidden md:block">
+                    <div class="relative">
+                        <input type="text" 
+                               placeholder="Search our 90,000 Games" 
+                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-600 hover:text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-100">
+                        Log in
+                    </button>
+                    <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+                        Register
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 面包屑导航 -->
+    <nav class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex items-center space-x-2 text-sm">
+                <a href="gameshiftly.html" class="text-gray-500 hover:text-red-600">Home</a>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+                <a href="#" class="text-gray-500 hover:text-red-600">Categories</a>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+                <span class="text-red-600 font-semibold">Driving</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- 分类标题和统计 -->
+        <div class="mb-8">
+            <div class="flex items-center space-x-4 mb-4">
+                <div class="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-car text-white text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900">Driving Games</h1>
+                    <p class="text-gray-600">1,945 games available</p>
+                </div>
+            </div>
+            <p class="text-gray-700 max-w-3xl">
+                Experience the thrill of high-speed racing, realistic driving simulations, and exciting car adventures. 
+                From casual driving games to intense racing competitions, we have the perfect driving game for every player.
+            </p>
+        </div>
+
+        <!-- 筛选和排序工具栏 -->
+        <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
+                <!-- 筛选选项 -->
+                <div class="flex flex-wrap gap-2">
+                    <button class="filter-option active px-4 py-2 rounded-lg text-sm font-medium">
+                        All Games
+                    </button>
+                    <button class="filter-option px-4 py-2 rounded-lg text-sm font-medium text-gray-700">
+                        Racing
+                    </button>
+                    <button class="filter-option px-4 py-2 rounded-lg text-sm font-medium text-gray-700">
+                        Simulation
+                    </button>
+                    <button class="filter-option px-4 py-2 rounded-lg text-sm font-medium text-gray-700">
+                        Stunt
+                    </button>
+                    <button class="filter-option px-4 py-2 rounded-lg text-sm font-medium text-gray-700">
+                        Parking
+                    </button>
+                    <button class="filter-option px-4 py-2 rounded-lg text-sm font-medium text-gray-700">
+                        Truck
+                    </button>
+                </div>
+                
+                <!-- 排序选项 -->
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-600">Sort by:</span>
+                    <select class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <option>Most Popular</option>
+                        <option>Newest</option>
+                        <option>Highest Rated</option>
+                        <option>Most Played</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 游戏网格 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+            <!-- 游戏卡片 1 -->
+            <div class="game-card bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="relative">
+                    <img src="https://via.placeholder.com/300x200/4F46E5/FFFFFF?text=Traffic+Jam+3D" alt="Traffic Jam 3D" class="w-full h-48 object-cover">
+                    <div class="absolute top-2 left-2">
+                        <span class="bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold">Racing</span>
+                    </div>
+                    <div class="absolute top-2 right-2">
+                        <div class="rating-stars text-sm">
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-700 ml-1">8.3</span>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-2 left-2">
+                        <span class="bg-black/70 text-white px-2 py-1 rounded text-xs">3D</span>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold text-lg mb-2">Traffic Jam 3D</h3>
+                    <p class="text-gray-600 text-sm mb-3">Navigate through busy traffic in this exciting 3D driving game.</p>
+                    <div class="flex items-center justify-between text-sm text-gray-500 mb-3">
+                        <span><i class="fas fa-play mr-1"></i> 2.1M plays</span>
+                        <span><i class="fas fa-calendar mr-1"></i> 2024</span>
+                    </div>
+                    <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
+                        Play Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- 游戏卡片 2 -->
+            <div class="game-card bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="relative">
+                    <img src="https://via.placeholder.com/300x200/7C3AED/FFFFFF?text=Turbo+Moto+Racer" alt="Turbo Moto Racer" class="w-full h-48 object-cover">
+                    <div class="absolute top-2 left-2">
+                        <span class="bg-purple-600 text-white px-2 py-1 rounded text-xs font-semibold">Racing</span>
+                    </div>
+                    <div class="absolute top-2 right-2">
+                        <div class="rating-stars text-sm">
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-700 ml-1">8.2</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold text-lg mb-2">Turbo Moto Racer</h3>
+                    <p class="text-gray-600 text-sm mb-3">High-speed motorcycle racing with stunning graphics and physics.</p>
+                    <div class="flex items-center justify-between text-sm text-gray-500 mb-3">
+                        <span><i class="fas fa-play mr-1"></i> 1.8M plays</span>
+                        <span><i class="fas fa-calendar mr-1"></i> 2024</span>
+                    </div>
+                    <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
+                        Play Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- 游戏卡片 3 -->
+            <div class="game-card bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="relative">
+                    <img src="https://via.placeholder.com/300x200/EC4899/FFFFFF?text=Airplane+Parking" alt="Airplane Parking Academy 3D" class="w-full h-48 object-cover">
+                    <div class="absolute top-2 left-2">
+                        <span class="bg-pink-600 text-white px-2 py-1 rounded text-xs font-semibold">Parking</span>
+                    </div>
+                    <div class="absolute top-2 right-2">
+                        <div class="rating-stars text-sm">
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-700 ml-1">7.2</span>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-2 left-2">
+                        <span class="bg-black/70 text-white px-2 py-1 rounded text-xs">3D</span>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold text-lg mb-2">Airplane Parking Academy 3D</h3>
+                    <p class="text-gray-600 text-sm mb-3">Master the art of parking airplanes in challenging scenarios.</p>
+                    <div class="flex items-center justify-between text-sm text-gray-500 mb-3">
+                        <span><i class="fas fa-play mr-1"></i> 950K plays</span>
+                        <span><i class="fas fa-calendar mr-1"></i> 2024</span>
+                    </div>
+                    <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
+                        Play Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- 游戏卡片 4 -->
+            <div class="game-card bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="relative">
+                    <img src="https://via.placeholder.com/300x200/10B981/FFFFFF?text=Highway+Road+Racing" alt="Highway Road Racing" class="w-full h-48 object-cover">
+                    <div class="absolute top-2 left-2">
+                        <span class="bg-green-600 text-white px-2 py-1 rounded text-xs font-semibold">Racing</span>
+                    </div>
+                    <div class="absolute top-2 right-2">
+                        <div class="rating-stars text-sm">
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-700 ml-1">7.9</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold text-lg mb-2">Highway Road Racing</h3>
+                    <p class="text-gray-600 text-sm mb-3">Race on endless highways with stunning scenery and fast cars.</p>
+                    <div class="flex items-center justify-between text-sm text-gray-500 mb-3">
+                        <span><i class="fas fa-play mr-1"></i> 1.5M plays</span>
+                        <span><i class="fas fa-calendar mr-1"></i> 2024</span>
+                    </div>
+                    <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
+                        Play Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- 游戏卡片 5 -->
+            <div class="game-card bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="relative">
+                    <img src="https://via.placeholder.com/300x200/F59E0B/FFFFFF?text=Uphill+Bus+Simulator" alt="Uphill Bus Simulator 3D" class="w-full h-48 object-cover">
+                    <div class="absolute top-2 left-2">
+                        <span class="bg-yellow-600 text-white px-2 py-1 rounded text-xs font-semibold">Simulation</span>
+                    </div>
+                    <div class="absolute top-2 right-2">
+                        <div class="rating-stars text-sm">
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-700 ml-1">8.0</span>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-2 left-2">
+                        <span class="bg-black/70 text-white px-2 py-1 rounded text-xs">3D</span>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold text-lg mb-2">Uphill Bus Simulator 3D</h3>
+                    <p class="text-gray-600 text-sm mb-3">Drive a bus up challenging hills and manage passengers safely.</p>
+                    <div class="flex items-center justify-between text-sm text-gray-500 mb-3">
+                        <span><i class="fas fa-play mr-1"></i> 1.2M plays</span>
+                        <span><i class="fas fa-calendar mr-1"></i> 2024</span>
+                    </div>
+                    <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
+                        Play Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- 游戏卡片 6 -->
+            <div class="game-card bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="relative">
+                    <img src="https://via.placeholder.com/300x200/84CC16/FFFFFF?text=Coach+Hill+Drive" alt="Coach Hill Drive Simulator" class="w-full h-48 object-cover">
+                    <div class="absolute top-2 left-2">
+                        <span class="bg-teal-600 text-white px-2 py-1 rounded text-xs font-semibold">Simulation</span>
+                    </div>
+                    <div class="absolute top-2 right-2">
+                        <div class="rating-stars text-sm">
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-700 ml-1">7.7</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold text-lg mb-2">Coach Hill Drive Simulator</h3>
+                    <p class="text-gray-600 text-sm mb-3">Experience realistic coach driving through scenic hill routes.</p>
+                    <div class="flex items-center justify-between text-sm text-gray-500 mb-3">
+                        <span><i class="fas fa-play mr-1"></i> 890K plays</span>
+                        <span><i class="fas fa-calendar mr-1"></i> 2024</span>
+                    </div>
+                    <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
+                        Play Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- 游戏卡片 7 -->
+            <div class="game-card bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="relative">
+                    <img src="https://via.placeholder.com/300x200/06B6D4/FFFFFF?text=GP+Moto+Racing" alt="GP Moto Racing" class="w-full h-48 object-cover">
+                    <div class="absolute top-2 left-2">
+                        <span class="bg-cyan-600 text-white px-2 py-1 rounded text-xs font-semibold">Racing</span>
+                    </div>
+                    <div class="absolute top-2 right-2">
+                        <div class="rating-stars text-sm">
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-700 ml-1">7.6</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold text-lg mb-2">GP Moto Racing</h3>
+                    <p class="text-gray-600 text-sm mb-3">Professional motorcycle racing with realistic physics and tracks.</p>
+                    <div class="flex items-center justify-between text-sm text-gray-500 mb-3">
+                        <span><i class="fas fa-play mr-1"></i> 1.1M plays</span>
+                        <span><i class="fas fa-calendar mr-1"></i> 2024</span>
+                    </div>
+                    <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
+                        Play Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- 游戏卡片 8 -->
+            <div class="game-card bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="relative">
+                    <img src="https://via.placeholder.com/300x200/EA580C/FFFFFF?text=City+Car+Stunt+3" alt="City Car Stunt 3" class="w-full h-48 object-cover">
+                    <div class="absolute top-2 left-2">
+                        <span class="bg-orange-600 text-white px-2 py-1 rounded text-xs font-semibold">Stunt</span>
+                    </div>
+                    <div class="absolute top-2 right-2">
+                        <div class="rating-stars text-sm">
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-700 ml-1">7.6</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold text-lg mb-2">City Car Stunt 3</h3>
+                    <p class="text-gray-600 text-sm mb-3">Perform amazing stunts and tricks in the city environment.</p>
+                    <div class="flex items-center justify-between text-sm text-gray-500 mb-3">
+                        <span><i class="fas fa-play mr-1"></i> 1.3M plays</span>
+                        <span><i class="fas fa-calendar mr-1"></i> 2024</span>
+                    </div>
+                    <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
+                        Play Now
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分页 -->
+        <div class="flex items-center justify-center space-x-2">
+            <button class="px-3 py-2 text-gray-500 hover:text-gray-700 disabled:opacity-50">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="px-3 py-2 bg-red-600 text-white rounded-lg">1</button>
+            <button class="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">2</button>
+            <button class="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">3</button>
+            <button class="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">4</button>
+            <button class="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">5</button>
+            <span class="px-3 py-2 text-gray-500">...</span>
+            <button class="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">97</button>
+            <button class="px-3 py-2 text-gray-700 hover:text-gray-900">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-900 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-xl">GS</span>
+                        </div>
+                        <h3 class="text-2xl font-bold">GameShiftly</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4 max-w-md">
+                        GameShiftly is your ultimate destination for free online games. With over 90,000 games across all categories, 
+                        we provide endless entertainment for gamers of all ages.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://facebook.com/gameshiftly" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="https://twitter.com/gameshiftly" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="https://instagram.com/gameshiftly" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="https://youtube.com/gameshiftly" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-youtube text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="gameshiftly.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="gameshiftly-category.html" class="text-gray-400 hover:text-white transition">Popular Games</a></li>
+                        <li><a href="gameshiftly-category.html" class="text-gray-400 hover:text-white transition">New Games</a></li>
+                        <li><a href="gameshiftly-category.html" class="text-gray-400 hover:text-white transition">Categories</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Videos</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2006 - 2025 GameShiftly. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 筛选按钮功能
+            document.querySelectorAll('.filter-option').forEach(button => {
+                button.addEventListener('click', function() {
+                    // 移除所有活动状态
+                    document.querySelectorAll('.filter-option').forEach(btn => {
+                        btn.classList.remove('active', 'bg-red-600', 'text-white');
+                        btn.classList.add('text-gray-700');
+                    });
+                    
+                    // 添加当前活动状态
+                    this.classList.add('active', 'bg-red-600', 'text-white');
+                    this.classList.remove('text-gray-700');
+                    
+                    // 这里可以添加实际的筛选逻辑
+                    const filter = this.textContent;
+                    console.log(`Filtering by: ${filter}`);
+                });
+            });
+            
+            // 游戏卡片点击事件
+            document.querySelectorAll('.game-card button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const gameName = this.closest('.game-card').querySelector('h3').textContent;
+                    alert(`Starting ${gameName}...`);
+                });
+            });
+            
+            // 排序功能
+            const sortSelect = document.querySelector('select');
+            if (sortSelect) {
+                sortSelect.addEventListener('change', function() {
+                    console.log(`Sorting by: ${this.value}`);
+                });
+            }
+        });
+    </script>
+</body>
+</html> 
