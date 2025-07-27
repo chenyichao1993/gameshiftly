@@ -3,61 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flappy Bird Game - GameShiftly</title>
+    <title>Flappy Bird - GameShiftly</title>
     <meta name="description" content="Play Flappy Bird online for free! Tap or click to keep the bird flying and avoid the pipes. How far can you go?">
     <link rel="canonical" href="https://gameshiftly.online/game-flappybird.html">
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZPVFP3K52R"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-ZPVFP3K52R');
-    </script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'apple-blue': '#007AFF',
-                        'apple-gray': '#1d1d1f',
-                    }
-                }
-            }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="footer.js"></script>
+    <style>
+        .game-canvas-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-    </script>
+        .game-canvas {
+            width: 100%;
+            aspect-ratio: 3/2;
+            background: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .game-canvas iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+            display: block;
+            background: transparent;
+        }
+        .game-controls {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            justify-content: center;
+        }
+        .control-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .control-btn.primary {
+            background: #dc2626;
+            color: white;
+        }
+        .control-btn.primary:hover {
+            background: #b91c1c;
+        }
+        .control-btn.secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        .control-btn.secondary:hover {
+            background: #e5e7eb;
+        }
+        .game-info-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+        .game-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #e5e7eb;
+            color: #374151;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .related-game {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 0.5rem;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+        .related-game:hover {
+            transform: translateY(-2px);
+        }
+        .related-game img {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        @media (max-width: 1024px) {
+            .game-canvas { aspect-ratio: 16/9; }
+        }
+        @media (max-width: 900px) {
+            .game-canvas { aspect-ratio: 16/9; }
+        }
+        @media (max-width: 768px) {
+            .game-canvas { aspect-ratio: 1/1; }
+        }
+    </style>
 </head>
-<body class="bg-white text-apple-gray">
-    <header class="container mx-auto px-4 py-8 flex flex-col items-center">
-        <a href="index.html" class="self-start mb-4 bg-gray-200 hover:bg-gray-300 text-apple-gray px-4 py-2 rounded-full font-semibold transition">&larr; Back to Home</a>
-        <img src="https://upload.wikimedia.org/wikipedia/en/0/0a/Flappy_Bird_icon.png" alt="Flappy Bird Logo" class="w-32 h-32 mb-4 rounded-lg object-cover bg-white">
-        <h1 class="text-4xl md:text-5xl font-bold text-center mb-4">Flappy Bird</h1>
-        <p class="text-xl text-center text-gray-600 max-w-2xl mx-auto mb-2">
-            Tap or click to keep the bird flying and avoid the pipes. How far can you go?
-        </p>
+<body class="bg-gray-50">
+    <!-- Header Navigation -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="gameshiftly.html" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">GS</span>
+                        </div>
+                        <div>
+                            <div class="text-red-600 font-bold text-lg">GameShiftly</div>
+                            <div class="text-gray-500 text-xs">Free Online Games</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="hidden md:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <input type="text" placeholder="Search our 90,000 Games" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-600 hover:text-gray-900">Log in</button>
+                    <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Register</button>
+                </div>
+            </div>
+        </div>
     </header>
-
-    <main class="container mx-auto px-4 py-8">
-        <div class="flex justify-center mb-8">
-            <iframe src="flappybird/index.html" width="900" height="600" style="max-width:100%;border:0;display:block;" allowfullscreen title="Flappy Bird Game"></iframe>
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Flappy Bird</h1>
+                <div class="flex items-center space-x-4 text-sm text-gray-600">
+                    <div class="flex items-center">
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <span>8.2</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-gamepad mr-1"></i>
+                        <span>Arcade & Classic</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-play mr-1"></i>
+                        <span>2.1M plays</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2 mt-4 lg:mt-0">
+                <button class="control-btn secondary" onclick="shareGame()">
+                    <i class="fas fa-share"></i>
+                    Share
+                </button>
+                <button class="control-btn secondary" onclick="toggleFavorite()">
+                    <i class="fas fa-heart" id="favoriteIcon"></i>
+                    <span id="favoriteText">Favorite</span>
+                </button>
+                <button class="control-btn secondary" onclick="toggleFullscreen()">
+                    <i class="fas fa-expand" id="fullscreenIcon"></i>
+                    <span id="fullscreenText">Fullscreen</span>
+                </button>
+            </div>
         </div>
-        <section class="max-w-4xl mx-auto">
-            <h2 class="text-2xl font-bold mb-4">How to Play</h2>
-            <ul class="list-disc pl-6 mb-6">
-                <li>Click or tap to make the bird flap its wings.</li>
-                <li>Avoid hitting the pipes or the ground.</li>
-                <li>Try to achieve the highest score possible!</li>
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Game Area -->
+            <div class="lg:col-span-3">
+                <div class="game-canvas-container" id="game-canvas-container">
+                    <div class="game-canvas">
+                        <iframe src="flappybird/index.html" title="Flappy Bird Game" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <!-- Game Information -->
+                <div class="game-info-card">
+                    <h3 class="text-lg font-semibold mb-3">Game Information</h3>
+                    <p class="text-gray-600 mb-4">
+                        Tap or click to keep the bird flying and avoid the pipes. How far can you go?
+                    </p>
+                    <div class="mb-4">
+                        <h4 class="font-medium mb-2">Game Tags</h4>
+                        <div>
+                            <span class="game-tag">Arcade & Classic</span>
+                            <span class="game-tag">Skill</span>
+                            <span class="game-tag">Endless</span>
+                            <span class="game-tag">Bird</span>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h4 class="font-medium mb-2">Controls</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Click or tap to flap</li>
+                            <li>• Avoid pipes and ground</li>
             </ul>
-        </section>
-    </main>
-
-    <footer class="bg-gray-100 py-8 mt-16">
-        <div class="container mx-auto px-4 text-center">
-            <p>&copy; 2024 GameShiftly. All rights reserved.</p>
+                    </div>
+                </div>
+                <!-- Related Games -->
+                <div class="game-info-card">
+                    <h3 class="text-lg font-semibold mb-3">Related Games</h3>
+                    <div class="space-y-2">
+                        <div class="related-game" onclick="goToGame('game-minesweeper.html')">
+                            <img src="img/minesweeper.jpg" alt="Minesweeper">
+                            <div><div class="font-medium">Minesweeper</div><div class="text-sm text-gray-500">Thinking</div></div>
+                        </div>
+                        <div class="related-game" onclick="goToGame('game-pacman.html')">
+                            <img src="img/Pacman.jpg" alt="Pacman">
+                            <div><div class="font-medium">Pacman</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
+                        </div>
+                        <div class="related-game" onclick="goToGame('game-tetris.html')">
+                            <img src="img/tetris.jpg" alt="Tetris">
+                            <div><div class="font-medium">Tetris</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
+                        </div>
+                        <div class="related-game" onclick="goToGame('game-snake.html')">
+                            <img src="img/2048.png" alt="Snake">
+                            <div><div class="font-medium">Snake</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
+    </main>
+    <!-- Footer Container -->
+    <div id="footer-container"></div>
+    <script>
+        function goToGame(game) { window.location.href = game; }
+        function toggleFullscreen() {
+            const container = document.querySelector('.game-canvas-container');
+            if (document.fullscreenElement) { document.exitFullscreen(); } else { container.requestFullscreen(); }
+        }
+        function shareGame() { if (navigator.share) { navigator.share({ title: 'Flappy Bird - GameShiftly', text: 'Check out this awesome game!', url: window.location.href }); } else { navigator.clipboard.writeText(window.location.href); alert('Game link copied to clipboard!'); } }
+        function toggleFavorite() { const icon = document.getElementById('favoriteIcon'); const text = document.getElementById('favoriteText'); if (icon.classList.contains('text-red-500')) { icon.classList.remove('text-red-500'); text.textContent = 'Favorite'; } else { icon.classList.add('text-red-500'); text.textContent = 'Favorited'; } }
+        function restartGame() { document.querySelector('.game-canvas iframe').contentWindow.location.reload(); }
+    </script>
 </body>
 </html> 
