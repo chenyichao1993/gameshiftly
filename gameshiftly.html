@@ -9,59 +9,205 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* 自定义滚动条 */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+        /* 隐藏滚动条但保持功能 */
+        .scroll-container {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
+        .scroll-container::-webkit-scrollbar {
+            display: none;
         }
         
-        /* 游戏卡片效果 */
+        /* 游戏卡片固定大小和悬停效果 */
         .game-card {
             transition: all 0.3s ease;
+            width: 160px;
+            min-width: 160px;
+            max-width: 160px;
+            height: 200px;
+            min-height: 200px;
+            max-height: 200px;
         }
         .game-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
         
-        /* 分类滚动容器 */
-        .category-scroll {
-            scrollbar-width: none;
-            -ms-overflow-style: none;
+        /* 游戏卡片图片固定大小 */
+        .game-card img {
+            width: 160px;
+            height: 120px;
+            object-fit: cover;
         }
-        .category-scroll::-webkit-scrollbar {
-            display: none;
+        
+        /* 游戏卡片内容区域固定大小 */
+        .game-card-content {
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        /* 游戏卡片悬停效果 - 显示游戏信息 */
+        .game-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-card-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .game-card:hover .game-card-info {
+            transform: translateY(0);
+        }
+        
+        .game-card-info h3 {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .game-card-info .rating {
+            font-size: 10px;
+            color: #fbbf24;
+        }
+        
+        .game-card-info .category-tag {
+            font-size: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        
+        /* 桌面端适配 */
+        @media (min-width: 1024px) {
+            .category-section {
+                max-width: 100%;
+                overflow: hidden;
+            }
+            .games-container {
+                max-width: calc(100vw - 400px);
+                overflow: hidden;
+            }
+            .scroll-container {
+                max-width: 100%;
+                overflow-x: auto;
+            }
+        }
+        
+        /* 分类卡片效果 */
+        .category-card {
+            transition: all 0.3s ease;
+        }
+        .category-card:hover {
+            transform: scale(1.02);
+        }
+        
+        /* 导航箭头样式 */
+        .nav-arrow {
+            transition: all 0.2s ease;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .nav-arrow:hover {
+            background-color: rgba(0,0,0,0.1);
+            transform: scale(1.1);
         }
         
         /* 动画效果 */
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
         .animate-fade-in-up {
             animation: fadeInUp 0.6s ease-out;
         }
         
-        /* 游戏评分星星 */
-        .rating-stars {
-            color: #ffd700;
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .category-section {
+                flex-direction: column;
+            }
+            .category-card {
+                min-width: 100%;
+                margin-bottom: 1rem;
+            }
+            .games-container {
+                width: 100%;
+                display: none; /* 移动端隐藏游戏卡片 */
+            }
+            .game-card {
+                min-width: 160px;
+            }
+            .nav-arrow {
+                display: none !important; /* 移动端隐藏箭头 */
+            }
+            .scroll-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* 移动端只显示分类卡片网格 */
+            .mobile-categories {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .mobile-category-card {
+                background: linear-gradient(135deg, var(--card-color-1), var(--card-color-2));
+                color: white;
+                border-radius: 12px;
+                padding: 1.5rem;
+                text-align: center;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.2s ease;
+            }
+            
+            .mobile-category-card:active {
+                transform: scale(0.95);
+            }
+            
+            .mobile-category-card i {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .mobile-category-card h3 {
+                font-size: 1.25rem;
+                font-weight: bold;
+                margin-bottom: 0.25rem;
+            }
+            
+            .mobile-category-card p {
+                font-size: 0.875rem;
+                opacity: 0.9;
+                margin-bottom: 1rem;
+            }
+            
+            .mobile-category-card button {
+                background: rgba(255, 255, 255, 0.2);
+                color: white;
+                border: none;
+                padding: 0.5rem 1rem;
+                border-radius: 6px;
+                font-weight: 600;
+                font-size: 0.875rem;
+            }
         }
     </style>
 </head>
@@ -71,40 +217,39 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <!-- 左侧Logo和菜单 -->
-                <div class="flex items-center space-x-8">
-                    <!-- 汉堡菜单 -->
+                <div class="flex items-center space-x-4 lg:space-x-8">
                     <button class="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                     
                     <!-- Logo -->
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
-                            <span class="text-white font-bold text-xl">GS</span>
+                    <div class="flex items-center space-x-2 lg:space-x-3">
+                        <div class="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-lg lg:text-xl">GS</span>
                         </div>
-                        <div>
-                            <h1 class="text-2xl font-bold text-red-600">GameShiftly</h1>
+                        <div class="hidden sm:block">
+                            <h1 class="text-lg lg:text-2xl font-bold text-red-600">GameShiftly</h1>
                             <p class="text-xs text-gray-500">Free Online Games</p>
                         </div>
                     </div>
                 </div>
                 
                 <!-- 搜索框 -->
-                <div class="flex-1 max-w-2xl mx-8 hidden md:block">
+                <div class="flex-1 max-w-md lg:max-w-2xl mx-4 lg:mx-8 hidden md:block">
                     <div class="relative">
                         <input type="text" 
                                placeholder="Search our 90,000 Games" 
-                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-sm lg:text-base">
                         <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
                     </div>
                 </div>
                 
                 <!-- 右侧按钮 -->
-                <div class="flex items-center space-x-4">
-                    <button class="text-gray-600 hover:text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-100">
+                <div class="flex items-center space-x-2 lg:space-x-4">
+                    <button class="text-gray-600 hover:text-gray-900 px-2 lg:px-4 py-2 rounded-lg hover:bg-gray-100 text-sm lg:text-base">
                         Log in
                     </button>
-                    <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+                    <button class="bg-red-600 text-white px-2 lg:px-4 py-2 rounded-lg hover:bg-red-700 transition text-sm lg:text-base">
                         Register
                     </button>
                 </div>
@@ -113,430 +258,520 @@
     </header>
 
     <!-- 主要内容区域 -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <!-- 游戏分类区域 -->
-        <section class="mb-12">
-            <h2 class="text-2xl font-bold mb-6">Game Categories</h2>
-            
-            <!-- 分类滚动容器 -->
-            <div class="category-scroll overflow-x-auto">
-                <div class="flex space-x-6 pb-4" style="min-width: max-content;">
-                    <!-- Driving -->
-                    <div class="category-card bg-white rounded-lg shadow-md p-6 min-w-[280px]">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-semibold">Driving</h3>
-                            <span class="text-sm text-gray-500">1,945 games</span>
-                        </div>
-                        <div class="grid grid-cols-3 gap-2 mb-4">
-                            <img src="https://via.placeholder.com/80x60/4F46E5/FFFFFF?text=Car" alt="Car Game" class="rounded">
-                            <img src="https://via.placeholder.com/80x60/7C3AED/FFFFFF?text=Race" alt="Race Game" class="rounded">
-                            <img src="https://via.placeholder.com/80x60/EC4899/FFFFFF?text=Speed" alt="Speed Game" class="rounded">
-                        </div>
-                        <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
-                            Explore
-                        </button>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-8">
+        <!-- 移动端分类卡片网格 -->
+        <div class="mobile-categories lg:hidden">
+            <div class="mobile-category-card" style="--card-color-1: #3B82F6; --card-color-2: #1D4ED8;">
+                <i class="fas fa-car"></i>
+                <h3>Driving</h3>
+                <p>1,945 games</p>
+                <button>Explore</button>
+            </div>
+            <div class="mobile-category-card" style="--card-color-1: #DC2626; --card-color-2: #B91C1C;">
+                <i class="fas fa-crosshairs"></i>
+                <h3>Shooting</h3>
+                <p>1,903 games</p>
+                <button>Explore</button>
+            </div>
+            <div class="mobile-category-card" style="--card-color-1: #EC4899; --card-color-2: #BE185D;">
+                <i class="fas fa-heart"></i>
+                <h3>For Girls</h3>
+                <p>3,944 games</p>
+                <button>Explore</button>
+            </div>
+            <div class="mobile-category-card" style="--card-color-1: #10B981; --card-color-2: #059669;">
+                <i class="fas fa-fist-raised"></i>
+                <h3>Fighting</h3>
+                <p>357 games</p>
+                <button>Explore</button>
+            </div>
+            <div class="mobile-category-card" style="--card-color-1: #F59E0B; --card-color-2: #D97706;">
+                <i class="fas fa-brain"></i>
+                <h3>Thinking</h3>
+                <p>3,766 games</p>
+                <button>Explore</button>
+            </div>
+            <div class="mobile-category-card" style="--card-color-1: #8B5CF6; --card-color-2: #7C3AED;">
+                <i class="fas fa-gamepad"></i>
+                <h3>Arcade</h3>
+                <p>2,123 games</p>
+                <button>Explore</button>
+            </div>
+        </div>
+        <!-- 游戏分类行 - Driving -->
+        <section class="mb-6 lg:mb-8">
+            <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
+                <!-- 左侧分类卡片 -->
+                <div class="category-card bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i class="fas fa-car text-xl lg:text-2xl"></i>
+                        <h2 class="text-xl lg:text-2xl font-bold">Driving</h2>
                     </div>
-                    
-                    <!-- Shooting -->
-                    <div class="category-card bg-white rounded-lg shadow-md p-6 min-w-[280px]">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-semibold">Shooting</h3>
-                            <span class="text-sm text-gray-500">1,903 games</span>
-                        </div>
-                        <div class="grid grid-cols-3 gap-2 mb-4">
-                            <img src="https://via.placeholder.com/80x60/DC2626/FFFFFF?text=Gun" alt="Gun Game" class="rounded">
-                            <img src="https://via.placeholder.com/80x60/EA580C/FFFFFF?text=War" alt="War Game" class="rounded">
-                            <img src="https://via.placeholder.com/80x60/CA8A04/FFFFFF?text=Battle" alt="Battle Game" class="rounded">
-                        </div>
-                        <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
-                            Explore
+                    <p class="text-blue-100 mb-4 lg:mb-6 text-sm lg:text-base">1,945 games</p>
+                    <button class="w-full bg-white text-blue-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-blue-50 transition text-sm lg:text-base">
+                        Explore
+                    </button>
+                </div>
+                
+                <!-- 右侧游戏滚动区域 -->
+                <div class="games-container flex-1">
+                    <div class="flex items-center space-x-2 lg:space-x-4">
+                        <!-- 左箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="driving" data-direction="-1">
+                            <i class="fas fa-chevron-left"></i>
                         </button>
-                    </div>
-                    
-                    <!-- For Girls -->
-                    <div class="category-card bg-white rounded-lg shadow-md p-6 min-w-[280px]">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-semibold">For Girls</h3>
-                            <span class="text-sm text-gray-500">3,944 games</span>
+                        
+                        <!-- 游戏滚动容器 -->
+                        <div class="flex-1 overflow-hidden">
+                            <div id="driving-games" class="flex space-x-3 lg:space-x-4 scroll-container" style="scroll-behavior: smooth;">
+                                <!-- 游戏卡片 -->
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/4F46E5/FFFFFF?text=Traffic+Jam+3D" alt="Traffic Jam 3D">
+                                    <div class="game-card-info">
+                                        <h3>Traffic Jam 3D</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.3</span>
+                                            </div>
+                                            <span class="category-tag">Driving</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/7C3AED/FFFFFF?text=Turbo+Moto+Racer" alt="Turbo Moto Racer">
+                                    <div class="game-card-info">
+                                        <h3>Turbo Moto Racer</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.2</span>
+                                            </div>
+                                            <span class="category-tag">Driving</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/EC4899/FFFFFF?text=Airplane+Parking" alt="Airplane Parking Academy 3D">
+                                    <div class="game-card-info">
+                                        <h3>Airplane Parking Academy 3D</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.2</span>
+                                            </div>
+                                            <span class="category-tag">Driving</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/10B981/FFFFFF?text=Highway+Road+Racing" alt="Highway Road Racing">
+                                    <div class="game-card-info">
+                                        <h3>Highway Road Racing</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.9</span>
+                                            </div>
+                                            <span class="category-tag">Driving</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/F59E0B/FFFFFF?text=Uphill+Bus+Simulator" alt="Uphill Bus Simulator 3D">
+                                    <div class="game-card-info">
+                                        <h3>Uphill Bus Simulator 3D</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.0</span>
+                                            </div>
+                                            <span class="category-tag">Driving</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- More Games 按钮 -->
+                                <div class="more-games-btn bg-blue-600 text-white rounded-lg shadow-md flex-shrink-0 flex items-center justify-center hover:bg-blue-700 transition cursor-pointer">
+                                    <div class="text-center p-4">
+                                        <i class="fas fa-chevron-right text-xl lg:text-2xl mb-2"></i>
+                                        <p class="font-semibold text-xs lg:text-sm">More Driving Games</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="grid grid-cols-3 gap-2 mb-4">
-                            <img src="https://via.placeholder.com/80x60/F472B6/FFFFFF?text=Dress" alt="Dress Game" class="rounded">
-                            <img src="https://via.placeholder.com/80x60/A78BFA/FFFFFF?text=Makeup" alt="Makeup Game" class="rounded">
-                            <img src="https://via.placeholder.com/80x60/FBBF24/FFFFFF?text=Princess" alt="Princess Game" class="rounded">
-                        </div>
-                        <button class="w-full bg-pink-600 text-white py-2 rounded-lg hover:bg-pink-700 transition">
-                            Explore
-                        </button>
-                    </div>
-                    
-                    <!-- Fighting -->
-                    <div class="category-card bg-white rounded-lg shadow-md p-6 min-w-[280px]">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-semibold">Fighting</h3>
-                            <span class="text-sm text-gray-500">357 games</span>
-                        </div>
-                        <div class="grid grid-cols-3 gap-2 mb-4">
-                            <img src="https://via.placeholder.com/80x60/EF4444/FFFFFF?text=Fight" alt="Fight Game" class="rounded">
-                            <img src="https://via.placeholder.com/80x60/8B5CF6/FFFFFF?text=Boxing" alt="Boxing Game" class="rounded">
-                            <img src="https://via.placeholder.com/80x60/06B6D4/FFFFFF?text=Karate" alt="Karate Game" class="rounded">
-                        </div>
-                        <button class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition">
-                            Explore
-                        </button>
-                    </div>
-                    
-                    <!-- Thinking -->
-                    <div class="category-card bg-white rounded-lg shadow-md p-6 min-w-[280px]">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-semibold">Thinking</h3>
-                            <span class="text-sm text-gray-500">3,766 games</span>
-                        </div>
-                        <div class="grid grid-cols-3 gap-2 mb-4">
-                            <img src="https://via.placeholder.com/80x60/10B981/FFFFFF?text=Puzzle" alt="Puzzle Game" class="rounded">
-                            <img src="https://via.placeholder.com/80x60/3B82F6/FFFFFF?text=Chess" alt="Chess Game" class="rounded">
-                            <img src="https://via.placeholder.com/80x60/F59E0B/FFFFFF?text=Brain" alt="Brain Game" class="rounded">
-                        </div>
-                        <button class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
-                            Explore
-                        </button>
-                    </div>
-                    
-                    <!-- Management & Sim -->
-                    <div class="category-card bg-white rounded-lg shadow-md p-6 min-w-[280px]">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-semibold">Management & Sim</h3>
-                            <span class="text-sm text-gray-500">567 games</span>
-                        </div>
-                        <div class="grid grid-cols-3 gap-2 mb-4">
-                            <img src="https://via.placeholder.com/80x60/84CC16/FFFFFF?text=Sim" alt="Sim Game" class="rounded">
-                            <img src="https://via.placeholder.com/80x60/14B8A6/FFFFFF?text=Manage" alt="Manage Game" class="rounded">
-                            <img src="https://via.placeholder.com/80x60/F97316/FFFFFF?text=Build" alt="Build Game" class="rounded">
-                        </div>
-                        <button class="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 transition">
-                            Explore
+                        
+                        <!-- 右箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="driving" data-direction="1">
+                            <i class="fas fa-chevron-right"></i>
                         </button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 热门游戏区域 -->
-        <section class="mb-12">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold">Popular Games</h2>
-                <a href="#" class="text-red-600 hover:text-red-700 font-semibold">View All</a>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- 游戏卡片 1 -->
-                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="relative">
-                        <img src="https://via.placeholder.com/300x200/4F46E5/FFFFFF?text=Traffic+Jam+3D" alt="Traffic Jam 3D" class="w-full h-48 object-cover">
-                        <div class="absolute top-2 left-2">
-                            <span class="bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold">Driving</span>
-                        </div>
-                        <div class="absolute top-2 right-2">
-                            <div class="rating-stars text-sm">
-                                <i class="fas fa-star"></i>
-                                <span class="text-gray-700 ml-1">8.3</span>
-                            </div>
-                        </div>
+        <!-- 游戏分类行 - Shooting -->
+        <section class="mb-6 lg:mb-8">
+            <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
+                <!-- 左侧分类卡片 -->
+                <div class="category-card bg-gradient-to-br from-red-500 to-red-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i class="fas fa-crosshairs text-xl lg:text-2xl"></i>
+                        <h2 class="text-xl lg:text-2xl font-bold">Shooting</h2>
                     </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold text-lg mb-2">Traffic Jam 3D</h3>
-                        <p class="text-gray-600 text-sm mb-3">Navigate through busy traffic in this exciting 3D driving game.</p>
-                        <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
-                            Play Now
-                        </button>
-                    </div>
+                    <p class="text-red-100 mb-4 lg:mb-6 text-sm lg:text-base">1,903 games</p>
+                    <button class="w-full bg-white text-red-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-red-50 transition text-sm lg:text-base">
+                        Explore
+                    </button>
                 </div>
                 
-                <!-- 游戏卡片 2 -->
-                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="relative">
-                        <img src="https://via.placeholder.com/300x200/DC2626/FFFFFF?text=CS+Dust" alt="CS Dust" class="w-full h-48 object-cover">
-                        <div class="absolute top-2 left-2">
-                            <span class="bg-red-600 text-white px-2 py-1 rounded text-xs font-semibold">Shooting</span>
-                        </div>
-                        <div class="absolute top-2 right-2">
-                            <div class="rating-stars text-sm">
-                                <i class="fas fa-star"></i>
-                                <span class="text-gray-700 ml-1">8.4</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold text-lg mb-2">CS Dust</h3>
-                        <p class="text-gray-600 text-sm mb-3">Classic counter-strike action in the famous Dust map.</p>
-                        <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
-                            Play Now
+                <!-- 右侧游戏滚动区域 -->
+                <div class="games-container flex-1">
+                    <div class="flex items-center space-x-2 lg:space-x-4">
+                        <!-- 左箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="shooting" data-direction="-1">
+                            <i class="fas fa-chevron-left"></i>
                         </button>
-                    </div>
-                </div>
-                
-                <!-- 游戏卡片 3 -->
-                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="relative">
-                        <img src="https://via.placeholder.com/300x200/F472B6/FFFFFF?text=Organization+Princess" alt="Organization Princess" class="w-full h-48 object-cover">
-                        <div class="absolute top-2 left-2">
-                            <span class="bg-pink-600 text-white px-2 py-1 rounded text-xs font-semibold">For Girls</span>
-                        </div>
-                        <div class="absolute top-2 right-2">
-                            <div class="rating-stars text-sm">
-                                <i class="fas fa-star"></i>
-                                <span class="text-gray-700 ml-1">8.0</span>
+                        
+                        <!-- 游戏滚动容器 -->
+                        <div class="flex-1 overflow-hidden">
+                            <div id="shooting-games" class="flex space-x-3 lg:space-x-4 scroll-container" style="scroll-behavior: smooth;">
+                                <!-- 游戏卡片 -->
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/DC2626/FFFFFF?text=CS+Dust" alt="CS Dust">
+                                    <div class="game-card-info">
+                                        <h3>CS Dust</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.4</span>
+                                            </div>
+                                            <span class="category-tag">Shooting</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/EA580C/FFFFFF?text=Hazmob+FPS" alt="Hazmob FPS">
+                                    <div class="game-card-info">
+                                        <h3>Hazmob FPS</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.7</span>
+                                            </div>
+                                            <span class="category-tag">Shooting</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/CA8A04/FFFFFF?text=Command+Strike+Fps" alt="Command Strike Fps">
+                                    <div class="game-card-info">
+                                        <h3>Command Strike Fps</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.1</span>
+                                            </div>
+                                            <span class="category-tag">Shooting</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/DC2626/FFFFFF?text=Squid+Game+Guard" alt="Squid Game Guard 011">
+                                    <div class="game-card-info">
+                                        <h3>Squid Game Guard 011</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.6</span>
+                                            </div>
+                                            <span class="category-tag">Shooting</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/EA580C/FFFFFF?text=Bullet+Party+2" alt="Bullet Party 2">
+                                    <div class="game-card-info">
+                                        <h3>Bullet Party 2</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.6</span>
+                                            </div>
+                                            <span class="category-tag">Shooting</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- More Games 按钮 -->
+                                <div class="more-games-btn bg-red-600 text-white rounded-lg shadow-md flex-shrink-0 flex items-center justify-center hover:bg-red-700 transition cursor-pointer">
+                                    <div class="text-center p-4">
+                                        <i class="fas fa-chevron-right text-xl lg:text-2xl mb-2"></i>
+                                        <p class="font-semibold text-xs lg:text-sm">More Shooting Games</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold text-lg mb-2">Organization Princess</h3>
-                        <p class="text-gray-600 text-sm mb-3">Help the princess organize her beautiful castle and belongings.</p>
-                        <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
-                            Play Now
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- 游戏卡片 4 -->
-                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="relative">
-                        <img src="https://via.placeholder.com/300x200/EF4444/FFFFFF?text=Punch+Boxing" alt="Punch Boxing Championship" class="w-full h-48 object-cover">
-                        <div class="absolute top-2 left-2">
-                            <span class="bg-purple-600 text-white px-2 py-1 rounded text-xs font-semibold">Fighting</span>
-                        </div>
-                        <div class="absolute top-2 right-2">
-                            <div class="rating-stars text-sm">
-                                <i class="fas fa-star"></i>
-                                <span class="text-gray-700 ml-1">7.5</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold text-lg mb-2">Punch Boxing Championship</h3>
-                        <p class="text-gray-600 text-sm mb-3">Become the ultimate boxing champion in this exciting fighting game.</p>
-                        <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
-                            Play Now
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- 游戏卡片 5 -->
-                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="relative">
-                        <img src="https://via.placeholder.com/300x200/10B981/FFFFFF?text=Master+Chess" alt="Master Chess" class="w-full h-48 object-cover">
-                        <div class="absolute top-2 left-2">
-                            <span class="bg-green-600 text-white px-2 py-1 rounded text-xs font-semibold">Thinking</span>
-                        </div>
-                        <div class="absolute top-2 right-2">
-                            <div class="rating-stars text-sm">
-                                <i class="fas fa-star"></i>
-                                <span class="text-gray-700 ml-1">7.5</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold text-lg mb-2">Master Chess</h3>
-                        <p class="text-gray-600 text-sm mb-3">Challenge your mind with this classic chess game.</p>
-                        <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
-                            Play Now
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- 游戏卡片 6 -->
-                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="relative">
-                        <img src="https://via.placeholder.com/300x200/84CC16/FFFFFF?text=Hill+Station+Bus" alt="Hill Station Bus Simulator" class="w-full h-48 object-cover">
-                        <div class="absolute top-2 left-2">
-                            <span class="bg-teal-600 text-white px-2 py-1 rounded text-xs font-semibold">Management</span>
-                        </div>
-                        <div class="absolute top-2 right-2">
-                            <div class="rating-stars text-sm">
-                                <i class="fas fa-star"></i>
-                                <span class="text-gray-700 ml-1">7.6</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold text-lg mb-2">Hill Station Bus Simulator</h3>
-                        <p class="text-gray-600 text-sm mb-3">Drive a bus through challenging hill stations and manage passengers.</p>
-                        <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
-                            Play Now
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- 游戏卡片 7 -->
-                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="relative">
-                        <img src="https://via.placeholder.com/300x200/7C3AED/FFFFFF?text=Geometry+Arrow" alt="Geometry Arrow" class="w-full h-48 object-cover">
-                        <div class="absolute top-2 left-2">
-                            <span class="bg-indigo-600 text-white px-2 py-1 rounded text-xs font-semibold">Skill</span>
-                        </div>
-                        <div class="absolute top-2 right-2">
-                            <div class="rating-stars text-sm">
-                                <i class="fas fa-star"></i>
-                                <span class="text-gray-700 ml-1">7.9</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold text-lg mb-2">Geometry Arrow</h3>
-                        <p class="text-gray-600 text-sm mb-3">Navigate through geometric obstacles with perfect timing.</p>
-                        <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
-                            Play Now
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- 游戏卡片 8 -->
-                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="relative">
-                        <img src="https://via.placeholder.com/300x200/F59E0B/FFFFFF?text=Fireboy+Watergirl" alt="Fireboy and Watergirl" class="w-full h-48 object-cover">
-                        <div class="absolute top-2 left-2">
-                            <span class="bg-yellow-600 text-white px-2 py-1 rounded text-xs font-semibold">Adventure</span>
-                        </div>
-                        <div class="absolute top-2 right-2">
-                            <div class="rating-stars text-sm">
-                                <i class="fas fa-star"></i>
-                                <span class="text-gray-700 ml-1">7.7</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold text-lg mb-2">Fireboy and Watergirl</h3>
-                        <p class="text-gray-600 text-sm mb-3">Solve puzzles together with fire and water elements.</p>
-                        <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
-                            Play Now
+                        
+                        <!-- 右箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="shooting" data-direction="1">
+                            <i class="fas fa-chevron-right"></i>
                         </button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 最新游戏区域 -->
-        <section class="mb-12">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold">New Games</h2>
-                <div class="flex items-center space-x-2">
-                    <span class="text-sm text-gray-500">Next addition in</span>
-                    <div class="bg-red-600 text-white px-3 py-1 rounded-lg font-bold">00:00</div>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- 新游戏卡片 -->
-                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="relative">
-                        <img src="https://via.placeholder.com/300x200/8B5CF6/FFFFFF?text=NEW+GAME" alt="New Game" class="w-full h-48 object-cover">
-                        <div class="absolute top-2 left-2">
-                            <span class="bg-green-600 text-white px-2 py-1 rounded text-xs font-semibold">NEW</span>
-                        </div>
+        <!-- 游戏分类行 - For Girls -->
+        <section class="mb-6 lg:mb-8">
+            <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
+                <!-- 左侧分类卡片 -->
+                <div class="category-card bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i class="fas fa-heart text-xl lg:text-2xl"></i>
+                        <h2 class="text-xl lg:text-2xl font-bold">For Girls</h2>
                     </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold text-lg mb-2">Amazing New Game</h3>
-                        <p class="text-gray-600 text-sm mb-3">Experience the latest and greatest gaming adventure.</p>
-                        <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
-                            Play Now
+                    <p class="text-pink-100 mb-4 lg:mb-6 text-sm lg:text-base">3,944 games</p>
+                    <button class="w-full bg-white text-pink-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-pink-50 transition text-sm lg:text-base">
+                        Explore
+                    </button>
+                </div>
+                
+                <!-- 右侧游戏滚动区域 -->
+                <div class="games-container flex-1">
+                    <div class="flex items-center space-x-2 lg:space-x-4">
+                        <!-- 左箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="girls" data-direction="-1">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <!-- 游戏滚动容器 -->
+                        <div class="flex-1 overflow-hidden">
+                            <div id="girls-games" class="flex space-x-3 lg:space-x-4 scroll-container" style="scroll-behavior: smooth;">
+                                <!-- 游戏卡片 -->
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/F472B6/FFFFFF?text=Organization+Princess" alt="Organization Princess">
+                                    <div class="game-card-info">
+                                        <h3>Organization Princess</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.0</span>
+                                            </div>
+                                            <span class="category-tag">For Girls</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/A78BFA/FFFFFF?text=Princesses+Party+Crashers" alt="Princesses Party Crashers">
+                                    <div class="game-card-info">
+                                        <h3>Princesses Party Crashers</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.7</span>
+                                            </div>
+                                            <span class="category-tag">For Girls</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/FBBF24/FFFFFF?text=Dark+Academia+Vibes" alt="Dark Academia Vibes">
+                                    <div class="game-card-info">
+                                        <h3>Dark Academia Vibes</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.9</span>
+                                            </div>
+                                            <span class="category-tag">For Girls</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/F472B6/FFFFFF?text=Ellie's+New+House" alt="Ellie's New House">
+                                    <div class="game-card-info">
+                                        <h3>Ellie's New House</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.2</span>
+                                            </div>
+                                            <span class="category-tag">For Girls</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/A78BFA/FFFFFF?text=Diy+Dessert+Cooking" alt="Diy Dessert: Cooking Master">
+                                    <div class="game-card-info">
+                                        <h3>Diy Dessert: Cooking Master</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.7</span>
+                                            </div>
+                                            <span class="category-tag">For Girls</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- More Games 按钮 -->
+                                <div class="more-games-btn bg-pink-600 text-white rounded-lg shadow-md flex-shrink-0 flex items-center justify-center hover:bg-pink-700 transition cursor-pointer">
+                                    <div class="text-center p-4">
+                                        <i class="fas fa-chevron-right text-xl lg:text-2xl mb-2"></i>
+                                        <p class="font-semibold text-xs lg:text-sm">More For Girls Games</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 右箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="girls" data-direction="1">
+                            <i class="fas fa-chevron-right"></i>
                         </button>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- 更多分类行可以继续添加... -->
     </main>
 
     <!-- 页脚 -->
-    <footer class="bg-gray-900 text-white py-12">
+    <footer class="bg-gray-900 text-white py-8 lg:py-12 mt-8 lg:mt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- 品牌信息 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
                 <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center space-x-3 mb-4">
-                        <div class="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
-                            <span class="text-white font-bold text-xl">GS</span>
+                        <div class="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-lg lg:text-xl">GS</span>
                         </div>
-                        <h3 class="text-2xl font-bold">GameShiftly</h3>
+                        <h3 class="text-xl lg:text-2xl font-bold">GameShiftly</h3>
                     </div>
-                    <p class="text-gray-400 mb-4 max-w-md">
+                    <p class="text-gray-400 mb-4 max-w-md text-sm lg:text-base">
                         GameShiftly is your ultimate destination for free online games. With over 90,000 games across all categories, 
                         we provide endless entertainment for gamers of all ages.
                     </p>
                     <div class="flex space-x-4">
                         <a href="https://facebook.com/gameshiftly" class="text-gray-400 hover:text-white transition">
-                            <i class="fab fa-facebook text-xl"></i>
+                            <i class="fab fa-facebook text-lg lg:text-xl"></i>
                         </a>
                         <a href="https://twitter.com/gameshiftly" class="text-gray-400 hover:text-white transition">
-                            <i class="fab fa-twitter text-xl"></i>
+                            <i class="fab fa-twitter text-lg lg:text-xl"></i>
                         </a>
                         <a href="https://instagram.com/gameshiftly" class="text-gray-400 hover:text-white transition">
-                            <i class="fab fa-instagram text-xl"></i>
+                            <i class="fab fa-instagram text-lg lg:text-xl"></i>
                         </a>
                         <a href="https://youtube.com/gameshiftly" class="text-gray-400 hover:text-white transition">
-                            <i class="fab fa-youtube text-xl"></i>
+                            <i class="fab fa-youtube text-lg lg:text-xl"></i>
                         </a>
                     </div>
                 </div>
                 
-                <!-- 快速链接 -->
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <h4 class="text-base lg:text-lg font-semibold mb-4">Quick Links</h4>
                     <ul class="space-y-2">
-                        <li><a href="gameshiftly.html" class="text-gray-400 hover:text-white transition">Home</a></li>
-                        <li><a href="gameshiftly-category.html" class="text-gray-400 hover:text-white transition">Popular Games</a></li>
-                        <li><a href="gameshiftly-category.html" class="text-gray-400 hover:text-white transition">New Games</a></li>
-                        <li><a href="gameshiftly-category.html" class="text-gray-400 hover:text-white transition">Categories</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Videos</a></li>
+                        <li><a href="gameshiftly.html" class="text-gray-400 hover:text-white transition text-sm lg:text-base">Home</a></li>
+                        <li><a href="gameshiftly-category.html" class="text-gray-400 hover:text-white transition text-sm lg:text-base">Popular Games</a></li>
+                        <li><a href="gameshiftly-category.html" class="text-gray-400 hover:text-white transition text-sm lg:text-base">New Games</a></li>
+                        <li><a href="gameshiftly-category.html" class="text-gray-400 hover:text-white transition text-sm lg:text-base">Categories</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition text-sm lg:text-base">Videos</a></li>
                     </ul>
                 </div>
                 
-                <!-- 支持 -->
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">Support</h4>
+                    <h4 class="text-base lg:text-lg font-semibold mb-4">Support</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Help Center</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Cookie Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition text-sm lg:text-base">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition text-sm lg:text-base">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition text-sm lg:text-base">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition text-sm lg:text-base">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition text-sm lg:text-base">Cookie Policy</a></li>
                     </ul>
                 </div>
             </div>
             
-            <!-- 版权信息 -->
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
-                <p class="text-gray-400">&copy; 2006 - 2025 GameShiftly. All rights reserved.</p>
+            <div class="border-t border-gray-800 mt-6 lg:mt-8 pt-6 lg:pt-8 text-center">
+                <p class="text-gray-400 text-sm lg:text-base">&copy; 2006 - 2025 GameShiftly. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // 简单的交互功能
+        // 滚动游戏列表的函数
+        function scrollGames(category, direction) {
+            const container = document.getElementById(category + '-games');
+            if (!container) {
+                console.error('Container not found for category:', category);
+                return;
+            }
+            
+            const scrollAmount = 220; // 每次滚动的距离（游戏卡片宽度 + 间距）
+            
+            if (direction === 1) {
+                container.scrollLeft += scrollAmount;
+                console.log(`Scrolling ${category} games right, new scrollLeft:`, container.scrollLeft);
+            } else {
+                container.scrollLeft -= scrollAmount;
+                console.log(`Scrolling ${category} games left, new scrollLeft:`, container.scrollLeft);
+            }
+        }
+        
+        // 页面加载完成后的初始化
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded, initializing...');
+            
+            // 箭头按钮点击事件 - 使用onclick属性
+            document.querySelectorAll('.nav-arrow').forEach(arrow => {
+                arrow.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const category = this.getAttribute('data-category');
+                    const direction = parseInt(this.getAttribute('data-direction'));
+                    
+                    console.log('Arrow clicked:', category, direction);
+                    scrollGames(category, direction);
+                });
+            });
+            
             // 游戏卡片点击事件
-            document.querySelectorAll('.game-card button').forEach(button => {
-                button.addEventListener('click', function() {
-                    const gameName = this.closest('.game-card').querySelector('h3').textContent;
+            document.querySelectorAll('.game-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const gameName = this.querySelector('h3').textContent;
                     alert(`Starting ${gameName}...`);
                 });
             });
             
-            // 分类卡片点击事件
-            document.querySelectorAll('.category-card button').forEach(button => {
-                button.addEventListener('click', function() {
-                    const categoryName = this.closest('.category-card').querySelector('h3').textContent;
-                    alert(`Exploring ${categoryName} category...`);
+            // More Games 按钮点击事件
+            document.querySelectorAll('.more-games-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.closest('section').querySelector('.category-card h2').textContent;
+                    alert(`Exploring all ${category} games...`);
                 });
             });
             
-            // 搜索功能
-            const searchInput = document.querySelector('input[placeholder="Search our 90,000 Games"]');
-            if (searchInput) {
-                searchInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        alert(`Searching for: ${this.value}`);
-                    }
+            // Explore 按钮点击事件
+            document.querySelectorAll('.category-card button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.closest('.category-card').querySelector('h2').textContent;
+                    alert(`Exploring all ${category} games...`);
                 });
-            }
+            });
+            
+            console.log('Initialization complete');
         });
     </script>
 </body>
