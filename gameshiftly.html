@@ -291,10 +291,46 @@
                 <p>3,766 games</p>
                 <button>Explore</button>
             </div>
-            <div class="mobile-category-card" style="--card-color-1: #8B5CF6; --card-color-2: #7C3AED;">
+            <div class="mobile-category-card" style="--card-color-1: #EA580C; --card-color-2: #C2410C;">
+                <i class="fas fa-city"></i>
+                <h3>Management</h3>
+                <p>567 games</p>
+                <button>Explore</button>
+            </div>
+            <div class="mobile-category-card" style="--card-color-1: #0891B2; --card-color-2: #0E7490;">
+                <i class="fas fa-bullseye"></i>
+                <h3>Skill</h3>
+                <p>2,345 games</p>
+                <button>Explore</button>
+            </div>
+            <div class="mobile-category-card" style="--card-color-1: #0D9488; --card-color-2: #0F766E;">
+                <i class="fas fa-running"></i>
+                <h3>Action</h3>
+                <p>4,251 games</p>
+                <button>Explore</button>
+            </div>
+            <div class="mobile-category-card" style="--card-color-1: #7C3AED; --card-color-2: #6D28D9;">
+                <i class="fas fa-chess"></i>
+                <h3>Strategy</h3>
+                <p>1,234 games</p>
+                <button>Explore</button>
+            </div>
+            <div class="mobile-category-card" style="--card-color-1: #10B981; --card-color-2: #059669;">
+                <i class="fas fa-futbol"></i>
+                <h3>Sports</h3>
+                <p>1,006 games</p>
+                <button>Explore</button>
+            </div>
+            <div class="mobile-category-card" style="--card-color-1: #0EA5E9; --card-color-2: #0284C7;">
+                <i class="fas fa-laugh"></i>
+                <h3>Fun & Crazy</h3>
+                <p>2,789 games</p>
+                <button>Explore</button>
+            </div>
+            <div class="mobile-category-card" style="--card-color-1: #6366F1; --card-color-2: #5855EB;">
                 <i class="fas fa-gamepad"></i>
                 <h3>Arcade</h3>
-                <p>2,123 games</p>
+                <p>3,456 games</p>
                 <button>Explore</button>
             </div>
         </div>
@@ -646,7 +682,1049 @@
             </div>
         </section>
 
-        <!-- 更多分类行可以继续添加... -->
+        <!-- 游戏分类行 - Fighting -->
+        <section class="mb-6 lg:mb-8">
+            <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
+                <!-- 左侧分类卡片 -->
+                <div class="category-card bg-gradient-to-br from-green-600 to-green-700 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i class="fas fa-fist-raised text-xl lg:text-2xl"></i>
+                        <h2 class="text-xl lg:text-2xl font-bold">Fighting</h2>
+                    </div>
+                    <p class="text-green-100 mb-4 lg:mb-6 text-sm lg:text-base">357 games</p>
+                    <button class="w-full bg-white text-green-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-green-50 transition text-sm lg:text-base">
+                        Explore
+                    </button>
+                </div>
+                
+                <!-- 右侧游戏滚动区域 -->
+                <div class="games-container flex-1">
+                    <div class="flex items-center space-x-2 lg:space-x-4">
+                        <!-- 左箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="fighting" data-direction="-1">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <!-- 游戏滚动容器 -->
+                        <div class="flex-1 overflow-hidden">
+                            <div id="fighting-games" class="flex space-x-3 lg:space-x-4 scroll-container" style="scroll-behavior: smooth;">
+                                <!-- 游戏卡片 -->
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/059669/FFFFFF?text=Street+Fighter" alt="Street Fighter">
+                                    <div class="game-card-info">
+                                        <h3>Street Fighter</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.5</span>
+                                            </div>
+                                            <span class="category-tag">Fighting</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/10B981/FFFFFF?text=Mortal+Kombat" alt="Mortal Kombat">
+                                    <div class="game-card-info">
+                                        <h3>Mortal Kombat</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.2</span>
+                                            </div>
+                                            <span class="category-tag">Fighting</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/16A34A/FFFFFF?text=Boxing+Champion" alt="Boxing Champion">
+                                    <div class="game-card-info">
+                                        <h3>Boxing Champion</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.8</span>
+                                            </div>
+                                            <span class="category-tag">Fighting</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/15803D/FFFFFF?text=Kung+Fu+Master" alt="Kung Fu Master">
+                                    <div class="game-card-info">
+                                        <h3>Kung Fu Master</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.9</span>
+                                            </div>
+                                            <span class="category-tag">Fighting</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/166534/FFFFFF?text=Karate+Kid" alt="Karate Kid">
+                                    <div class="game-card-info">
+                                        <h3>Karate Kid</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.6</span>
+                                            </div>
+                                            <span class="category-tag">Fighting</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- More Games 按钮 -->
+                                <div class="more-games-btn bg-green-600 text-white rounded-lg shadow-md flex-shrink-0 flex items-center justify-center hover:bg-green-700 transition cursor-pointer">
+                                    <div class="text-center p-4">
+                                        <i class="fas fa-chevron-right text-xl lg:text-2xl mb-2"></i>
+                                        <p class="font-semibold text-xs lg:text-sm">More Fighting Games</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 右箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="fighting" data-direction="1">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 游戏分类行 - Thinking -->
+        <section class="mb-6 lg:mb-8">
+            <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
+                <!-- 左侧分类卡片 -->
+                <div class="category-card bg-gradient-to-br from-yellow-500 to-yellow-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i class="fas fa-brain text-xl lg:text-2xl"></i>
+                        <h2 class="text-xl lg:text-2xl font-bold">Thinking</h2>
+                    </div>
+                    <p class="text-yellow-100 mb-4 lg:mb-6 text-sm lg:text-base">3,766 games</p>
+                    <button class="w-full bg-white text-yellow-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-yellow-50 transition text-sm lg:text-base">
+                        Explore
+                    </button>
+                </div>
+                
+                <!-- 右侧游戏滚动区域 -->
+                <div class="games-container flex-1">
+                    <div class="flex items-center space-x-2 lg:space-x-4">
+                        <!-- 左箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="thinking" data-direction="-1">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <!-- 游戏滚动容器 -->
+                        <div class="flex-1 overflow-hidden">
+                            <div id="thinking-games" class="flex space-x-3 lg:space-x-4 scroll-container" style="scroll-behavior: smooth;">
+                                <!-- 游戏卡片 -->
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/F59E0B/FFFFFF?text=Chess+Master" alt="Chess Master">
+                                    <div class="game-card-info">
+                                        <h3>Chess Master</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.7</span>
+                                            </div>
+                                            <span class="category-tag">Thinking</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/D97706/FFFFFF?text=Sudoku+Puzzle" alt="Sudoku Puzzle">
+                                    <div class="game-card-info">
+                                        <h3>Sudoku Puzzle</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.1</span>
+                                            </div>
+                                            <span class="category-tag">Thinking</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/B45309/FFFFFF?text=Crossword+Challenge" alt="Crossword Challenge">
+                                    <div class="game-card-info">
+                                        <h3>Crossword Challenge</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.9</span>
+                                            </div>
+                                            <span class="category-tag">Thinking</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/92400E/FFFFFF?text=Logic+Puzzle" alt="Logic Puzzle">
+                                    <div class="game-card-info">
+                                        <h3>Logic Puzzle</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.3</span>
+                                            </div>
+                                            <span class="category-tag">Thinking</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/78350F/FFFFFF?text=Memory+Game" alt="Memory Game">
+                                    <div class="game-card-info">
+                                        <h3>Memory Game</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.8</span>
+                                            </div>
+                                            <span class="category-tag">Thinking</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- More Games 按钮 -->
+                                <div class="more-games-btn bg-yellow-600 text-white rounded-lg shadow-md flex-shrink-0 flex items-center justify-center hover:bg-yellow-700 transition cursor-pointer">
+                                    <div class="text-center p-4">
+                                        <i class="fas fa-chevron-right text-xl lg:text-2xl mb-2"></i>
+                                        <p class="font-semibold text-xs lg:text-sm">More Thinking Games</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 右箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="thinking" data-direction="1">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 游戏分类行 - Management & Sim -->
+        <section class="mb-6 lg:mb-8">
+            <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
+                <!-- 左侧分类卡片 -->
+                <div class="category-card bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i class="fas fa-city text-xl lg:text-2xl"></i>
+                        <h2 class="text-xl lg:text-2xl font-bold">Management & Sim</h2>
+                    </div>
+                    <p class="text-orange-100 mb-4 lg:mb-6 text-sm lg:text-base">567 games</p>
+                    <button class="w-full bg-white text-orange-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-orange-50 transition text-sm lg:text-base">
+                        Explore
+                    </button>
+                </div>
+                
+                <!-- 右侧游戏滚动区域 -->
+                <div class="games-container flex-1">
+                    <div class="flex items-center space-x-2 lg:space-x-4">
+                        <!-- 左箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="management" data-direction="-1">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <!-- 游戏滚动容器 -->
+                        <div class="flex-1 overflow-hidden">
+                            <div id="management-games" class="flex space-x-3 lg:space-x-4 scroll-container" style="scroll-behavior: smooth;">
+                                <!-- 游戏卡片 -->
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/EA580C/FFFFFF?text=City+Builder" alt="City Builder">
+                                    <div class="game-card-info">
+                                        <h3>City Builder</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.4</span>
+                                            </div>
+                                            <span class="category-tag">Management</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/D97706/FFFFFF?text=Farm+Simulator" alt="Farm Simulator">
+                                    <div class="game-card-info">
+                                        <h3>Farm Simulator</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.2</span>
+                                            </div>
+                                            <span class="category-tag">Management</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/C2410C/FFFFFF?text=Restaurant+Tycoon" alt="Restaurant Tycoon">
+                                    <div class="game-card-info">
+                                        <h3>Restaurant Tycoon</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.9</span>
+                                            </div>
+                                            <span class="category-tag">Management</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/A16207/FFFFFF?text=Hotel+Manager" alt="Hotel Manager">
+                                    <div class="game-card-info">
+                                        <h3>Hotel Manager</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.7</span>
+                                            </div>
+                                            <span class="category-tag">Management</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/854D0E/FFFFFF?text=Business+Empire" alt="Business Empire">
+                                    <div class="game-card-info">
+                                        <h3>Business Empire</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.1</span>
+                                            </div>
+                                            <span class="category-tag">Management</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- More Games 按钮 -->
+                                <div class="more-games-btn bg-orange-600 text-white rounded-lg shadow-md flex-shrink-0 flex items-center justify-center hover:bg-orange-700 transition cursor-pointer">
+                                    <div class="text-center p-4">
+                                        <i class="fas fa-chevron-right text-xl lg:text-2xl mb-2"></i>
+                                        <p class="font-semibold text-xs lg:text-sm">More Management Games</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 右箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="management" data-direction="1">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 游戏分类行 - Skill -->
+        <section class="mb-6 lg:mb-8">
+            <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
+                <!-- 左侧分类卡片 -->
+                <div class="category-card bg-gradient-to-br from-cyan-500 to-cyan-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i class="fas fa-bullseye text-xl lg:text-2xl"></i>
+                        <h2 class="text-xl lg:text-2xl font-bold">Skill</h2>
+                    </div>
+                    <p class="text-cyan-100 mb-4 lg:mb-6 text-sm lg:text-base">2,345 games</p>
+                    <button class="w-full bg-white text-cyan-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-cyan-50 transition text-sm lg:text-base">
+                        Explore
+                    </button>
+                </div>
+                
+                <!-- 右侧游戏滚动区域 -->
+                <div class="games-container flex-1">
+                    <div class="flex items-center space-x-2 lg:space-x-4">
+                        <!-- 左箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="skill" data-direction="-1">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <!-- 游戏滚动容器 -->
+                        <div class="flex-1 overflow-hidden">
+                            <div id="skill-games" class="flex space-x-3 lg:space-x-4 scroll-container" style="scroll-behavior: smooth;">
+                                <!-- 游戏卡片 -->
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/0891B2/FFFFFF?text=Darts+Master" alt="Darts Master">
+                                    <div class="game-card-info">
+                                        <h3>Darts Master</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.6</span>
+                                            </div>
+                                            <span class="category-tag">Skill</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/0E7490/FFFFFF?text=Basketball+Pro" alt="Basketball Pro">
+                                    <div class="game-card-info">
+                                        <h3>Basketball Pro</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.3</span>
+                                            </div>
+                                            <span class="category-tag">Skill</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/155E75/FFFFFF?text=Golf+Champion" alt="Golf Champion">
+                                    <div class="game-card-info">
+                                        <h3>Golf Champion</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.9</span>
+                                            </div>
+                                            <span class="category-tag">Skill</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/164E63/FFFFFF?text=Pool+Master" alt="Pool Master">
+                                    <div class="game-card-info">
+                                        <h3>Pool Master</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.1</span>
+                                            </div>
+                                            <span class="category-tag">Skill</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/134E4A/FFFFFF?text=Archery+Pro" alt="Archery Pro">
+                                    <div class="game-card-info">
+                                        <h3>Archery Pro</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.8</span>
+                                            </div>
+                                            <span class="category-tag">Skill</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- More Games 按钮 -->
+                                <div class="more-games-btn bg-cyan-600 text-white rounded-lg shadow-md flex-shrink-0 flex items-center justify-center hover:bg-cyan-700 transition cursor-pointer">
+                                    <div class="text-center p-4">
+                                        <i class="fas fa-chevron-right text-xl lg:text-2xl mb-2"></i>
+                                        <p class="font-semibold text-xs lg:text-sm">More Skill Games</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 右箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="skill" data-direction="1">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 游戏分类行 - Action & Adventure -->
+        <section class="mb-6 lg:mb-8">
+            <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
+                <!-- 左侧分类卡片 -->
+                <div class="category-card bg-gradient-to-br from-teal-500 to-teal-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i class="fas fa-running text-xl lg:text-2xl"></i>
+                        <h2 class="text-xl lg:text-2xl font-bold">Action & Adventure</h2>
+                    </div>
+                    <p class="text-teal-100 mb-4 lg:mb-6 text-sm lg:text-base">4,251 games</p>
+                    <button class="w-full bg-white text-teal-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-teal-50 transition text-sm lg:text-base">
+                        Explore
+                    </button>
+                </div>
+                
+                <!-- 右侧游戏滚动区域 -->
+                <div class="games-container flex-1">
+                    <div class="flex items-center space-x-2 lg:space-x-4">
+                        <!-- 左箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="action" data-direction="-1">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <!-- 游戏滚动容器 -->
+                        <div class="flex-1 overflow-hidden">
+                            <div id="action-games" class="flex space-x-3 lg:space-x-4 scroll-container" style="scroll-behavior: smooth;">
+                                <!-- 游戏卡片 -->
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/0D9488/FFFFFF?text=Adventure+Quest" alt="Adventure Quest">
+                                    <div class="game-card-info">
+                                        <h3>Adventure Quest</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.8</span>
+                                            </div>
+                                            <span class="category-tag">Action</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/0F766E/FFFFFF?text=Treasure+Hunter" alt="Treasure Hunter">
+                                    <div class="game-card-info">
+                                        <h3>Treasure Hunter</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.5</span>
+                                            </div>
+                                            <span class="category-tag">Action</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/115E59/FFFFFF?text=Platform+Runner" alt="Platform Runner">
+                                    <div class="game-card-info">
+                                        <h3>Platform Runner</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.2</span>
+                                            </div>
+                                            <span class="category-tag">Action</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/134E4A/FFFFFF?text=Ninja+Warrior" alt="Ninja Warrior">
+                                    <div class="game-card-info">
+                                        <h3>Ninja Warrior</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.0</span>
+                                            </div>
+                                            <span class="category-tag">Action</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/164E63/FFFFFF?text=Space+Explorer" alt="Space Explorer">
+                                    <div class="game-card-info">
+                                        <h3>Space Explorer</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.9</span>
+                                            </div>
+                                            <span class="category-tag">Action</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- More Games 按钮 -->
+                                <div class="more-games-btn bg-teal-600 text-white rounded-lg shadow-md flex-shrink-0 flex items-center justify-center hover:bg-teal-700 transition cursor-pointer">
+                                    <div class="text-center p-4">
+                                        <i class="fas fa-chevron-right text-xl lg:text-2xl mb-2"></i>
+                                        <p class="font-semibold text-xs lg:text-sm">More Action Games</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 右箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="action" data-direction="1">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 游戏分类行 - Strategy & RPG -->
+        <section class="mb-6 lg:mb-8">
+            <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
+                <!-- 左侧分类卡片 -->
+                <div class="category-card bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i class="fas fa-chess text-xl lg:text-2xl"></i>
+                        <h2 class="text-xl lg:text-2xl font-bold">Strategy & RPG</h2>
+                    </div>
+                    <p class="text-purple-100 mb-4 lg:mb-6 text-sm lg:text-base">1,234 games</p>
+                    <button class="w-full bg-white text-purple-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-purple-50 transition text-sm lg:text-base">
+                        Explore
+                    </button>
+                </div>
+                
+                <!-- 右侧游戏滚动区域 -->
+                <div class="games-container flex-1">
+                    <div class="flex items-center space-x-2 lg:space-x-4">
+                        <!-- 左箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="strategy" data-direction="-1">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <!-- 游戏滚动容器 -->
+                        <div class="flex-1 overflow-hidden">
+                            <div id="strategy-games" class="flex space-x-3 lg:space-x-4 scroll-container" style="scroll-behavior: smooth;">
+                                <!-- 游戏卡片 -->
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/7C3AED/FFFFFF?text=Fantasy+RPG" alt="Fantasy RPG">
+                                    <div class="game-card-info">
+                                        <h3>Fantasy RPG</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.9</span>
+                                            </div>
+                                            <span class="category-tag">Strategy</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/6D28D9/FFFFFF?text=War+Strategy" alt="War Strategy">
+                                    <div class="game-card-info">
+                                        <h3>War Strategy</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.6</span>
+                                            </div>
+                                            <span class="category-tag">Strategy</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/5B21B6/FFFFFF?text=Medieval+Empire" alt="Medieval Empire">
+                                    <div class="game-card-info">
+                                        <h3>Medieval Empire</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.3</span>
+                                            </div>
+                                            <span class="category-tag">Strategy</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/4C1D95/FFFFFF?text=Dungeon+Crawler" alt="Dungeon Crawler">
+                                    <div class="game-card-info">
+                                        <h3>Dungeon Crawler</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.1</span>
+                                            </div>
+                                            <span class="category-tag">Strategy</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/2E1065/FFFFFF?text=Tower+Defense" alt="Tower Defense">
+                                    <div class="game-card-info">
+                                        <h3>Tower Defense</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.9</span>
+                                            </div>
+                                            <span class="category-tag">Strategy</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- More Games 按钮 -->
+                                <div class="more-games-btn bg-purple-600 text-white rounded-lg shadow-md flex-shrink-0 flex items-center justify-center hover:bg-purple-700 transition cursor-pointer">
+                                    <div class="text-center p-4">
+                                        <i class="fas fa-chevron-right text-xl lg:text-2xl mb-2"></i>
+                                        <p class="font-semibold text-xs lg:text-sm">More Strategy Games</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 右箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="strategy" data-direction="1">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 游戏分类行 - Sports -->
+        <section class="mb-6 lg:mb-8">
+            <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
+                <!-- 左侧分类卡片 -->
+                <div class="category-card bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i class="fas fa-futbol text-xl lg:text-2xl"></i>
+                        <h2 class="text-xl lg:text-2xl font-bold">Sports</h2>
+                    </div>
+                    <p class="text-emerald-100 mb-4 lg:mb-6 text-sm lg:text-base">1,006 games</p>
+                    <button class="w-full bg-white text-emerald-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-emerald-50 transition text-sm lg:text-base">
+                        Explore
+                    </button>
+                </div>
+                
+                <!-- 右侧游戏滚动区域 -->
+                <div class="games-container flex-1">
+                    <div class="flex items-center space-x-2 lg:space-x-4">
+                        <!-- 左箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="sports" data-direction="-1">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <!-- 游戏滚动容器 -->
+                        <div class="flex-1 overflow-hidden">
+                            <div id="sports-games" class="flex space-x-3 lg:space-x-4 scroll-container" style="scroll-behavior: smooth;">
+                                <!-- 游戏卡片 -->
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/10B981/FFFFFF?text=Soccer+Champion" alt="Soccer Champion">
+                                    <div class="game-card-info">
+                                        <h3>Soccer Champion</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.7</span>
+                                            </div>
+                                            <span class="category-tag">Sports</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/059669/FFFFFF?text=Basketball+Stars" alt="Basketball Stars">
+                                    <div class="game-card-info">
+                                        <h3>Basketball Stars</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.4</span>
+                                            </div>
+                                            <span class="category-tag">Sports</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/047857/FFFFFF?text=Tennis+Pro" alt="Tennis Pro">
+                                    <div class="game-card-info">
+                                        <h3>Tennis Pro</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.2</span>
+                                            </div>
+                                            <span class="category-tag">Sports</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/065F46/FFFFFF?text=Baseball+League" alt="Baseball League">
+                                    <div class="game-card-info">
+                                        <h3>Baseball League</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.9</span>
+                                            </div>
+                                            <span class="category-tag">Sports</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/064E3B/FFFFFF?text=Hockey+Champion" alt="Hockey Champion">
+                                    <div class="game-card-info">
+                                        <h3>Hockey Champion</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.8</span>
+                                            </div>
+                                            <span class="category-tag">Sports</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- More Games 按钮 -->
+                                <div class="more-games-btn bg-emerald-600 text-white rounded-lg shadow-md flex-shrink-0 flex items-center justify-center hover:bg-emerald-700 transition cursor-pointer">
+                                    <div class="text-center p-4">
+                                        <i class="fas fa-chevron-right text-xl lg:text-2xl mb-2"></i>
+                                        <p class="font-semibold text-xs lg:text-sm">More Sports Games</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 右箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="sports" data-direction="1">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 游戏分类行 - Fun & Crazy -->
+        <section class="mb-6 lg:mb-8">
+            <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
+                <!-- 左侧分类卡片 -->
+                <div class="category-card bg-gradient-to-br from-sky-500 to-sky-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i class="fas fa-laugh text-xl lg:text-2xl"></i>
+                        <h2 class="text-xl lg:text-2xl font-bold">Fun & Crazy</h2>
+                    </div>
+                    <p class="text-sky-100 mb-4 lg:mb-6 text-sm lg:text-base">2,789 games</p>
+                    <button class="w-full bg-white text-sky-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-sky-50 transition text-sm lg:text-base">
+                        Explore
+                    </button>
+                </div>
+                
+                <!-- 右侧游戏滚动区域 -->
+                <div class="games-container flex-1">
+                    <div class="flex items-center space-x-2 lg:space-x-4">
+                        <!-- 左箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="fun" data-direction="-1">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <!-- 游戏滚动容器 -->
+                        <div class="flex-1 overflow-hidden">
+                            <div id="fun-games" class="flex space-x-3 lg:space-x-4 scroll-container" style="scroll-behavior: smooth;">
+                                <!-- 游戏卡片 -->
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/0EA5E9/FFFFFF?text=Wacky+Race" alt="Wacky Race">
+                                    <div class="game-card-info">
+                                        <h3>Wacky Race</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.5</span>
+                                            </div>
+                                            <span class="category-tag">Fun</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/0284C7/FFFFFF?text=Crazy+Physics" alt="Crazy Physics">
+                                    <div class="game-card-info">
+                                        <h3>Crazy Physics</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.2</span>
+                                            </div>
+                                            <span class="category-tag">Fun</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/0369A1/FFFFFF?text=Silly+Simulator" alt="Silly Simulator">
+                                    <div class="game-card-info">
+                                        <h3>Silly Simulator</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.9</span>
+                                            </div>
+                                            <span class="category-tag">Fun</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/075985/FFFFFF?text=Random+Adventure" alt="Random Adventure">
+                                    <div class="game-card-info">
+                                        <h3>Random Adventure</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.1</span>
+                                            </div>
+                                            <span class="category-tag">Fun</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/0C4A6E/FFFFFF?text=Absurd+Puzzle" alt="Absurd Puzzle">
+                                    <div class="game-card-info">
+                                        <h3>Absurd Puzzle</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>7.7</span>
+                                            </div>
+                                            <span class="category-tag">Fun</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- More Games 按钮 -->
+                                <div class="more-games-btn bg-sky-600 text-white rounded-lg shadow-md flex-shrink-0 flex items-center justify-center hover:bg-sky-700 transition cursor-pointer">
+                                    <div class="text-center p-4">
+                                        <i class="fas fa-chevron-right text-xl lg:text-2xl mb-2"></i>
+                                        <p class="font-semibold text-xs lg:text-sm">More Fun Games</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 右箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="fun" data-direction="1">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 游戏分类行 - Arcade & Classic -->
+        <section class="mb-6 lg:mb-8">
+            <div class="category-section flex flex-col lg:flex-row lg:items-start lg:space-x-6">
+                <!-- 左侧分类卡片 -->
+                <div class="category-card bg-gradient-to-br from-indigo-500 to-indigo-600 text-white rounded-xl p-4 lg:p-6 mb-4 lg:mb-0 lg:min-w-[280px] lg:min-h-[200px] shadow-lg hidden lg:block">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i class="fas fa-gamepad text-xl lg:text-2xl"></i>
+                        <h2 class="text-xl lg:text-2xl font-bold">Arcade & Classic</h2>
+                    </div>
+                    <p class="text-indigo-100 mb-4 lg:mb-6 text-sm lg:text-base">3,456 games</p>
+                    <button class="w-full bg-white text-indigo-600 py-2 lg:py-3 rounded-lg font-semibold hover:bg-indigo-50 transition text-sm lg:text-base">
+                        Explore
+                    </button>
+                </div>
+                
+                <!-- 右侧游戏滚动区域 -->
+                <div class="games-container flex-1">
+                    <div class="flex items-center space-x-2 lg:space-x-4">
+                        <!-- 左箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="arcade" data-direction="-1">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <!-- 游戏滚动容器 -->
+                        <div class="flex-1 overflow-hidden">
+                            <div id="arcade-games" class="flex space-x-3 lg:space-x-4 scroll-container" style="scroll-behavior: smooth;">
+                                <!-- 游戏卡片 -->
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/6366F1/FFFFFF?text=Pac-Man" alt="Pac-Man">
+                                    <div class="game-card-info">
+                                        <h3>Pac-Man</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>9.1</span>
+                                            </div>
+                                            <span class="category-tag">Arcade</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/5855EB/FFFFFF?text=Tetris" alt="Tetris">
+                                    <div class="game-card-info">
+                                        <h3>Tetris</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>9.0</span>
+                                            </div>
+                                            <span class="category-tag">Arcade</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/4F46E5/FFFFFF?text=Snake+Game" alt="Snake Game">
+                                    <div class="game-card-info">
+                                        <h3>Snake Game</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.8</span>
+                                            </div>
+                                            <span class="category-tag">Arcade</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/4338CA/FFFFFF?text=Space+Invaders" alt="Space Invaders">
+                                    <div class="game-card-info">
+                                        <h3>Space Invaders</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.6</span>
+                                            </div>
+                                            <span class="category-tag">Arcade</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                                    <img src="https://via.placeholder.com/160x120/3730A3/FFFFFF?text=Pong" alt="Pong">
+                                    <div class="game-card-info">
+                                        <h3>Pong</h3>
+                                        <div class="flex items-center justify-between">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <span>8.4</span>
+                                            </div>
+                                            <span class="category-tag">Arcade</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- More Games 按钮 -->
+                                <div class="more-games-btn bg-indigo-600 text-white rounded-lg shadow-md flex-shrink-0 flex items-center justify-center hover:bg-indigo-700 transition cursor-pointer">
+                                    <div class="text-center p-4">
+                                        <i class="fas fa-chevron-right text-xl lg:text-2xl mb-2"></i>
+                                        <p class="font-semibold text-xs lg:text-sm">More Arcade Games</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 右箭头 -->
+                        <button class="nav-arrow w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900" data-category="arcade" data-direction="1">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- 页脚 -->
