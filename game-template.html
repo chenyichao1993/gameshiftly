@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Template - GameShiftly</title>
+    <title>Game Title - GameShiftly</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="footer.js"></script>
@@ -13,12 +13,11 @@
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #f8f9fa;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
         .game-canvas {
             width: 100%;
             height: 500px;
@@ -28,8 +27,15 @@
             justify-content: center;
             color: white;
             font-size: 1.2rem;
+            position: relative;
         }
-        
+        .game-canvas::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
         .game-controls {
             display: flex;
             gap: 0.5rem;
@@ -37,7 +43,6 @@
             background: white;
             border-top: 1px solid #e5e7eb;
         }
-        
         .control-btn {
             padding: 0.5rem 1rem;
             border: none;
@@ -49,25 +54,20 @@
             align-items: center;
             gap: 0.5rem;
         }
-        
         .control-btn.primary {
             background: #dc2626;
             color: white;
         }
-        
         .control-btn.primary:hover {
             background: #b91c1c;
         }
-        
         .control-btn.secondary {
             background: #f3f4f6;
             color: #374151;
         }
-        
         .control-btn.secondary:hover {
             background: #e5e7eb;
         }
-        
         .game-info-card {
             background: white;
             border-radius: 12px;
@@ -75,7 +75,6 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 1rem;
         }
-        
         .game-tag {
             display: inline-block;
             padding: 0.25rem 0.75rem;
@@ -86,7 +85,6 @@
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
         }
-        
         .related-game {
             display: flex;
             align-items: center;
@@ -99,143 +97,116 @@
             transition: transform 0.2s ease;
             cursor: pointer;
         }
-        
         .related-game:hover {
             transform: translateY(-2px);
         }
-        
         .related-game img {
             width: 80px;
             height: 60px;
-            border-radius: 6px;
             object-fit: cover;
+            border-radius: 6px;
         }
-        
         .game-stats {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
-        
         .stat-item {
             text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
         }
-        
         .stat-value {
             font-size: 1.5rem;
             font-weight: bold;
             color: #dc2626;
         }
-        
         .stat-label {
             font-size: 0.875rem;
             color: #6b7280;
             margin-top: 0.25rem;
         }
-        
-        .game-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .action-btn {
-            padding: 0.5rem 1rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            background: white;
-            color: #374151;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .action-btn:hover {
-            background: #f9fafb;
-            border-color: #d1d5db;
+        @media (max-width: 768px) {
+            .game-canvas { height: 300px; }
+            .game-controls { flex-wrap: wrap; }
+            .control-btn { flex: 1; min-width: 120px; }
+            .game-stats { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Header -->
-    <header class="bg-white shadow-sm border-b">
+    <!-- Header Navigation -->
+    <header class="bg-white shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
+            <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
-                <div class="flex items-center space-x-2">
-                    <div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
-                        <span class="text-white font-bold text-sm">GS</span>
-                    </div>
-                    <div>
-                        <span class="text-xl font-bold">GameShiftly</span>
-                        <div class="text-sm text-gray-500">Free Online Games</div>
-                    </div>
+                <div class="flex items-center">
+                    <a href="gameshiftly.html" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">GS</span>
+                        </div>
+                        <div>
+                            <div class="text-red-600 font-bold text-lg">GameShiftly</div>
+                            <div class="text-gray-500 text-xs">Free Online Games</div>
+                        </div>
+                    </a>
                 </div>
-                
                 <!-- Search Bar -->
-                <div class="flex-1 max-w-lg mx-8">
-                    <div class="relative">
-                        <input type="text" placeholder="Search our 90,000 Games" 
-                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                <div class="hidden md:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <input type="text" placeholder="Search our 90,000 Games" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
                         <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
                     </div>
                 </div>
-                
-                <!-- Auth Buttons -->
+                <!-- User Actions -->
                 <div class="flex items-center space-x-4">
-                    <button class="text-gray-700 hover:text-gray-900">Log in</button>
+                    <button class="text-gray-600 hover:text-gray-900">Log in</button>
                     <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Register</button>
                 </div>
             </div>
         </div>
     </header>
-
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Game Title and Actions -->
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Game Title</h1>
+                <div class="flex items-center space-x-4 text-sm text-gray-600">
+                    <div class="flex items-center">
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <span>8.5</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-gamepad mr-1"></i>
+                        <span>Category</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-play mr-1"></i>
+                        <span>1.2M plays</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2 mt-4 lg:mt-0">
+                <button class="control-btn secondary" onclick="shareGame()">
+                    <i class="fas fa-share"></i>
+                    Share
+                </button>
+                <button class="control-btn secondary" onclick="toggleFavorite()">
+                    <i class="fas fa-heart" id="favoriteIcon"></i>
+                    <span id="favoriteText">Favorite</span>
+                </button>
+                <button class="control-btn secondary" onclick="toggleFullscreen()">
+                    <i class="fas fa-expand" id="fullscreenIcon"></i>
+                    <span id="fullscreenText">Fullscreen</span>
+                </button>
+            </div>
+        </div>
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
             <!-- Game Area -->
             <div class="lg:col-span-3">
-                <!-- Game Title and Stats -->
-                <div class="flex items-center justify-between mb-6">
-                    <div>
-                        <h1 class="text-3xl font-bold text-gray-900 mb-2">Game Title</h1>
-                        <div class="flex items-center space-x-4 text-sm text-gray-600">
-                            <span class="flex items-center">
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                8.5
-                            </span>
-                            <span class="flex items-center">
-                                <i class="fas fa-gamepad mr-1"></i>
-                                Category
-                            </span>
-                            <span class="flex items-center">
-                                <i class="fas fa-play mr-1"></i>
-                                1.2M plays
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <!-- Game Actions -->
-                    <div class="game-actions">
-                        <button class="action-btn" onclick="shareGame()">
-                            <i class="fas fa-share"></i>
-                            Share
-                        </button>
-                        <button class="action-btn" onclick="toggleFavorite()">
-                            <i class="fas fa-heart" id="favoriteIcon"></i>
-                            <span id="favoriteText">Favorite</span>
-                        </button>
-                        <button class="action-btn" onclick="toggleFullscreen()">
-                            <i class="fas fa-expand" id="fullscreenIcon"></i>
-                            <span id="fullscreenText">Fullscreen</span>
-                        </button>
-                    </div>
-                </div>
-                
                 <!-- Game Canvas -->
                 <div class="game-canvas-container">
                     <div class="game-canvas" id="gameCanvas">
@@ -249,7 +220,6 @@
                             </button>
                         </div>
                     </div>
-                    
                     <!-- Game Control Buttons -->
                     <div class="game-controls">
                         <button class="control-btn primary" id="startBtn" onclick="toggleGame()">
@@ -266,7 +236,6 @@
                         </button>
                     </div>
                 </div>
-                
                 <!-- Game Statistics -->
                 <div class="game-stats mt-6">
                     <div class="stat-item">
@@ -283,7 +252,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Sidebar -->
             <div class="lg:col-span-1">
                 <!-- Game Information -->
@@ -292,7 +260,6 @@
                     <p class="text-gray-600 mb-4">
                         Game description goes here. This is a placeholder for the actual game description.
                     </p>
-                    
                     <div class="mb-4">
                         <h4 class="font-medium mb-2">Game Tags</h4>
                         <div>
@@ -302,7 +269,6 @@
                             <span class="game-tag">Skill</span>
                         </div>
                     </div>
-                    
                     <div class="mb-4">
                         <h4 class="font-medium mb-2">Controls</h4>
                         <ul class="text-sm text-gray-600 space-y-1">
@@ -313,7 +279,6 @@
                         </ul>
                     </div>
                 </div>
-
                 <!-- Related Games -->
                 <div class="game-info-card">
                     <h3 class="text-lg font-semibold mb-3">Related Games</h3>
@@ -339,17 +304,22 @@
                                 <div class="text-sm text-gray-500">Category</div>
                             </div>
                         </div>
+                        <div class="related-game" onclick="goToGame('related-game-4')">
+                            <img src="https://via.placeholder.com/80x60/8b5cf6/ffffff?text=Game" alt="Related Game 4">
+                            <div>
+                                <div class="font-medium">Related Game 4</div>
+                                <div class="text-sm text-gray-500">Category</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-
     <!-- Footer Container -->
     <div id="footer-container"></div>
-
     <script>
-        // Game state management
+        // Game state
         let gameState = {
             isPlaying: false,
             isPaused: false,
@@ -359,7 +329,6 @@
             isFavorite: false,
             isFullscreen: false
         };
-        
         // Game control functions
         function startGame() {
             gameState.isPlaying = true;
@@ -367,7 +336,6 @@
             updateGameDisplay();
             startGameLoop();
         }
-        
         function toggleGame() {
             if (!gameState.isPlaying) {
                 startGame();
@@ -377,14 +345,12 @@
                 pauseGame();
             }
         }
-        
         function pauseGame() {
             if (gameState.isPlaying && !gameState.isPaused) {
                 gameState.isPaused = true;
                 updateGameDisplay();
             }
         }
-        
         function resumeGame() {
             if (gameState.isPlaying && gameState.isPaused) {
                 gameState.isPaused = false;
@@ -392,7 +358,6 @@
                 startGameLoop();
             }
         }
-        
         function restartGame() {
             gameState.isPlaying = false;
             gameState.isPaused = false;
@@ -402,11 +367,9 @@
             updateGameDisplay();
             resetGameCanvas();
         }
-        
         function updateGameDisplay() {
             const gameCanvas = document.getElementById('gameCanvas');
             const startBtn = document.getElementById('startBtn');
-            
             // Update game canvas display
             if (!gameState.isPlaying) {
                 gameCanvas.innerHTML = `
@@ -451,13 +414,11 @@
                 startBtn.classList.remove('primary');
                 startBtn.classList.add('secondary');
             }
-            
             // Update statistics display
             document.getElementById('score').textContent = gameState.score;
             document.getElementById('level').textContent = gameState.level;
             document.getElementById('lives').textContent = gameState.lives;
         }
-        
         function resetGameCanvas() {
             const gameCanvas = document.getElementById('gameCanvas');
             gameCanvas.innerHTML = `
@@ -472,28 +433,22 @@
                 </div>
             `;
         }
-        
         function startGameLoop() {
             if (!gameState.isPlaying || gameState.isPaused) return;
-            
             // Simulate game logic
             gameState.score += 10;
             if (gameState.score % 100 === 0) {
                 gameState.level++;
             }
-            
             updateGameDisplay();
-            
             // Continue game loop
             setTimeout(startGameLoop, 1000);
         }
-        
         // Fullscreen functionality
         function toggleFullscreen() {
             const container = document.querySelector('.game-canvas-container');
             const icon = document.getElementById('fullscreenIcon');
             const text = document.getElementById('fullscreenText');
-            
             if (document.fullscreenElement) {
                 document.exitFullscreen();
                 icon.className = 'fas fa-expand';
@@ -504,13 +459,11 @@
                 text.textContent = 'Exit Fullscreen';
             }
         }
-        
         // Favorite functionality
         function toggleFavorite() {
             gameState.isFavorite = !gameState.isFavorite;
             const icon = document.getElementById('favoriteIcon');
             const text = document.getElementById('favoriteText');
-            
             if (gameState.isFavorite) {
                 icon.className = 'fas fa-heart text-red-500';
                 text.textContent = 'Favorited';
@@ -519,7 +472,6 @@
                 text.textContent = 'Favorite';
             }
         }
-        
         // Share functionality
         function shareGame() {
             if (navigator.share) {
@@ -534,13 +486,11 @@
                 alert('Game link copied to clipboard!');
             }
         }
-        
         // Navigation function
         function goToGame(gameName) {
             // This function should be customized for each game
             console.log('Navigating to game:', gameName);
         }
-        
         // Initialize game when page loads
         document.addEventListener('DOMContentLoaded', function() {
             updateGameDisplay();
