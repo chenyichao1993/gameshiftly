@@ -10,6 +10,53 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="footer.js"></script>
     <style>
+        /* 隐藏和美化滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 隐藏Firefox滚动条 */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+        }
+        
+        /* 确保页面高度适应视口 */
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* 侧边栏滚动优化 */
+        .game-info-card {
+            max-height: none;
+            overflow: visible;
+        }
+        
+        /* iframe滚动条隐藏 */
+        iframe {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        iframe::-webkit-scrollbar {
+            display: none;
+        }
+        
         .game-canvas-container {
             position: relative;
             width: 100%;
@@ -122,7 +169,7 @@
 </head>
 <body class="bg-gray-50">
     <!-- Header Navigation -->
-    <header class="bg-white shadow-sm">
+    <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
@@ -160,8 +207,8 @@
                         <span>8.2</span>
                     </div>
                     <div class="flex items-center">
-                        <i class="fas fa-gamepad mr-1"></i>
-                        <span>Arcade & Classic</span>
+                        <i class="fas fa-gamepad mr-1" id="categoryIcon"></i>
+                        <span id="categoryText">Arcade & Classic</span>
                     </div>
                     <div class="flex items-center">
                         <i class="fas fa-play mr-1"></i>
@@ -185,13 +232,9 @@
             </div>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            <!-- Game Area -->
+            <!-- Game Area 直接平铺 -->
             <div class="lg:col-span-3">
-                <div class="game-canvas-container" id="game-canvas-container">
-                    <div class="game-canvas">
-                        <iframe src="flappybird/index.html" title="Flappy Bird Game" allowfullscreen></iframe>
-                    </div>
-                </div>
+                <iframe src="flappybird/index.html" width="100%" height="600" style="border:none;"></iframe>
             </div>
             <!-- Sidebar -->
             <div class="lg:col-span-1">
@@ -234,26 +277,44 @@
                             <img src="img/tetris.jpg" alt="Tetris">
                             <div><div class="font-medium">Tetris</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
                         </div>
-                        <div class="related-game" onclick="goToGame('game-snake.html')">
-                            <img src="img/2048.png" alt="Snake">
-                            <div><div class="font-medium">Snake</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-    <!-- Footer Container -->
     <div id="footer-container"></div>
     <script>
+        // 分类图标映射
+        const categoryIcons = {
+            'Driving': 'fas fa-car',
+            'Shooting': 'fas fa-crosshairs',
+            'For Girls': 'fas fa-heart',
+            'Fighting': 'fas fa-fist-raised',
+            'Thinking': 'fas fa-brain',
+            'Management & Sim': 'fas fa-city',
+            'Skill': 'fas fa-bullseye',
+            'Action & Adventure': 'fas fa-running',
+            'Strategy & RPG': 'fas fa-chess',
+            'Sports': 'fas fa-futbol',
+            'Fun & Crazy': 'fas fa-laugh',
+            'Arcade & Classic': 'fas fa-gamepad'
+        };
+        function setCategory(category) {
+            const iconElement = document.getElementById('categoryIcon');
+            const textElement = document.getElementById('categoryText');
+            if (categoryIcons[category]) {
+                iconElement.className = categoryIcons[category] + ' mr-1';
+                textElement.textContent = category;
+            }
+        }
+        setCategory('Arcade & Classic');
         function goToGame(game) { window.location.href = game; }
         function toggleFullscreen() {
-            const container = document.querySelector('.game-canvas-container');
-            if (document.fullscreenElement) { document.exitFullscreen(); } else { container.requestFullscreen(); }
+            const iframe = document.querySelector('iframe');
+            if (document.fullscreenElement) { document.exitFullscreen(); } else { iframe.requestFullscreen(); }
         }
         function shareGame() { if (navigator.share) { navigator.share({ title: 'Flappy Bird - GameShiftly', text: 'Check out this awesome game!', url: window.location.href }); } else { navigator.clipboard.writeText(window.location.href); alert('Game link copied to clipboard!'); } }
         function toggleFavorite() { const icon = document.getElementById('favoriteIcon'); const text = document.getElementById('favoriteText'); if (icon.classList.contains('text-red-500')) { icon.classList.remove('text-red-500'); text.textContent = 'Favorite'; } else { icon.classList.add('text-red-500'); text.textContent = 'Favorited'; } }
-        function restartGame() { document.querySelector('.game-canvas iframe').contentWindow.location.reload(); }
     </script>
 </body>
 </html> 

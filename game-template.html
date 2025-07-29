@@ -4,45 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Title - GameShiftly</title>
+    <meta name="description" content="Game description goes here.">
+    <link rel="canonical" href="https://gameshiftly.online/game-template.html">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="footer.js"></script>
     <style>
-        .game-canvas-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            background: #f8f9fa;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* 隐藏和美化滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
-        .game-canvas {
-            width: 100%;
-            height: 500px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            position: relative;
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
         }
-        .game-canvas::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.3;
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
         }
-        .game-controls {
-            display: flex;
-            gap: 0.5rem;
-            padding: 1rem;
-            background: white;
-            border-top: 1px solid #e5e7eb;
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.3);
         }
+        
+        /* 隐藏Firefox滚动条 */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+        }
+        
+        /* 确保页面高度适应视口 */
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* 侧边栏滚动优化 */
+        .game-info-card {
+            max-height: none;
+            overflow: visible;
+        }
+        
+        /* iframe滚动条隐藏 */
+        iframe {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        iframe::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* 按钮样式 - 匹配game-flappybird.html */
         .control-btn {
             padding: 0.5rem 1rem;
             border: none;
@@ -54,20 +69,25 @@
             align-items: center;
             gap: 0.5rem;
         }
+        
         .control-btn.primary {
             background: #dc2626;
             color: white;
         }
+        
         .control-btn.primary:hover {
             background: #b91c1c;
         }
+        
         .control-btn.secondary {
             background: #f3f4f6;
             color: #374151;
         }
+        
         .control-btn.secondary:hover {
             background: #e5e7eb;
         }
+        
         .game-info-card {
             background: white;
             border-radius: 12px;
@@ -75,6 +95,7 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 1rem;
         }
+        
         .game-tag {
             display: inline-block;
             padding: 0.25rem 0.75rem;
@@ -85,6 +106,7 @@
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
         }
+        
         .related-game {
             display: flex;
             align-items: center;
@@ -97,42 +119,40 @@
             transition: transform 0.2s ease;
             cursor: pointer;
         }
+        
         .related-game:hover {
             transform: translateY(-2px);
         }
+        
         .related-game img {
             width: 80px;
             height: 60px;
             object-fit: cover;
             border-radius: 6px;
         }
-        .game-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 1rem;
+        
+        /* 游戏区域直接平铺，无容器 */
+        .game-area {
+            width: 100%;
+            height: 600px;
+            background: #222;
+            border-radius: 12px;
+            overflow: hidden;
         }
-        .stat-item {
-            text-align: center;
-            padding: 1rem;
-            background: #f8f9fa;
-            border-radius: 8px;
+        
+        .game-area iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
         }
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #dc2626;
+        
+        @media (max-width: 1024px) {
+            .game-area { height: 500px; }
         }
-        .stat-label {
-            font-size: 0.875rem;
-            color: #6b7280;
-            margin-top: 0.25rem;
-        }
+        
         @media (max-width: 768px) {
-            .game-canvas { height: 300px; }
-            .game-controls { flex-wrap: wrap; }
-            .control-btn { flex: 1; min-width: 120px; }
-            .game-stats { grid-template-columns: repeat(2, 1fr); }
+            .game-area { height: 400px; }
         }
     </style>
 </head>
@@ -141,7 +161,6 @@
     <header class="bg-white shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
                 <div class="flex items-center">
                     <a href="gameshiftly.html" class="flex items-center space-x-2">
                         <div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
@@ -153,14 +172,12 @@
                         </div>
                     </a>
                 </div>
-                <!-- Search Bar -->
                 <div class="hidden md:flex flex-1 max-w-md mx-8">
                     <div class="relative w-full">
                         <input type="text" placeholder="Search our 90,000 Games" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
                         <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
                     </div>
                 </div>
-                <!-- User Actions -->
                 <div class="flex items-center space-x-4">
                     <button class="text-gray-600 hover:text-gray-900">Log in</button>
                     <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Register</button>
@@ -170,7 +187,6 @@
     </header>
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <!-- Game Title and Actions -->
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
             <div>
                 <h1 class="text-3xl font-bold text-gray-900 mb-2">Game Title</h1>
@@ -180,8 +196,8 @@
                         <span>8.5</span>
                     </div>
                     <div class="flex items-center">
-                        <i class="fas fa-gamepad mr-1"></i>
-                        <span>Category</span>
+                        <i class="fas fa-gamepad mr-1" id="categoryIcon"></i>
+                        <span id="categoryText">Category</span>
                     </div>
                     <div class="flex items-center">
                         <i class="fas fa-play mr-1"></i>
@@ -205,51 +221,10 @@
             </div>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            <!-- Game Area -->
+            <!-- Game Area - 直接平铺，无容器 -->
             <div class="lg:col-span-3">
-                <!-- Game Canvas -->
-                <div class="game-canvas-container">
-                    <div class="game-canvas" id="gameCanvas">
-                        <div class="text-center relative z-10">
-                            <i class="fas fa-gamepad text-6xl mb-4 text-white"></i>
-                            <h2 class="text-2xl font-bold mb-2">Game Title</h2>
-                            <p class="text-lg mb-4">Game description goes here</p>
-                            <button class="control-btn primary text-lg px-8 py-3" onclick="startGame()">
-                                <i class="fas fa-play mr-2"></i>
-                                Start Game
-                            </button>
-                        </div>
-                    </div>
-                    <!-- Game Control Buttons -->
-                    <div class="game-controls">
-                        <button class="control-btn primary" id="startBtn" onclick="toggleGame()">
-                            <i class="fas fa-play"></i>
-                            Start
-                        </button>
-                        <button class="control-btn secondary" id="restartBtn" onclick="restartGame()">
-                            <i class="fas fa-redo"></i>
-                            Restart
-                        </button>
-                        <button class="control-btn secondary" onclick="toggleFullscreen()">
-                            <i class="fas fa-expand"></i>
-                            Fullscreen
-                        </button>
-                    </div>
-                </div>
-                <!-- Game Statistics -->
-                <div class="game-stats mt-6">
-                    <div class="stat-item">
-                        <div class="stat-value" id="score">0</div>
-                        <div class="stat-label">Score</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="level">1</div>
-                        <div class="stat-label">Level</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="lives">3</div>
-                        <div class="stat-label">Lives</div>
-                    </div>
+                <div class="game-area" id="game-area">
+                        <iframe src="" title="Game Iframe" allowfullscreen></iframe>
                 </div>
             </div>
             <!-- Sidebar -->
@@ -258,7 +233,7 @@
                 <div class="game-info-card">
                     <h3 class="text-lg font-semibold mb-3">Game Information</h3>
                     <p class="text-gray-600 mb-4">
-                        Game description goes here. This is a placeholder for the actual game description.
+                        Game description goes here.
                     </p>
                     <div class="mb-4">
                         <h4 class="font-medium mb-2">Game Tags</h4>
@@ -274,8 +249,6 @@
                         <ul class="text-sm text-gray-600 space-y-1">
                             <li>• Use arrow keys or WASD to control</li>
                             <li>• Follow the game instructions</li>
-                            <li>• Collect items and avoid obstacles</li>
-                            <li>• Complete objectives to win</li>
                         </ul>
                     </div>
                 </div>
@@ -283,33 +256,21 @@
                 <div class="game-info-card">
                     <h3 class="text-lg font-semibold mb-3">Related Games</h3>
                     <div class="space-y-2">
-                        <div class="related-game" onclick="goToGame('related-game-1')">
-                            <img src="https://via.placeholder.com/80x60/3b82f6/ffffff?text=Game" alt="Related Game 1">
-                            <div>
-                                <div class="font-medium">Related Game 1</div>
-                                <div class="text-sm text-gray-500">Category</div>
-                            </div>
+                        <div class="related-game" onclick="goToGame('game-minesweeper.html')">
+                            <img src="img/minesweeper.jpg" alt="Minesweeper">
+                            <div><div class="font-medium">Minesweeper</div><div class="text-sm text-gray-500">Thinking</div></div>
                         </div>
-                        <div class="related-game" onclick="goToGame('related-game-2')">
-                            <img src="https://via.placeholder.com/80x60/10b981/ffffff?text=Game" alt="Related Game 2">
-                            <div>
-                                <div class="font-medium">Related Game 2</div>
-                                <div class="text-sm text-gray-500">Category</div>
-                            </div>
+                        <div class="related-game" onclick="goToGame('game-pacman.html')">
+                            <img src="img/Pacman.jpg" alt="Pacman">
+                            <div><div class="font-medium">Pacman</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
                         </div>
-                        <div class="related-game" onclick="goToGame('related-game-3')">
-                            <img src="https://via.placeholder.com/80x60/f59e0b/ffffff?text=Game" alt="Related Game 3">
-                            <div>
-                                <div class="font-medium">Related Game 3</div>
-                                <div class="text-sm text-gray-500">Category</div>
-                            </div>
+                        <div class="related-game" onclick="goToGame('game-tetris.html')">
+                            <img src="img/tetris.jpg" alt="Tetris">
+                            <div><div class="font-medium">Tetris</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
                         </div>
-                        <div class="related-game" onclick="goToGame('related-game-4')">
-                            <img src="https://via.placeholder.com/80x60/8b5cf6/ffffff?text=Game" alt="Related Game 4">
-                            <div>
-                                <div class="font-medium">Related Game 4</div>
-                                <div class="text-sm text-gray-500">Category</div>
-                            </div>
+                        <div class="related-game" onclick="goToGame('game-flappybird.html')">
+                            <img src="img/flappybird.png" alt="Flappy Bird">
+                            <div><div class="font-medium">Flappy Bird</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
                         </div>
                     </div>
                 </div>
@@ -319,182 +280,73 @@
     <!-- Footer Container -->
     <div id="footer-container"></div>
     <script>
-        // Game state
-        let gameState = {
-            isPlaying: false,
-            isPaused: false,
-            score: 0,
-            level: 1,
-            lives: 3,
-            isFavorite: false,
-            isFullscreen: false
+        // 分类图标映射
+        const categoryIcons = {
+            'Driving': 'fas fa-car',
+            'Shooting': 'fas fa-crosshairs',
+            'For Girls': 'fas fa-heart',
+            'Fighting': 'fas fa-fist-raised',
+            'Thinking': 'fas fa-brain',
+            'Management & Sim': 'fas fa-city',
+            'Skill': 'fas fa-bullseye',
+            'Action & Adventure': 'fas fa-running',
+            'Strategy & RPG': 'fas fa-chess',
+            'Sports': 'fas fa-futbol',
+            'Fun & Crazy': 'fas fa-laugh',
+            'Arcade & Classic': 'fas fa-gamepad'
         };
-        // Game control functions
-        function startGame() {
-            gameState.isPlaying = true;
-            gameState.isPaused = false;
-            updateGameDisplay();
-            startGameLoop();
-        }
-        function toggleGame() {
-            if (!gameState.isPlaying) {
-                startGame();
-            } else if (gameState.isPaused) {
-                resumeGame();
-            } else {
-                pauseGame();
+        
+        // 设置分类图标和文本的函数
+        function setCategory(category) {
+            const iconElement = document.getElementById('categoryIcon');
+            const textElement = document.getElementById('categoryText');
+            
+            if (categoryIcons[category]) {
+                iconElement.className = categoryIcons[category] + ' mr-1';
+                textElement.textContent = category;
             }
         }
-        function pauseGame() {
-            if (gameState.isPlaying && !gameState.isPaused) {
-                gameState.isPaused = true;
-                updateGameDisplay();
-            }
+        
+        // 示例：设置分类为"Arcade & Classic"
+        setCategory('Arcade & Classic');
+        
+        function goToGame(game) { 
+            window.location.href = game; 
         }
-        function resumeGame() {
-            if (gameState.isPlaying && gameState.isPaused) {
-                gameState.isPaused = false;
-                updateGameDisplay();
-                startGameLoop();
-            }
-        }
-        function restartGame() {
-            gameState.isPlaying = false;
-            gameState.isPaused = false;
-            gameState.score = 0;
-            gameState.level = 1;
-            gameState.lives = 3;
-            updateGameDisplay();
-            resetGameCanvas();
-        }
-        function updateGameDisplay() {
-            const gameCanvas = document.getElementById('gameCanvas');
-            const startBtn = document.getElementById('startBtn');
-            // Update game canvas display
-            if (!gameState.isPlaying) {
-                gameCanvas.innerHTML = `
-                    <div class="text-center relative z-10">
-                        <i class="fas fa-gamepad text-6xl mb-4 text-white"></i>
-                        <h2 class="text-2xl font-bold mb-2">Game Title</h2>
-                        <p class="text-lg mb-4">Game description goes here</p>
-                        <button class="control-btn primary text-lg px-8 py-3" onclick="startGame()">
-                            <i class="fas fa-play mr-2"></i>
-                            Start Game
-                        </button>
-                    </div>
-                `;
-                startBtn.innerHTML = '<i class="fas fa-play"></i> Start';
-                startBtn.classList.remove('secondary');
-                startBtn.classList.add('primary');
-            } else if (gameState.isPaused) {
-                gameCanvas.innerHTML = `
-                    <div class="text-center relative z-10">
-                        <i class="fas fa-pause text-6xl mb-4 text-yellow-400"></i>
-                        <h2 class="text-2xl font-bold mb-2">Game Paused</h2>
-                        <p class="text-lg mb-4">Click continue to resume the game</p>
-                        <button class="control-btn primary text-lg px-8 py-3" onclick="resumeGame()">
-                            <i class="fas fa-play mr-2"></i>
-                            Continue Game
-                        </button>
-                    </div>
-                `;
-                startBtn.innerHTML = '<i class="fas fa-play"></i> Resume';
-            } else {
-                gameCanvas.innerHTML = `
-                    <div class="text-center relative z-10">
-                        <i class="fas fa-gamepad text-6xl mb-4 text-green-400"></i>
-                        <h2 class="text-2xl font-bold mb-2">Game in Progress</h2>
-                        <p class="text-lg mb-4">Use arrow keys or WASD to control</p>
-                        <div class="text-sm text-gray-300">
-                            Score: ${gameState.score} | Level: ${gameState.level} | Lives: ${gameState.lives}
-                        </div>
-                    </div>
-                `;
-                startBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
-                startBtn.classList.remove('primary');
-                startBtn.classList.add('secondary');
-            }
-            // Update statistics display
-            document.getElementById('score').textContent = gameState.score;
-            document.getElementById('level').textContent = gameState.level;
-            document.getElementById('lives').textContent = gameState.lives;
-        }
-        function resetGameCanvas() {
-            const gameCanvas = document.getElementById('gameCanvas');
-            gameCanvas.innerHTML = `
-                <div class="text-center relative z-10">
-                    <i class="fas fa-gamepad text-6xl mb-4 text-white"></i>
-                    <h2 class="text-2xl font-bold mb-2">Game Title</h2>
-                    <p class="text-lg mb-4">Game description goes here</p>
-                    <button class="control-btn primary text-lg px-8 py-3" onclick="startGame()">
-                        <i class="fas fa-play mr-2"></i>
-                        Start Game
-                    </button>
-                </div>
-            `;
-        }
-        function startGameLoop() {
-            if (!gameState.isPlaying || gameState.isPaused) return;
-            // Simulate game logic
-            gameState.score += 10;
-            if (gameState.score % 100 === 0) {
-                gameState.level++;
-            }
-            updateGameDisplay();
-            // Continue game loop
-            setTimeout(startGameLoop, 1000);
-        }
-        // Fullscreen functionality
+        
         function toggleFullscreen() {
-            const container = document.querySelector('.game-canvas-container');
-            const icon = document.getElementById('fullscreenIcon');
-            const text = document.getElementById('fullscreenText');
-            if (document.fullscreenElement) {
-                document.exitFullscreen();
-                icon.className = 'fas fa-expand';
-                text.textContent = 'Fullscreen';
-            } else {
-                container.requestFullscreen();
-                icon.className = 'fas fa-compress';
-                text.textContent = 'Exit Fullscreen';
+            const gameArea = document.getElementById('game-area');
+            if (document.fullscreenElement) { 
+                document.exitFullscreen(); 
+            } else { 
+                gameArea.requestFullscreen(); 
             }
         }
-        // Favorite functionality
-        function toggleFavorite() {
-            gameState.isFavorite = !gameState.isFavorite;
-            const icon = document.getElementById('favoriteIcon');
-            const text = document.getElementById('favoriteText');
-            if (gameState.isFavorite) {
-                icon.className = 'fas fa-heart text-red-500';
-                text.textContent = 'Favorited';
-            } else {
-                icon.className = 'fas fa-heart';
-                text.textContent = 'Favorite';
-            }
+        
+        function shareGame() { 
+            if (navigator.share) { 
+                navigator.share({ 
+                    title: document.title, 
+                    text: 'Check out this awesome game!', 
+                    url: window.location.href 
+                }); 
+            } else { 
+                navigator.clipboard.writeText(window.location.href); 
+                alert('Game link copied to clipboard!'); 
+            } 
         }
-        // Share functionality
-        function shareGame() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Game Title - GameShiftly',
-                    text: 'Check out this awesome game!',
-                    url: window.location.href
-                });
-            } else {
-                // Copy link to clipboard
-                navigator.clipboard.writeText(window.location.href);
-                alert('Game link copied to clipboard!');
-            }
+        
+        function toggleFavorite() { 
+            const icon = document.getElementById('favoriteIcon'); 
+            const text = document.getElementById('favoriteText'); 
+            if (icon.classList.contains('text-red-500')) { 
+                icon.classList.remove('text-red-500'); 
+                text.textContent = 'Favorite'; 
+            } else { 
+                icon.classList.add('text-red-500'); 
+                text.textContent = 'Favorited'; 
+            } 
         }
-        // Navigation function
-        function goToGame(gameName) {
-            // This function should be customized for each game
-            console.log('Navigating to game:', gameName);
-        }
-        // Initialize game when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            updateGameDisplay();
-        });
     </script>
 </body>
 </html> 

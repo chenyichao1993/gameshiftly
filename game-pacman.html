@@ -10,23 +10,169 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="footer.js"></script>
     <style>
-        .game-canvas-container { position: relative; width: 100%; max-width: 900px; margin: 0 auto; background: #f8f9fa; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .game-canvas { width: 100%; height: 500px; background: #222; display: flex; align-items: center; justify-content: center; position: relative; }
-        #iframe-wrapper { width: 900px; height: 600px; transform-origin: top left; }
-        .game-canvas iframe { width: 900px; height: 600px; border: none; display: block; background: transparent; }
-        @media (max-width: 1024px) { .game-canvas { height: 350px; } }
-        @media (max-width: 900px) { #iframe-wrapper, .game-canvas iframe { width: 100vw; height: 66vw; min-width: 0; min-height: 0; } }
-        @media (max-width: 768px) { .game-canvas { height: 220px; } }
+        /* 隐藏和美化滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+        }
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .game-info-card {
+            max-height: none;
+            overflow: visible;
+        }
+        iframe {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            width: 100%;
+            height: 600px;
+            border: none;
+            display: block;
+            background: transparent;
+        }
+        iframe::-webkit-scrollbar {
+            display: none;
+        }
+        .game-canvas-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .game-canvas {
+            width: 100%;
+            aspect-ratio: 3/2;
+            background: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .game-canvas iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+            display: block;
+            background: transparent;
+        }
+        .game-controls {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            justify-content: center;
+        }
+        .control-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .control-btn.primary {
+            background: #dc2626;
+            color: white;
+        }
+        .control-btn.primary:hover {
+            background: #b91c1c;
+        }
+        .control-btn.secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        .control-btn.secondary:hover {
+            background: #e5e7eb;
+        }
+        .game-info-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+        .game-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #e5e7eb;
+            color: #374151;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .related-game {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 0.5rem;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+        .related-game:hover {
+            transform: translateY(-2px);
+        }
+        .related-game img {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        @media (max-width: 1024px) {
+            .game-canvas { aspect-ratio: 16/9; }
+        }
+        @media (max-width: 900px) {
+            .game-canvas { aspect-ratio: 16/9; }
+        }
+        @media (max-width: 768px) {
+            .game-canvas { aspect-ratio: 1/1; }
+        }
     </style>
 </head>
 <body class="bg-gray-50">
-    <header class="bg-white shadow-sm">
+    <!-- Header Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
                     <a href="gameshiftly.html" class="flex items-center space-x-2">
-                        <div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center"><span class="text-white font-bold text-sm">GS</span></div>
-                        <div><div class="text-red-600 font-bold text-lg">GameShiftly</div><div class="text-gray-500 text-xs">Free Online Games</div></div>
+                        <div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">GS</span>
+                        </div>
+                        <div>
+                            <div class="text-red-600 font-bold text-lg">GameShiftly</div>
+                            <div class="text-gray-500 text-xs">Free Online Games</div>
+                        </div>
                     </a>
                 </div>
                 <div class="hidden md:flex flex-1 max-w-md mx-8">
@@ -42,37 +188,49 @@
             </div>
         </div>
     </header>
+    <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
             <div>
                 <h1 class="text-3xl font-bold text-gray-900 mb-2">Pacman</h1>
                 <div class="flex items-center space-x-4 text-sm text-gray-600">
-                    <div class="flex items-center"><i class="fas fa-star text-yellow-400 mr-1"></i><span>8.9</span></div>
-                    <div class="flex items-center"><i class="fas fa-gamepad mr-1"></i><span>Arcade & Classic</span></div>
-                    <div class="flex items-center"><i class="fas fa-play mr-1"></i><span>1.8M plays</span></div>
+                    <div class="flex items-center">
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <span>8.9</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-gamepad mr-1" id="categoryIcon"></i>
+                        <span id="categoryText">Arcade & Classic</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-play mr-1"></i>
+                        <span>1.8M plays</span>
+                    </div>
                 </div>
             </div>
             <div class="flex items-center space-x-2 mt-4 lg:mt-0">
-                <button class="control-btn secondary" onclick="shareGame()"><i class="fas fa-share"></i>Share</button>
-                <button class="control-btn secondary" onclick="toggleFavorite()"><i class="fas fa-heart" id="favoriteIcon"></i><span id="favoriteText">Favorite</span></button>
-                <button class="control-btn secondary" onclick="toggleFullscreen()"><i class="fas fa-expand" id="fullscreenIcon"></i><span id="fullscreenText">Fullscreen</span></button>
+                <button class="control-btn secondary" onclick="shareGame()">
+                    <i class="fas fa-share"></i>
+                    Share
+                </button>
+                <button class="control-btn secondary" onclick="toggleFavorite()">
+                    <i class="fas fa-heart" id="favoriteIcon"></i>
+                    <span id="favoriteText">Favorite</span>
+                </button>
+                <button class="control-btn secondary" onclick="toggleFullscreen()">
+                    <i class="fas fa-expand" id="fullscreenIcon"></i>
+                    <span id="fullscreenText">Fullscreen</span>
+                </button>
             </div>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Game Area 直接平铺 -->
             <div class="lg:col-span-3">
-                <div class="game-canvas-container" id="game-canvas-container">
-                    <div class="game-canvas">
-                        <div id="iframe-wrapper">
-                            <iframe src="https://html-classic.itch.zone/html/3946506/index.html" title="Pacman Game" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                    <div class="game-controls">
-                        <button class="control-btn secondary" id="restartBtn" onclick="restartGame()"><i class="fas fa-redo"></i>Restart</button>
-                        <button class="control-btn secondary" onclick="toggleFullscreen()"><i class="fas fa-expand"></i>Fullscreen</button>
-                    </div>
-                </div>
+                <iframe src="https://html-classic.itch.zone/html/3946506/index.html" width="552" height="600" frameborder="0" allowfullscreen title="Pacman Game"></iframe>
             </div>
+            <!-- Sidebar -->
             <div class="lg:col-span-1">
+                <!-- Game Information -->
                 <div class="game-info-card">
                     <h3 class="text-lg font-semibold mb-3">Game Information</h3>
                     <p class="text-gray-600 mb-4">Enjoy the classic Pacman arcade game! Eat all the dots, avoid the ghosts, and chase the high score.</p>
@@ -91,10 +249,18 @@
                 <div class="game-info-card">
                     <h3 class="text-lg font-semibold mb-3">Related Games</h3>
                     <div class="space-y-2">
-                        <div class="related-game" onclick="goToGame('game-flappybird.html')"><img src="https://upload.wikimedia.org/wikipedia/en/0/0a/Flappy_Bird_icon.png" alt="Flappy Bird"><div><div class="font-medium">Flappy Bird</div><div class="text-sm text-gray-500">Arcade & Classic</div></div></div>
-                        <div class="related-game" onclick="goToGame('game-minesweeper.html')"><img src="img/minesweeper.jpg" alt="Minesweeper"><div><div class="font-medium">Minesweeper</div><div class="text-sm text-gray-500">Thinking</div></div></div>
-                        <div class="related-game" onclick="goToGame('game-tetris.html')"><img src="img/tetris.jpg" alt="Tetris"><div><div class="font-medium">Tetris</div><div class="text-sm text-gray-500">Arcade & Classic</div></div></div>
-                        <div class="related-game" onclick="goToGame('game-snake.html')"><img src="img/2048.png" alt="Snake"><div><div class="font-medium">Snake</div><div class="text-sm text-gray-500">Arcade & Classic</div></div></div>
+                        <div class="related-game" onclick="goToGame('game-flappybird.html')">
+                            <img src="img/flappybird.png" alt="Flappy Bird">
+                            <div><div class="font-medium">Flappy Bird</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
+                        </div>
+                        <div class="related-game" onclick="goToGame('game-minesweeper.html')">
+                            <img src="img/minesweeper.jpg" alt="Minesweeper">
+                            <div><div class="font-medium">Minesweeper</div><div class="text-sm text-gray-500">Thinking</div></div>
+                        </div>
+                        <div class="related-game" onclick="goToGame('game-tetris.html')">
+                            <img src="img/tetris.jpg" alt="Tetris">
+                            <div><div class="font-medium">Tetris</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -102,28 +268,37 @@
     </main>
     <div id="footer-container"></div>
     <script>
-        function scaleIframe() {
-            const container = document.getElementById('game-canvas-container');
-            const wrapper = document.getElementById('iframe-wrapper');
-            const baseWidth = 900, baseHeight = 600;
-            const maxW = container.offsetWidth;
-            const maxH = window.innerHeight * 0.7;
-            const scale = Math.min(maxW / baseWidth, maxH / baseHeight, 1);
-            wrapper.style.transform = `scale(${scale})`;
-            wrapper.style.width = baseWidth + 'px';
-            wrapper.style.height = baseHeight + 'px';
-            container.style.height = (baseHeight * scale) + 'px';
+        // 分类图标映射
+        const categoryIcons = {
+            'Driving': 'fas fa-car',
+            'Shooting': 'fas fa-crosshairs',
+            'For Girls': 'fas fa-heart',
+            'Fighting': 'fas fa-fist-raised',
+            'Thinking': 'fas fa-brain',
+            'Management & Sim': 'fas fa-city',
+            'Skill': 'fas fa-bullseye',
+            'Action & Adventure': 'fas fa-running',
+            'Strategy & RPG': 'fas fa-chess',
+            'Sports': 'fas fa-futbol',
+            'Fun & Crazy': 'fas fa-laugh',
+            'Arcade & Classic': 'fas fa-gamepad'
+        };
+        function setCategory(category) {
+            const iconElement = document.getElementById('categoryIcon');
+            const textElement = document.getElementById('categoryText');
+            if (categoryIcons[category]) {
+                iconElement.className = categoryIcons[category] + ' mr-1';
+                textElement.textContent = category;
+            }
         }
-        window.addEventListener('resize', scaleIframe);
-        document.addEventListener('DOMContentLoaded', scaleIframe);
+        setCategory('Arcade & Classic');
         function goToGame(game) { window.location.href = game; }
         function toggleFullscreen() {
-            const container = document.querySelector('.game-canvas-container');
-            if (document.fullscreenElement) { document.exitFullscreen(); } else { container.requestFullscreen(); }
+            const iframe = document.querySelector('iframe');
+            if (document.fullscreenElement) { document.exitFullscreen(); } else { iframe.requestFullscreen(); }
         }
         function shareGame() { if (navigator.share) { navigator.share({ title: 'Pacman - GameShiftly', text: 'Check out this awesome game!', url: window.location.href }); } else { navigator.clipboard.writeText(window.location.href); alert('Game link copied to clipboard!'); } }
         function toggleFavorite() { const icon = document.getElementById('favoriteIcon'); const text = document.getElementById('favoriteText'); if (icon.classList.contains('text-red-500')) { icon.classList.remove('text-red-500'); text.textContent = 'Favorite'; } else { icon.classList.add('text-red-500'); text.textContent = 'Favorited'; } }
-        function restartGame() { document.querySelector('.game-canvas iframe').contentWindow.location.reload(); }
     </script>
 </body>
 </html> 
