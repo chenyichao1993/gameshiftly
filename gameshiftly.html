@@ -95,17 +95,14 @@
             backdrop-filter: blur(4px);
         }
         
-        /* 游戏卡片悬停预览效果 - 显示游戏预览 */
+        /* 游戏卡片悬停预览效果 - 简洁版本 */
         .game-card-preview {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: rgba(0, 0, 0, 0.2);
             opacity: 0;
             transition: all 0.3s ease;
             pointer-events: none;
@@ -113,66 +110,11 @@
         
         .game-card:hover .game-card-preview {
             opacity: 1;
-            background: rgba(0, 0, 0, 0.2);
-        }
-        
-        .game-card-preview .play-icon {
-            color: white;
-            font-size: 28px;
-            background: rgba(255, 255, 255, 0.25);
-            border-radius: 50%;
-            width: 56px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            animation: pulse 2s infinite;
         }
         
         /* 悬停时图片缩放效果 */
         .game-card:hover img {
             transform: scale(1.1);
-        }
-        
-        /* 悬停时显示游戏预览文字 */
-        .game-card-preview::before {
-            content: "点击开始游戏";
-            position: absolute;
-            bottom: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: 12px;
-            font-weight: 600;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 6px 12px;
-            border-radius: 16px;
-            backdrop-filter: blur(4px);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .game-card:hover .game-card-preview::before {
-            opacity: 1;
-        }
-        
-        /* 特定游戏的悬停效果 */
-        .pacman-card:hover .game-card-preview::before {
-            content: "经典吃豆人游戏";
-        }
-        
-        .tetris-card:hover .game-card-preview::before {
-            content: "俄罗斯方块挑战";
-        }
-        
-        .flappybird-card:hover .game-card-preview::before {
-            content: "小鸟飞行冒险";
-        }
-        
-        .minesweeper-card:hover .game-card-preview::before {
-            content: "扫雷智力挑战";
         }
         
         /* 游戏特定的悬停动画 */
@@ -214,20 +156,7 @@
             50% { transform: scale(1.1); filter: brightness(1.2); }
         }
         
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.1);
-                opacity: 0.8;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
+
         
         /* 游戏卡片加载动画 */
         .game-card {
@@ -351,7 +280,7 @@
             }
             
             /* 移动端悬停效果简化 */
-            .game-card-preview::before {
+            .game-card-preview {
                 display: none;
             }
             
@@ -801,11 +730,7 @@
                                             <span class="category-tag">Thinking</span>
                                         </div>
                                     </div>
-                                    <div class="game-card-preview">
-                                        <div class="play-icon">
-                                            <i class="fas fa-play"></i>
-                                        </div>
-                                    </div>
+                                    <div class="game-card-preview"></div>
                                 </div>
                                 
                                 <!-- 暂时没有更多可用的思维游戏 -->
@@ -1147,17 +1072,13 @@
                                                 <i class="fas fa-star"></i>
                                                 <span>9.1</span>
                                             </div>
-                                            <span class="category-tag">Arcade & Classic</span>
+                                                                                        <span class="category-tag">Arcade & Classic</span>
                                         </div>
                                     </div>
-                                    <div class="game-card-preview">
-                                        <div class="play-icon">
-                                            <i class="fas fa-play"></i>
-                                        </div>
-                                    </div>
+                                    <div class="game-card-preview"></div>
                                 </div>
                                 
-                                                                <div class="game-card cursor-pointer tetris-card" onclick="window.open('game-tetris.html', '_blank')">
+                                <div class="game-card cursor-pointer tetris-card" onclick="window.open('game-tetris.html', '_blank')">
                                     <img src="img/tetris.jpg" alt="Tetris">
                                     <div class="game-card-info">
                                         <h3>Tetris</h3>
@@ -1166,17 +1087,13 @@
                                                 <i class="fas fa-star"></i>
                                                 <span>9.0</span>
                                             </div>
-                                            <span class="category-tag">Arcade & Classic</span>
+                                                                                        <span class="category-tag">Arcade & Classic</span>
                                         </div>
                                     </div>
-                                    <div class="game-card-preview">
-                                        <div class="play-icon">
-                                            <i class="fas fa-play"></i>
-                                        </div>
-                                    </div>
+                                    <div class="game-card-preview"></div>
                                 </div>
                                 
-                                                                <div class="game-card cursor-pointer flappybird-card" onclick="window.open('game-flappybird.html', '_blank')">
+                                <div class="game-card cursor-pointer flappybird-card" onclick="window.open('game-flappybird.html', '_blank')">
                                     <img src="img/flappybird.png" alt="Flappy Bird">
                                     <div class="game-card-info">
                                         <h3>Flappy Bird</h3>
@@ -1188,11 +1105,7 @@
                                             <span class="category-tag">Arcade & Classic</span>
                                         </div>
                                     </div>
-                                    <div class="game-card-preview">
-                                        <div class="play-icon">
-                                            <i class="fas fa-play"></i>
-                                        </div>
-                                    </div>
+                                    <div class="game-card-preview"></div>
                                 </div>
                                 
                                 <!-- 暂时没有更多可用的街机经典游戏 -->
