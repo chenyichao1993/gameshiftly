@@ -174,7 +174,7 @@
             }
         }
         
-        /* 桌面端适配 */
+                /* 桌面端适配 */
         @media (min-width: 1024px) {
             .category-section {
                 max-width: 100%;
@@ -188,9 +188,34 @@
                 max-width: 100%;
                 overflow-x: auto;
             }
+            
+            /* 桌面端分类卡片内容调整 */
+            .category-card .header-section {
+                gap: 0.5rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+            
+            .category-card h2 {
+                font-size: 1.1rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            .category-card i {
+                font-size: 1.25rem !important;
+            }
+            
+            .category-card p {
+                font-size: 0.75rem !important;
+                margin: 0 0 0.75rem 0 !important;
+            }
+            
+            .category-card button {
+                font-size: 0.75rem !important;
+                padding: 0.5rem 1rem !important;
+            }
         }
         
-        /* 分类卡片统一宽度和高度 */
+        /* 分类卡片统一宽度和高度 - 默认样式 */
         .category-card {
             width: 280px;
             min-width: 280px;
@@ -202,6 +227,16 @@
             flex-direction: column;
             padding: 1.5rem;
             box-sizing: border-box;
+        }
+        
+        /* 桌面端分类卡片高度调整 */
+        @media (min-width: 1024px) {
+            .category-card {
+                height: 140px !important;
+                min-height: 140px !important;
+                max-height: 140px !important;
+                padding: 1rem !important;
+            }
         }
         
         /* 分类卡片内容样式调整 */
@@ -726,9 +761,9 @@
                                             <div class="rating">
                                                 <i class="fas fa-star"></i>
                                                 <span>8.7</span>
-                                            </div>
+                        </div>
                                             <span class="category-tag">Thinking</span>
-                                        </div>
+                        </div>
                                     </div>
                                     <div class="game-card-preview"></div>
                                 </div>
@@ -1071,9 +1106,9 @@
                                             <div class="rating">
                                                 <i class="fas fa-star"></i>
                                                 <span>9.1</span>
-                                            </div>
+                        </div>
                                                                                         <span class="category-tag">Arcade & Classic</span>
-                                        </div>
+                    </div>
                                     </div>
                                     <div class="game-card-preview"></div>
                                 </div>
