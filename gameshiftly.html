@@ -18,70 +18,231 @@
             display: none;
         }
         
-        /* 游戏卡片固定尺寸 */
+        /* 游戏卡片优化设计 - 扁平化布局 */
         .game-card {
             transition: all 0.3s ease;
-            width: 160px;
-            min-width: 160px;
-            max-width: 160px;
-            height: 200px;
-            min-height: 200px;
-            max-height: 200px;
-        }
-        .game-card img {
-            width: 160px;
-            height: 120px;
-            object-fit: cover;
-        }
-        .game-card-content {
-            height: 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        
-        /* 游戏卡片悬停效果 - 显示游戏信息 */
-        .game-card {
+            width: 180px;
+            min-width: 180px;
+            max-width: 180px;
+            height: 140px;
+            min-height: 140px;
+            max-height: 140px;
             position: relative;
             overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
         }
         
+        .game-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .game-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .game-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* 游戏卡片信息覆盖层 - 始终显示 */
         .game-card-info {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(0, 0, 0, 0.8);
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
             color: white;
-            padding: 8px;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
+            padding: 12px 8px 8px 8px;
+            transition: all 0.3s ease;
         }
         
         .game-card:hover .game-card-info {
-            transform: translateY(0);
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            padding: 16px 8px 12px 8px;
         }
         
         .game-card-info h3 {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
         }
         
         .game-card-info .rating {
-            font-size: 10px;
+            font-size: 11px;
             color: #fbbf24;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 4px;
         }
         
         .game-card-info .category-tag {
             font-size: 10px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 2px 6px;
-            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.25);
+            padding: 3px 8px;
+            border-radius: 12px;
             display: inline-block;
+            backdrop-filter: blur(4px);
+        }
+        
+        /* 游戏卡片悬停预览效果 - 显示游戏预览 */
+        .game-card-preview {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .game-card:hover .game-card-preview {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .game-card-preview .play-icon {
+            color: white;
+            font-size: 28px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        /* 悬停时图片缩放效果 */
+        .game-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* 悬停时显示游戏预览文字 */
+        .game-card-preview::before {
+            content: "点击开始游戏";
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 6px 12px;
+            border-radius: 16px;
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .game-card:hover .game-card-preview::before {
+            opacity: 1;
+        }
+        
+        /* 特定游戏的悬停效果 */
+        .pacman-card:hover .game-card-preview::before {
+            content: "经典吃豆人游戏";
+        }
+        
+        .tetris-card:hover .game-card-preview::before {
+            content: "俄罗斯方块挑战";
+        }
+        
+        .flappybird-card:hover .game-card-preview::before {
+            content: "小鸟飞行冒险";
+        }
+        
+        .minesweeper-card:hover .game-card-preview::before {
+            content: "扫雷智力挑战";
+        }
+        
+        /* 游戏特定的悬停动画 */
+        .pacman-card:hover img {
+            animation: pacman-eat 1s infinite;
+        }
+        
+        .tetris-card:hover img {
+            animation: tetris-rotate 2s infinite;
+        }
+        
+        .flappybird-card:hover img {
+            animation: flappy-bounce 0.8s infinite;
+        }
+        
+        .minesweeper-card:hover img {
+            animation: mine-pulse 1.5s infinite;
+        }
+        
+        @keyframes pacman-eat {
+            0%, 100% { transform: scale(1.1) rotate(0deg); }
+            50% { transform: scale(1.15) rotate(5deg); }
+        }
+        
+        @keyframes tetris-rotate {
+            0% { transform: scale(1.1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(1deg); }
+            75% { transform: scale(1.1) rotate(-1deg); }
+            100% { transform: scale(1.1) rotate(0deg); }
+        }
+        
+        @keyframes flappy-bounce {
+            0%, 100% { transform: scale(1.1) translateY(0); }
+            50% { transform: scale(1.1) translateY(-2px); }
+        }
+        
+        @keyframes mine-pulse {
+            0%, 100% { transform: scale(1.1); filter: brightness(1); }
+            50% { transform: scale(1.1); filter: brightness(1.2); }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        /* 游戏卡片加载动画 */
+        .game-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         /* 桌面端适配 */
@@ -183,7 +344,20 @@
                 display: none; /* 移动端隐藏游戏卡片 */
             }
             .game-card {
-                min-width: 160px;
+                min-width: 180px;
+                height: 120px;
+                min-height: 120px;
+                max-height: 120px;
+            }
+            
+            /* 移动端悬停效果简化 */
+            .game-card-preview::before {
+                display: none;
+            }
+            
+            .game-card:hover img {
+                animation: none;
+                transform: scale(1.05);
             }
             .nav-arrow {
                 display: none !important; /* 移动端隐藏箭头 */
@@ -613,9 +787,9 @@
                         
                         <!-- 游戏滚动容器 -->
                         <div class="flex-1 overflow-hidden">
-                            <div id="thinking-games" class="flex space-x-3 lg:space-x-4 scroll-container" style="scroll-behavior: smooth;">
+                            <div id="thinking-games" class="flex space-x-4 lg:space-x-5 scroll-container" style="scroll-behavior: smooth;">
                                 <!-- 游戏卡片 -->
-                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0 cursor-pointer" onclick="window.open('game-minesweeper.html', '_blank')">
+                                                                                                <div class="game-card cursor-pointer minesweeper-card" onclick="window.open('game-minesweeper.html', '_blank')">
                                     <img src="img/minesweeper.jpg" alt="Minesweeper">
                                     <div class="game-card-info">
                                         <h3>Minesweeper</h3>
@@ -625,6 +799,11 @@
                                                 <span>8.7</span>
                                             </div>
                                             <span class="category-tag">Thinking</span>
+                                        </div>
+                                    </div>
+                                    <div class="game-card-preview">
+                                        <div class="play-icon">
+                                            <i class="fas fa-play"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -705,13 +884,13 @@
                     <div class="header-section">
                         <i class="fas fa-bullseye"></i>
                         <h2>Skill</h2>
-                    </div>
+                        </div>
                     <p>2,345 games</p>
                     <button class="bg-white text-cyan-600 hover:bg-cyan-50 transition">
                         Explore
                     </button>
-            </div>
-            
+                </div>
+                
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
                     <div class="flex items-center space-x-2 lg:space-x-4">
@@ -752,13 +931,13 @@
                     <div class="header-section">
                         <i class="fas fa-running"></i>
                         <h2>Action & Adventure</h2>
-                    </div>
+                        </div>
                     <p>4,251 games</p>
                     <button class="bg-white text-teal-600 hover:bg-teal-50 transition">
                         Explore
                     </button>
-            </div>
-            
+                </div>
+                
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
                     <div class="flex items-center space-x-2 lg:space-x-4">
@@ -799,13 +978,13 @@
                     <div class="header-section">
                         <i class="fas fa-chess"></i>
                         <h2>Strategy & RPG</h2>
-                    </div>
+                        </div>
                     <p>1,234 games</p>
                     <button class="bg-white text-purple-600 hover:bg-purple-50 transition">
                         Explore
                     </button>
-            </div>
-            
+                </div>
+                
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
                     <div class="flex items-center space-x-2 lg:space-x-4">
@@ -846,13 +1025,13 @@
                     <div class="header-section">
                         <i class="fas fa-futbol"></i>
                         <h2>Sports</h2>
-                    </div>
+                        </div>
                     <p>1,006 games</p>
                     <button class="bg-white text-emerald-600 hover:bg-emerald-50 transition">
                         Explore
                     </button>
-            </div>
-            
+                </div>
+                
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
                     <div class="flex items-center space-x-2 lg:space-x-4">
@@ -893,13 +1072,13 @@
                     <div class="header-section">
                         <i class="fas fa-laugh"></i>
                         <h2>Fun & Crazy</h2>
-                    </div>
+                        </div>
                     <p>2,789 games</p>
                     <button class="bg-white text-sky-600 hover:bg-sky-50 transition">
                         Explore
                     </button>
-            </div>
-            
+                </div>
+                
                 <!-- 右侧游戏滚动区域 -->
                 <div class="games-container flex-1">
                     <div class="flex items-center space-x-2 lg:space-x-4">
@@ -957,9 +1136,9 @@
                         
                         <!-- 游戏滚动容器 -->
                         <div class="flex-1 overflow-hidden">
-                            <div id="arcade-games" class="flex space-x-3 lg:space-x-4 scroll-container" style="scroll-behavior: smooth;">
+                            <div id="arcade-games" class="flex space-x-4 lg:space-x-5 scroll-container" style="scroll-behavior: smooth;">
                                 <!-- 游戏卡片 -->
-                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0 cursor-pointer" onclick="window.open('game-pacman.html', '_blank')">
+                                                                                                <div class="game-card cursor-pointer pacman-card" onclick="window.open('game-pacman.html', '_blank')">
                                     <img src="img/Pacman.jpg" alt="Pacman">
                                     <div class="game-card-info">
                                         <h3>Pacman</h3>
@@ -971,9 +1150,14 @@
                                             <span class="category-tag">Arcade & Classic</span>
                                         </div>
                                     </div>
+                                    <div class="game-card-preview">
+                                        <div class="play-icon">
+                                            <i class="fas fa-play"></i>
+                                        </div>
+                                    </div>
                                 </div>
                                 
-                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0 cursor-pointer" onclick="window.open('game-tetris.html', '_blank')">
+                                                                <div class="game-card cursor-pointer tetris-card" onclick="window.open('game-tetris.html', '_blank')">
                                     <img src="img/tetris.jpg" alt="Tetris">
                                     <div class="game-card-info">
                                         <h3>Tetris</h3>
@@ -985,9 +1169,14 @@
                                             <span class="category-tag">Arcade & Classic</span>
                                         </div>
                                     </div>
+                                    <div class="game-card-preview">
+                                        <div class="play-icon">
+                                            <i class="fas fa-play"></i>
+                                        </div>
+                                    </div>
                                 </div>
                                 
-                                <div class="game-card bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0 cursor-pointer" onclick="window.open('game-flappybird.html', '_blank')">
+                                                                <div class="game-card cursor-pointer flappybird-card" onclick="window.open('game-flappybird.html', '_blank')">
                                     <img src="img/flappybird.png" alt="Flappy Bird">
                                     <div class="game-card-info">
                                         <h3>Flappy Bird</h3>
@@ -997,6 +1186,11 @@
                                                 <span>8.8</span>
                                             </div>
                                             <span class="category-tag">Arcade & Classic</span>
+                                        </div>
+                                    </div>
+                                    <div class="game-card-preview">
+                                        <div class="play-icon">
+                                            <i class="fas fa-play"></i>
                                         </div>
                                     </div>
                                 </div>
