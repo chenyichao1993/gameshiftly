@@ -468,6 +468,60 @@
                 align-self: stretch !important;
                 box-sizing: border-box !important;
             }
+            
+            /* 移动端页脚布局 - 强制Quick Links和Support并排 */
+            footer .grid {
+                display: block !important;
+            }
+            
+            /* 品牌信息部分占整行 */
+            footer .grid > div.col-span-1.md\:col-span-2 {
+                display: block !important;
+                width: 100% !important;
+                margin-bottom: 2rem !important;
+            }
+            
+            /* Quick Links和Support强制并排显示 */
+            .quick-links-section,
+            .support-section {
+                display: inline-block !important;
+                width: 48% !important;
+                vertical-align: top !important;
+                margin-right: 2% !important;
+                float: left !important;
+                clear: none !important;
+            }
+            
+            .support-section {
+                margin-right: 0 !important;
+                float: right !important;
+            }
+            
+            /* 清除浮动 */
+            footer .grid::after {
+                content: "" !important;
+                display: table !important;
+                clear: both !important;
+            }
+            
+
+        }
+        
+        /* 桌面端也强制Quick Links和Support并排显示 */
+        @media (min-width: 768px) {
+            .quick-links-section,
+            .support-section {
+                display: inline-block !important;
+                width: 48% !important;
+                vertical-align: top !important;
+                margin-right: 2% !important;
+                float: left !important;
+            }
+            
+            .support-section {
+                margin-right: 0 !important;
+                float: right !important;
+            }
         }
     </style>
 </head>
@@ -1277,7 +1331,7 @@
                     </div>
                 </div>
                 
-                <div>
+                                <div class="quick-links-section">
                     <h4 class="text-base lg:text-lg font-semibold mb-4">Quick Links</h4>
                     <ul class="space-y-2">
                         <li><a href="gameshiftly.html" class="text-gray-400 hover:text-white transition text-sm lg:text-base">Home</a></li>
@@ -1288,7 +1342,7 @@
                     </ul>
                 </div>
                 
-                <div>
+                <div class="support-section">
                     <h4 class="text-base lg:text-lg font-semibold mb-4">Support</h4>
                     <ul class="space-y-2">
                         <li><a href="#" class="text-gray-400 hover:text-white transition text-sm lg:text-base">Help Center</a></li>
