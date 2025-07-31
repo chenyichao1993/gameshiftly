@@ -34,6 +34,15 @@
             cursor: pointer;
         }
         
+        /* 桌面端游戏卡片高度确保一致 */
+        @media (min-width: 1024px) {
+            .game-card {
+                height: 140px !important;
+                min-height: 140px !important;
+                max-height: 140px !important;
+            }
+        }
+        
         .game-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
@@ -174,7 +183,7 @@
             }
         }
         
-                /* 桌面端适配 */
+        /* 桌面端适配 */
         @media (min-width: 1024px) {
             .category-section {
                 max-width: 100%;
@@ -236,6 +245,35 @@
                 min-height: 140px !important;
                 max-height: 140px !important;
                 padding: 1rem !important;
+            }
+            
+            /* More Games 按钮高度调整 */
+            .more-games-btn {
+                height: 140px !important;
+                min-height: 140px !important;
+                max-height: 140px !important;
+                width: 200px !important;
+                min-width: 200px !important;
+                max-width: 200px !important;
+            }
+        }
+        
+        /* 中等屏幕尺寸调整 (768px-1024px) */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .category-card {
+                height: 140px !important;
+                min-height: 140px !important;
+                max-height: 140px !important;
+                padding: 1rem !important;
+            }
+            
+            .more-games-btn {
+                height: 140px !important;
+                min-height: 140px !important;
+                max-height: 140px !important;
+                width: 200px !important;
+                min-width: 200px !important;
+                max-width: 200px !important;
             }
         }
         
@@ -329,6 +367,11 @@
             .scroll-container {
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
+            }
+            
+            /* 移动端More Games按钮保持原样 */
+            .more-games-btn {
+                /* 移动端保持默认样式 */
             }
             
             /* 移动端只显示分类卡片网格 */
