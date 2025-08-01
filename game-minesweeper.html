@@ -394,7 +394,19 @@
             if (document.fullscreenElement) { document.exitFullscreen(); } else { iframe.requestFullscreen(); }
         }
         function shareGame() {
-            showShareModal();
+            // 移动端优先使用原生分享API
+            if (navigator.share && /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                navigator.share({
+                    title: 'Minesweeper - GameShiftly',
+                    text: 'Check out this awesome Minesweeper game on GameShiftly! 🎮',
+                    url: window.location.href
+                }).catch(err => {
+                    console.log('Native sharing failed, falling back to modal');
+                    showShareModal();
+                });
+            } else {
+                showShareModal();
+            }
         }
         
         function showShareModal() {
@@ -445,10 +457,10 @@
             }
             
             if (shareUrl) {
-                window.open(shareUrl, '_blank', 'width=600,height=400');
+                // 直接在新标签页打开，不弹窗
+                window.open(shareUrl, '_blank');
+                hideShareModal();
             }
-            
-            hideShareModal();
         }
         
         function copyToClipboard(text) {
