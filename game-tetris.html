@@ -324,35 +324,18 @@
                     </div>
                 </div>
                 
-                <!-- Copy Link & QR Code -->
+                <!-- Copy Link -->
                 <div class="flex gap-3">
-                    <button onclick="copyToClipboard(window.location.href); hideShareModal(); alert('Game link copied to clipboard!')" class="flex-1 flex items-center justify-center p-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition">
+                    <button onclick="copyGameLink()" class="flex-1 flex items-center justify-center p-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition">
                         <i class="fas fa-link mr-2"></i>
                         Copy Link
-                    </button>
-                    <button onclick="generateQRCode()" class="flex-1 flex items-center justify-center p-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition">
-                        <i class="fas fa-qrcode mr-2"></i>
-                        QR Code
                     </button>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- QR Code Modal -->
-    <div id="qrModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg shadow-xl max-w-sm w-full mx-4">
-            <div class="flex items-center justify-between p-6 border-b">
-                <h3 class="text-lg font-semibold">QR Code</h3>
-                <button onclick="hideQRModal()" class="text-gray-400 hover:text-gray-600">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div id="qrCode" class="p-6 text-center">
-                <!-- QR code content will be generated here -->
-            </div>
-        </div>
-    </div>
+
     
     <div id="footer-container"></div>
     <script>
@@ -415,44 +398,121 @@
             const gameUrl = window.location.href;
             const gameTitle = 'Tetris - GameShiftly';
             const gameText = 'Check out this awesome Tetris game on GameShiftly! 🎮';
-            
-            let shareUrl = '';
+            const isLocal = window.location.protocol === 'file:';
             
             switch(platform) {
                 case 'facebook':
-                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(gameUrl)}`;
+                    if (isLocal) {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Facebook manually.');
+                    } else {
+                        const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(gameUrl)}`;
+                        shareWithFallback('facebook', shareUrl, () => {
+                            copyToClipboard(gameUrl);
+                            showToast('Link copied! Please share it on Facebook manually.');
+                        });
+                    }
                     break;
+                    
                 case 'twitter':
-                    shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(gameText)}&url=${encodeURIComponent(gameUrl)}`;
+                    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(gameText)}&url=${encodeURIComponent(gameUrl)}`;
+                    shareWithFallback('twitter', twitterUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Twitter manually.');
+                    });
                     break;
+                    
                 case 'instagram':
-                    copyToClipboard(gameUrl);
-                    alert('Game link copied! You can paste it in Instagram.');
-                    return;
+                    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                        // 移动端尝试直接分享
+                        const instagramUrl = `instagram://library?AssetPath=${encodeURIComponent(gameUrl)}`;
+                        window.location.href = instagramUrl;
+                        setTimeout(() => {
+                            copyToClipboard(gameUrl);
+                            showToast('Link copied! Open Instagram to share.');
+                        }, 1000);
+                    } else {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Open Instagram to share.');
+                    }
+                    break;
+                    
                 case 'reddit':
-                    shareUrl = `https://reddit.com/submit?url=${encodeURIComponent(gameUrl)}&title=${encodeURIComponent(gameTitle)}`;
+                    const redditUrl = `https://reddit.com/submit?url=${encodeURIComponent(gameUrl)}&title=${encodeURIComponent(gameTitle)}`;
+                    shareWithFallback('reddit', redditUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Reddit manually.');
+                    });
                     break;
+                    
                 case 'whatsapp':
-                    shareUrl = `https://wa.me/?text=${encodeURIComponent(gameText + ' ' + gameUrl)}`;
+                    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(gameText + ' ' + gameUrl)}`;
+                    shareWithFallback('whatsapp', whatsappUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on WhatsApp manually.');
+                    });
                     break;
+                    
                 case 'telegram':
-                    shareUrl = `https://t.me/share/url?url=${encodeURIComponent(gameUrl)}&text=${encodeURIComponent(gameText)}`;
+                    const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(gameUrl)}&text=${encodeURIComponent(gameText)}`;
+                    shareWithFallback('telegram', telegramUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Telegram manually.');
+                    });
                     break;
+                    
                 case 'discord':
-                    copyToClipboard(gameUrl);
-                    alert('Game link copied! You can paste it in Discord.');
-                    return;
+                    const discordUrl = `https://discord.com/channels/@me?content=${encodeURIComponent(gameText + ' ' + gameUrl)}`;
+                    shareWithFallback('discord', discordUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Discord manually.');
+                    });
+                    break;
+                    
                 case 'snapchat':
-                    copyToClipboard(gameUrl);
-                    alert('Game link copied! You can paste it in Snapchat.');
-                    return;
+                    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                        // 移动端尝试直接分享
+                        const snapchatUrl = `snapchat://share?text=${encodeURIComponent(gameText)}&url=${encodeURIComponent(gameUrl)}`;
+                        window.location.href = snapchatUrl;
+                        setTimeout(() => {
+                            copyToClipboard(gameUrl);
+                            showToast('Link copied! Open Snapchat to share.');
+                        }, 1000);
+                    } else {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Open Snapchat to share.');
+                    }
+                    break;
             }
             
-            if (shareUrl) {
-                // 直接在新标签页打开，不弹窗
-                window.open(shareUrl, '_blank');
-                hideShareModal();
+            hideShareModal();
+        }
+        
+        function shareWithFallback(platform, shareUrl, fallbackAction) {
+            const newWindow = window.open(shareUrl, '_blank');
+            
+            // 检测窗口是否被阻止或失败
+            if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+                fallbackAction();
             }
+        }
+        
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 ease-in-out';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            // 动画效果
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'scale-95');
+            }, 2500);
+            
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.remove();
+                }
+            }, 3000);
         }
         
         function copyToClipboard(text) {
@@ -463,23 +523,11 @@
             });
         }
         
-        function generateQRCode() {
+        function copyGameLink() {
             const gameUrl = window.location.href;
-            const qrModal = document.getElementById('qrModal');
-            const qrCode = document.getElementById('qrCode');
-            
-            // 简单的QR码生成（实际项目中建议使用专业库）
-            qrCode.innerHTML = `<div class="text-center p-4">
-                <div class="text-sm text-gray-600 mb-2">Scan to play</div>
-                <div class="text-xs text-gray-500">${gameUrl}</div>
-            </div>`;
-            
-            qrModal.classList.remove('hidden');
-        }
-        
-        function hideQRModal() {
-            const qrModal = document.getElementById('qrModal');
-            qrModal.classList.add('hidden');
+            copyToClipboard(gameUrl);
+            hideShareModal();
+            showToast('Game link copied to clipboard!');
         }
         function toggleFavorite() { const icon = document.getElementById('favoriteIcon'); const text = document.getElementById('favoriteText'); if (icon.classList.contains('text-red-500')) { icon.classList.remove('text-red-500'); text.textContent = 'Favorite'; } else { icon.classList.add('text-red-500'); text.textContent = 'Favorited'; } }
     </script>
