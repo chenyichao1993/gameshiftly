@@ -352,25 +352,16 @@
             }
         }
         setCategory('Arcade & Classic');
-        function goToGame(game) { window.location.href = game; }
         function toggleFullscreen() {
             const iframe = document.querySelector('iframe');
-            if (document.fullscreenElement) { document.exitFullscreen(); } else { iframe.requestFullscreen(); }
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                iframe.requestFullscreen();
+            }
         }
         function shareGame() {
-            // 移动端优先使用原生分享API
-            if (navigator.share && /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                navigator.share({
-                    title: 'Pacman - GameShiftly',
-                    text: 'Check out this awesome Pacman game on GameShiftly! 🎮',
-                    url: window.location.href
-                }).catch(err => {
-                    console.log('Native sharing failed, falling back to modal');
-                    showShareModal();
-                });
-            } else {
-                showShareModal();
-            }
+            showShareModal();
         }
         
         function showShareModal() {
@@ -387,139 +378,41 @@
             const gameUrl = window.location.href;
             const gameTitle = 'Pacman - GameShiftly';
             const gameText = 'Check out this awesome Pacman game on GameShiftly! 🎮';
-            const isLocal = window.location.protocol === 'file:';
             
             switch(platform) {
                 case 'facebook':
-                    if (isLocal) {
-                        copyToClipboard(gameUrl);
-                        showToast('Link copied! Please share it on Facebook manually.');
-                    } else {
-                        const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(gameUrl)}`;
-                        shareWithFallback('facebook', shareUrl, () => {
-                            copyToClipboard(gameUrl);
-                            showToast('Link copied! Please share it on Facebook manually.');
-                        });
-                    }
+                    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(gameUrl)}`;
+                    window.open(facebookUrl, '_blank');
                     break;
-                    
                 case 'twitter':
                     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(gameText)}&url=${encodeURIComponent(gameUrl)}`;
-                    shareWithFallback('twitter', twitterUrl, () => {
-                        copyToClipboard(gameUrl);
-                        showToast('Link copied! Please share it on Twitter manually.');
-                    });
+                    window.open(twitterUrl, '_blank');
                     break;
-                    
-                case 'instagram':
-                    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                        const instagramUrl = `instagram://library?AssetPath=${encodeURIComponent(gameUrl)}`;
-                        window.location.href = instagramUrl;
-                        setTimeout(() => {
-                            copyToClipboard(gameUrl);
-                            showToast('Link copied! Open Instagram to share.');
-                        }, 1000);
-                    } else {
-                        copyToClipboard(gameUrl);
-                        showToast('Link copied! Open Instagram to share.');
-                    }
-                    break;
-                    
-                case 'reddit':
-                    const redditUrl = `https://reddit.com/submit?url=${encodeURIComponent(gameUrl)}&title=${encodeURIComponent(gameTitle)}`;
-                    shareWithFallback('reddit', redditUrl, () => {
-                        copyToClipboard(gameUrl);
-                        showToast('Link copied! Please share it on Reddit manually.');
-                    });
-                    break;
-                    
                 case 'whatsapp':
                     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(gameText + ' ' + gameUrl)}`;
-                    shareWithFallback('whatsapp', whatsappUrl, () => {
-                        copyToClipboard(gameUrl);
-                        showToast('Link copied! Please share it on WhatsApp manually.');
-                    });
+                    window.open(whatsappUrl, '_blank');
                     break;
-                    
                 case 'telegram':
                     const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(gameUrl)}&text=${encodeURIComponent(gameText)}`;
-                    shareWithFallback('telegram', telegramUrl, () => {
-                        copyToClipboard(gameUrl);
-                        showToast('Link copied! Please share it on Telegram manually.');
-                    });
-                    break;
-                    
-                case 'discord':
-                    const discordUrl = `https://discord.com/channels/@me?content=${encodeURIComponent(gameText + ' ' + gameUrl)}`;
-                    shareWithFallback('discord', discordUrl, () => {
-                        copyToClipboard(gameUrl);
-                        showToast('Link copied! Please share it on Discord manually.');
-                    });
-                    break;
-                    
-                case 'snapchat':
-                    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                        const snapchatUrl = `snapchat://share?text=${encodeURIComponent(gameText)}&url=${encodeURIComponent(gameUrl)}`;
-                        window.location.href = snapchatUrl;
-                        setTimeout(() => {
-                            copyToClipboard(gameUrl);
-                            showToast('Link copied! Open Snapchat to share.');
-                        }, 1000);
-                    } else {
-                        copyToClipboard(gameUrl);
-                        showToast('Link copied! Open Snapchat to share.');
-                    }
+                    window.open(telegramUrl, '_blank');
                     break;
             }
-            
             hideShareModal();
-        }
-        
-        function shareWithFallback(platform, shareUrl, fallbackAction) {
-            const newWindow = window.open(shareUrl, '_blank');
-            
-            if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
-                fallbackAction();
-            }
-        }
-        
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 ease-in-out';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'scale-95');
-            }, 2500);
-            
-            setTimeout(() => {
-                if (toast.parentNode) {
-                    toast.remove();
-                }
-            }, 3000);
-        }
-        
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                console.log('Link copied to clipboard');
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
         }
         
         function copyGameLink() {
             const gameUrl = window.location.href;
-            copyToClipboard(gameUrl);
+            navigator.clipboard.writeText(gameUrl).then(() => {
+                alert('Link copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
             hideShareModal();
-            showToast('Game link copied to clipboard!');
         }
         
         // 游戏数据库 - 只包含网站实际存在的游戏
         const gamesDatabase = [
-            { name: 'Tetris', category: 'Arcade & Classic', url: 'tetris/', tags: ['puzzle', 'blocks', 'retro', 'classic', 'tetris'] },
             { name: 'Pacman', category: 'Arcade & Classic', url: 'pacman.html', tags: ['maze', 'arcade', 'retro', 'ghosts', 'pacman'] },
-            { name: 'Flappy Bird', category: 'Arcade & Classic', url: 'flappybird/', tags: ['bird', 'skill', 'endless', 'pixel', 'flappy'] },
             { name: 'Minesweeper', category: 'Thinking', url: 'minesweeper.html', tags: ['logic', 'puzzle', 'mines', 'strategy', 'minesweeper'] }
         ];
 
@@ -619,44 +512,12 @@
             }
         }
         
-        // 跳转到游戏页面
-        function goToGame(url) {
-            if (url && url !== '#') {
-                window.location.href = url;
-            }
-        }
-        
         // 页面加载完成后的初始化
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Page loaded, initializing search...');
             initializeSearch();
             console.log('Search initialized');
         });
-        
-        // 登录和注册模态框功能
-        function showLoginModal() {
-            const modal = document.getElementById('loginModal');
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function hideLoginModal() {
-            const modal = document.getElementById('loginModal');
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-        
-        function showRegisterModal() {
-            const modal = document.getElementById('registerModal');
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function hideRegisterModal() {
-            const modal = document.getElementById('registerModal');
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
         
         function handleLogin(event) {
             event.preventDefault();
@@ -785,7 +646,17 @@
                 hideShareModal();
             }
         });
-        function toggleFavorite() { const icon = document.getElementById('favoriteIcon'); const text = document.getElementById('favoriteText'); if (icon.classList.contains('text-red-500')) { icon.classList.remove('text-red-500'); text.textContent = 'Favorite'; } else { icon.classList.add('text-red-500'); text.textContent = 'Favorited'; } }
+        function toggleFavorite() {
+            const icon = document.getElementById('favoriteIcon');
+            const text = document.getElementById('favoriteText');
+            if (icon.classList.contains('text-red-500')) {
+                icon.classList.remove('text-red-500');
+                text.textContent = 'Favorite';
+            } else {
+                icon.classList.add('text-red-500');
+                text.textContent = 'Favorited';
+            }
+        }
     </script>
     
     <!-- 登录模态框 -->
