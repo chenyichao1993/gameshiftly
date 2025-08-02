@@ -241,7 +241,17 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
             <!-- Game Area 直接平铺 -->
             <div class="lg:col-span-3">
-                <iframe src="tetris/index.html" width="100%" height="600" style="border:none;"></iframe>
+                <iframe id="tetrisGame" src="tetris/index.html" width="100%" height="600" style="border:none;" onload="handleTetrisLoad()" onerror="handleTetrisError()"></iframe>
+                <div id="tetrisError" class="hidden bg-gray-100 rounded-lg p-8 text-center">
+                    <div class="text-gray-600 mb-4">
+                        <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Game Loading Issue</h3>
+                        <p class="mb-4">The Tetris game is temporarily unavailable. Please try refreshing the page or check back later.</p>
+                        <button onclick="retryTetrisGame()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                            <i class="fas fa-redo mr-2"></i>Retry
+                        </button>
+                    </div>
+                </div>
             </div>
             <!-- Sidebar -->
             <div class="lg:col-span-1">
@@ -928,5 +938,47 @@
             </div>
         </div>
     </div>
+    
+    <script>
+        // 处理Tetris游戏加载问题
+        function handleTetrisLoad() {
+            console.log('Tetris game iframe loaded successfully');
+            document.getElementById('tetrisError').classList.add('hidden');
+        }
+        
+        function handleTetrisError() {
+            console.log('Tetris game iframe failed to load');
+            document.getElementById('tetrisGame').classList.add('hidden');
+            document.getElementById('tetrisError').classList.remove('hidden');
+        }
+        
+        function retryTetrisGame() {
+            const iframe = document.getElementById('tetrisGame');
+            const errorDiv = document.getElementById('tetrisError');
+            
+            iframe.classList.remove('hidden');
+            errorDiv.classList.add('hidden');
+            
+            // 重新加载iframe
+            iframe.src = iframe.src;
+        }
+        
+        // 检查iframe是否在5秒内加载完成
+        setTimeout(function() {
+            const iframe = document.getElementById('tetrisGame');
+            const errorDiv = document.getElementById('tetrisError');
+            
+            try {
+                // 尝试访问iframe内容，如果失败说明加载有问题
+                if (iframe.contentWindow && iframe.contentWindow.location.href) {
+                    console.log('Tetris iframe loaded successfully');
+                }
+            } catch (e) {
+                console.log('Tetris iframe loading issue detected:', e);
+                iframe.classList.add('hidden');
+                errorDiv.classList.remove('hidden');
+            }
+        }, 5000);
+    </script>
 </body>
 </html> 
