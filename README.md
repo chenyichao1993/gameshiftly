@@ -1,216 +1,219 @@
-# GameShiftly - 免费在线游戏平台
+# GameShiftly - 在线游戏平台
 
-这是一个基于Y8.com设计的现代化在线游戏平台，提供了完整的游戏网站功能和用户体验。
+一个功能完整的在线游戏平台，包含用户认证系统和多个经典游戏。
 
-## 🎮 项目特点
+## 功能特性
 
-### 核心功能
-- **游戏分类系统** - 包含驾驶、射击、女生游戏、格斗、思维、管理等分类
-- **游戏搜索功能** - 支持搜索90,000+游戏
-- **用户系统** - 登录、注册、收藏功能
-- **游戏评分系统** - 星级评分和用户评论
-- **响应式设计** - 完美适配桌面端和移动端
-- **现代化UI** - 使用Tailwind CSS构建的美观界面
+### 🎮 游戏功能
+- **Tetris** - 经典俄罗斯方块
+- **Pacman** - 吃豆人游戏
+- **Flappy Bird** - 像素鸟游戏
+- **Minesweeper** - 扫雷游戏
+- **搜索功能** - 实时游戏搜索
+- **分享功能** - 社交媒体分享
 
-### 技术栈
-- **前端框架**: HTML5 + CSS3 + JavaScript
-- **样式框架**: Tailwind CSS
-- **图标库**: Font Awesome
-- **响应式设计**: 移动优先设计理念
+### 👤 用户系统
+- **用户注册** - 安全的用户注册
+- **用户登录** - JWT token认证
+- **用户资料** - 个人信息管理
+- **密码加密** - bcrypt安全加密
+- **会话管理** - 自动登录状态保持
 
-## 📁 项目结构
+### 🎨 界面设计
+- **响应式设计** - 适配桌面和移动设备
+- **现代UI** - 使用Tailwind CSS
+- **动画效果** - 流畅的交互动画
+- **用户友好** - 直观的操作界面
 
+## 技术栈
+
+### 前端
+- **HTML5** - 页面结构
+- **CSS3** - 样式设计 (Tailwind CSS)
+- **JavaScript** - 交互逻辑
+- **Font Awesome** - 图标库
+
+### 后端
+- **Node.js** - 服务器运行环境
+- **Express.js** - Web框架
+- **SQLite** - 轻量级数据库
+- **bcryptjs** - 密码加密
+- **jsonwebtoken** - JWT认证
+- **CORS** - 跨域支持
+
+## 安装和运行
+
+### 1. 安装依赖
+
+```bash
+npm install
 ```
-gameshiftly/
-├── gameshiftly.html           # 主页面 - 游戏分类展示
-├── gameshiftly-category.html  # 分类页面 - 特定分类游戏列表
-├── gameshiftly-game.html      # 游戏详情页 - 单个游戏信息
-├── index.html                 # 原有游戏平台首页
-├── game-*.html               # 各种游戏页面
-├── img/                      # 游戏图片资源
-├── 2048/                     # 2048游戏完整代码
-├── flappybird/               # Flappy Bird游戏完整代码
-├── tetris/                   # 俄罗斯方块游戏完整代码
-└── README.md                 # 项目说明文档
+
+### 2. 启动服务器
+
+```bash
+# 开发模式（自动重启）
+npm run dev
+
+# 生产模式
+npm start
 ```
 
-## 🚀 快速开始
+### 3. 访问网站
 
-### 1. 查看主页面
-打开 `gameshiftly.html` 查看完整的GameShiftly游戏平台首页，包含：
-- 顶部导航栏（Logo、搜索、登录/注册）
-- 游戏分类横向滚动展示
-- 热门游戏网格布局
-- 最新游戏区域
-- 页脚信息
+打开浏览器访问：`http://localhost:3000`
 
-### 2. 浏览分类页面
-打开 `gameshiftly-category.html` 查看特定分类的游戏列表，包含：
-- 面包屑导航
-- 分类筛选功能
-- 游戏排序选项
-- 分页功能
-- 游戏统计信息
+## API 接口
 
-### 3. 查看游戏详情
-打开 `gameshiftly-game.html` 查看单个游戏的详细信息，包含：
-- 游戏基本信息
-- 游戏截图展示
-- 用户评论系统
-- 相关游戏推荐
-- 游戏统计数据
+### 用户认证
 
-## 🎯 主要页面功能
+#### 注册用户
+```
+POST /api/register
+Content-Type: application/json
 
-### 主页面 (gameshiftly.html)
-- **游戏分类展示**: 6个主要分类，每个分类显示游戏数量和预览图
-- **热门游戏**: 8个精选游戏，包含评分和分类标签
-- **最新游戏**: 展示最新添加的游戏
-- **搜索功能**: 支持搜索90,000+游戏
-- **响应式设计**: 完美适配各种屏幕尺寸
-
-### 分类页面 (gameshiftly-category.html)
-- **筛选功能**: 按游戏类型筛选（Racing、Simulation、Stunt等）
-- **排序选项**: 按人气、最新、评分、播放量排序
-- **分页系统**: 支持大量游戏的分页浏览
-- **游戏卡片**: 包含游戏截图、评分、播放量、发布时间等信息
-
-### 游戏详情页 (gameshiftly-game.html)
-- **游戏信息**: 详细描述、评分、播放量、发布时间
-- **截图展示**: 6张游戏截图，支持点击查看
-- **用户评论**: 评论列表和评分系统
-- **相关游戏**: 智能推荐相似游戏
-- **游戏统计**: 播放量、评分、评论数等数据
-
-## 🎨 设计特色
-
-### 视觉设计
-- **现代化界面**: 使用Tailwind CSS构建的清新界面
-- **游戏卡片效果**: 悬停动画和阴影效果
-- **分类色彩**: 不同分类使用不同主题色彩
-- **响应式布局**: 完美适配桌面、平板、手机
-
-### 交互体验
-- **平滑动画**: 卡片悬停、按钮点击等动画效果
-- **直观导航**: 清晰的面包屑导航和分类筛选
-- **快速加载**: 优化的图片和资源加载
-- **用户友好**: 简洁明了的操作界面
-
-## 🔧 自定义配置
-
-### 修改主题色彩
-在HTML文件的`<style>`标签中修改CSS变量：
-```css
-:root {
-    --primary-color: #ef4444;    /* 主色调 */
-    --secondary-color: #dc2626;  /* 次要色调 */
-    --accent-color: #f59e0b;     /* 强调色 */
+{
+  "username": "用户名",
+  "email": "邮箱",
+  "password": "密码"
 }
 ```
 
-### 添加新游戏
-1. 在游戏网格中添加新的游戏卡片
-2. 更新游戏分类和标签
-3. 添加游戏截图和描述
-4. 更新相关游戏推荐
+#### 用户登录
+```
+POST /api/login
+Content-Type: application/json
 
-### 修改分类
-在分类区域添加或修改游戏分类：
-```html
-<div class="category-card bg-white rounded-lg shadow-md p-6 min-w-[280px]">
-    <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold">新分类名称</h3>
-        <span class="text-sm text-gray-500">游戏数量</span>
-    </div>
-    <!-- 分类内容 -->
-</div>
+{
+  "email": "邮箱",
+  "password": "密码"
+}
 ```
 
-## 📱 移动端适配
+#### 获取用户信息
+```
+GET /api/user
+Authorization: Bearer <token>
+```
 
-项目完全支持移动端访问：
-- **响应式布局**: 自动适配不同屏幕尺寸
-- **触摸友好**: 按钮和链接适合触摸操作
-- **快速加载**: 优化的移动端性能
-- **简洁界面**: 移动端优化的界面布局
+#### 更新用户信息
+```
+PUT /api/user
+Authorization: Bearer <token>
+Content-Type: application/json
 
-## 🌟 特色功能
+{
+  "username": "新用户名",
+  "email": "新邮箱"
+}
+```
 
-### 游戏分类系统
-- **驾驶游戏**: 赛车、模拟驾驶、停车等
-- **射击游戏**: FPS、狙击、战争等
-- **女生游戏**: 装扮、化妆、公主等
-- **格斗游戏**: 拳击、武术、战斗等
-- **思维游戏**: 益智、棋类、解谜等
-- **管理游戏**: 模拟经营、策略等
+#### 更改密码
+```
+PUT /api/user/password
+Authorization: Bearer <token>
+Content-Type: application/json
 
-### 用户交互
-- **游戏收藏**: 用户可以收藏喜欢的游戏
-- **评分系统**: 5星评分系统
-- **评论功能**: 用户可以对游戏进行评论
-- **分享功能**: 分享游戏到社交媒体
+{
+  "currentPassword": "当前密码",
+  "newPassword": "新密码"
+}
+```
 
-### 数据展示
-- **游戏统计**: 播放量、评分、评论数
-- **热门排行**: 基于播放量的游戏排行
-- **最新游戏**: 实时更新的最新游戏
-- **推荐系统**: 基于用户行为的游戏推荐
+#### 删除账户
+```
+DELETE /api/user
+Authorization: Bearer <token>
+```
 
-## 🚀 部署说明
+### 健康检查
+```
+GET /api/health
+```
 
-### 本地运行
-1. 下载所有文件到本地目录
-2. 使用现代浏览器打开 `gameshiftly.html`
-3. 确保网络连接正常（用于加载CDN资源）
+## 数据库结构
+
+### users 表
+```sql
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    last_login DATETIME,
+    is_active BOOLEAN DEFAULT 1
+);
+```
+
+## 安全特性
+
+- **密码加密** - 使用bcrypt进行密码哈希
+- **JWT认证** - 安全的token认证机制
+- **请求限制** - 防止暴力攻击
+- **CORS配置** - 安全的跨域设置
+- **输入验证** - 全面的数据验证
+- **SQL注入防护** - 参数化查询
+
+## 文件结构
+
+```
+gameshiftly/
+├── gameshiftly.html          # 主页面
+├── game-tetris.html          # Tetris游戏页面
+├── game-pacman.html          # Pacman游戏页面
+├── game-flappybird.html      # Flappy Bird游戏页面
+├── game-minesweeper.html     # Minesweeper游戏页面
+├── game-template.html        # 游戏页面模板
+├── auth.js                   # 前端认证脚本
+├── server.js                 # 后端服务器
+├── package.json              # 项目配置
+├── users.db                  # SQLite数据库（自动生成）
+└── README.md                 # 项目说明
+```
+
+## 开发指南
+
+### 添加新游戏
+
+1. 复制 `game-template.html` 创建新游戏页面
+2. 在 `gameshiftly.html` 中添加游戏卡片
+3. 更新搜索数据库中的游戏列表
+
+### 自定义样式
+
+项目使用Tailwind CSS，可以通过修改类名或添加自定义CSS来自定义样式。
+
+### 扩展功能
+
+- 添加用户头像上传
+- 实现游戏分数记录
+- 添加用户排行榜
+- 集成支付系统
+- 添加游戏评论功能
+
+## 部署
+
+### 本地部署
+1. 安装Node.js
+2. 运行 `npm install`
+3. 运行 `npm start`
+4. 访问 `http://localhost:3000`
 
 ### 服务器部署
-1. 将所有文件上传到Web服务器
-2. 确保服务器支持静态文件服务
-3. 配置域名和SSL证书（推荐）
-4. 设置适当的缓存策略
+1. 上传代码到服务器
+2. 安装依赖：`npm install --production`
+3. 使用PM2启动：`pm2 start server.js`
+4. 配置Nginx反向代理
 
-### CDN资源
-项目使用了以下CDN资源：
-- Tailwind CSS: `https://cdn.tailwindcss.com`
-- Font Awesome: `https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css`
+## 许可证
 
-## 🔮 未来计划
+MIT License
 
-### 功能扩展
-- [ ] 用户注册和登录系统
-- [ ] 游戏收藏和播放历史
-- [ ] 实时聊天功能
-- [ ] 游戏排行榜系统
-- [ ] 多语言支持
+## 贡献
 
-### 技术优化
-- [ ] 游戏加载优化
-- [ ] 图片懒加载
-- [ ] 缓存策略优化
-- [ ] SEO优化
-- [ ] 性能监控
+欢迎提交Issue和Pull Request来改进项目！
 
-### 内容扩展
-- [ ] 更多游戏分类
-- [ ] 游戏视频功能
-- [ ] 游戏攻略和教程
-- [ ] 用户生成内容
-- [ ] 游戏开发者平台
+## 联系方式
 
-## 📄 许可证
-
-本项目仅用于学习和演示目的。请遵守相关法律法规，不要用于商业用途。
-
-## 🤝 贡献
-
-欢迎提交Issue和Pull Request来改进这个项目！
-
-## 📞 联系方式
-
-如有问题或建议，请通过以下方式联系：
-- 提交GitHub Issue
-- 发送邮件到项目维护者
-
----
-
-**注意**: 这是一个演示项目，展示了如何构建类似Y8.com的游戏平台。所有游戏内容和图片仅用于演示目的。GameShiftly是您的专属游戏平台品牌。 
+如有问题或建议，请通过GitHub Issues联系。 
