@@ -964,40 +964,23 @@
             const iframe = document.getElementById('pacmanGame');
             const errorDiv = document.getElementById('gameError');
             
-            // 检查iframe是否加载了正确的内容
-            function checkIframeContent() {
-                try {
-                    // 检查iframe是否加载了父页面内容
-                    if (iframe.contentWindow && iframe.contentWindow.document) {
-                        const iframeDoc = iframe.contentWindow.document;
-                        const iframeTitle = iframeDoc.title || iframeDoc.querySelector('title');
-                        
-                        // 如果iframe加载的是父页面内容，显示错误
-                        if (iframeTitle && iframeTitle.textContent.includes('Pacman')) {
-                            console.log('Pacman iframe loaded parent page content');
-                            iframe.style.display = 'none';
-                            errorDiv.classList.remove('hidden');
-                            return;
-                        }
-                        
-                        // 检查是否有游戏特有的元素
-                        const gameCanvas = iframeDoc.querySelector('canvas');
-                        if (gameCanvas) {
-                            console.log('Pacman iframe loaded successfully');
-                            errorDiv.classList.add('hidden');
-                            return;
-                        }
-                    }
-                } catch (e) {
-                    console.log('Pacman iframe cross-origin or loading issue:', e);
+                    // 5秒后检查iframe是否正常加载
+        setTimeout(function() {
+            try {
+                // 尝试访问iframe内容
+                if (iframe.contentWindow && iframe.contentWindow.location.href) {
+                    console.log('Pacman iframe loaded successfully');
+                    errorDiv.classList.add('hidden');
+                } else {
+                    throw new Error('Iframe not loaded');
                 }
-                
-                // 如果无法检测，3秒后再次检查
-                setTimeout(checkIframeContent, 3000);
+            } catch (e) {
+                console.log('Pacman iframe loading issue detected:', e);
+                // 不隐藏iframe，让它继续尝试加载
+                // iframe.classList.add('hidden');
+                // errorDiv.classList.remove('hidden');
             }
-            
-            // 5秒后开始检查
-            setTimeout(checkIframeContent, 5000);
+        }, 5000);
         });
     </script>
 </body>

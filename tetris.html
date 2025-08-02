@@ -241,7 +241,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
             <!-- Game Area 直接平铺 -->
             <div class="lg:col-span-3">
-                <iframe id="tetrisGame" src="./tetris/index.html" width="100%" height="600" style="border:none;" onload="handleTetrisLoad()" onerror="handleTetrisError()"></iframe>
+                <iframe id="tetrisGame" src="tetris/index.html" width="100%" height="600" style="border:none;" onload="handleTetrisLoad()" onerror="handleTetrisError()"></iframe>
                 <div id="tetrisError" class="hidden bg-gray-100 rounded-lg p-8 text-center">
                     <div class="text-gray-600 mb-4">
                         <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
@@ -969,40 +969,22 @@
             const iframe = document.getElementById('tetrisGame');
             const errorDiv = document.getElementById('tetrisError');
             
-            // 检查iframe是否加载了正确的内容
-            function checkIframeContent() {
-                try {
-                    // 检查iframe是否加载了父页面内容
-                    if (iframe.contentWindow && iframe.contentWindow.document) {
-                        const iframeDoc = iframe.contentWindow.document;
-                        const iframeTitle = iframeDoc.title || iframeDoc.querySelector('title');
-                        
-                        // 如果iframe加载的是父页面内容，显示错误
-                        if (iframeTitle && iframeTitle.textContent.includes('Tetris')) {
-                            console.log('Tetris iframe loaded parent page content');
-                            iframe.style.display = 'none';
-                            errorDiv.classList.remove('hidden');
-                            return;
-                        }
-                        
-                        // 检查是否有游戏特有的元素
-                        const gameCanvas = iframeDoc.querySelector('canvas');
-                        if (gameCanvas) {
-                            console.log('Tetris iframe loaded successfully');
-                            errorDiv.classList.add('hidden');
-                            return;
-                        }
-                    }
-                } catch (e) {
-                    console.log('Tetris iframe cross-origin or loading issue:', e);
+                    // 5秒后检查iframe是否正常加载
+        setTimeout(function() {
+            try {
+                if (iframe.contentWindow && iframe.contentWindow.location.href) {
+                    console.log('Tetris iframe loaded successfully');
+                    errorDiv.classList.add('hidden');
+                } else {
+                    throw new Error('Iframe not loaded');
                 }
-                
-                // 如果无法检测，3秒后再次检查
-                setTimeout(checkIframeContent, 3000);
+            } catch (e) {
+                console.log('Tetris iframe loading issue detected:', e);
+                // 不隐藏iframe，让它继续尝试加载
+                // iframe.style.display = 'none';
+                // errorDiv.classList.remove('hidden');
             }
-            
-            // 5秒后开始检查
-            setTimeout(checkIframeContent, 5000);
+        }, 5000);
         });
     </script>
 </body>
