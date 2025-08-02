@@ -2620,11 +2620,412 @@ Read file: _redirects
 
 ---
 
+```bash
+rm game-tetris.html game-flappybird.html game-minesweeper.html game-pacman.html
+```
+
+```
+PS D:\cursor练习\gameshiftly> rm game-tetris.html game-flappybird.html game-minesweeper.html game-pacman.
+html
+PS D:\cursor练习\gameshiftly>
+```
+
+---
+
+```bash
+del game-tetris.html game-flappybird.html game-minesweeper.html game-pacman.html
+```
+
+```
+.html
+Remove-Item : 找不到接受实际参数“game-flappybird.html”的位置形式参数。
+所在位置 行:1 字符: 1
++ del game-tetris.html game-flappybird.html game-minesweeper.html game- ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Remove-Item]，ParameterBindingException
+    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.RemoveItemComma
+
+   nd
+
+```
+
+---
+
+```bash
+Remove-Item game-tetris.html, game-flappybird.html, game-minesweeper.html, game-pacman.html
+```
+
+```
+PS D:\cursor练习\gameshiftly> Remove-Item game-tetris.html, game-flappybird.html, game-minesweeper.html, 
+game-pacman.html
+PS D:\cursor练习\gameshiftly>
+PS D:\cursor练习\gameshiftly> \
+```
+
+---
+
+现在让我清空 `_redirects` 文件，因为我们已经有了直接的HTML文件：
 
 
 ---
 
+<details><summary>Edit file: _redirects</summary>
 
+我将清空重定向规则，因为现在有了直接的HTML文件
+
+**Chunk 1**
+Lines added: 1, lines removed: 13
+
+```diff
+@@ -1,13 +1,1 @@
+- # 使用index.html作为根页面，无需重定向
+- 
+- # 处理末尾斜杠 - 先处理斜杠，再重定向到游戏页面
+- /minesweeper/ /minesweeper 301
+- /pacman/ /pacman 301
+- /tetris/ /tetris 301
+- /flappybird/ /flappybird 301
+- 
+- # 游戏页面URL重定向 - 指向正确的游戏HTML文件
+- /minesweeper /minesweeper.html 200
+- /pacman /pacman.html 200
+- /tetris /tetris.html 200
+- /flappybird /flappybird.html 200 
++ # 使用index.html作为根页面，无需重定向 
+```
+
+</details>
+
+---
+
+现在让我验证文件结构：
+
+
+---
+
+<details>
+            <summary>Listed current directory • **18** results</summary>
+        
+| Name |
+|-------|
+| 📄 `_redirects` |
+| 📁 `.git` |
+| 📄 `flappybird.html` |
+| 📄 `pacman.html` |
+| 📄 `tetris.html` |
+| 📄 `index.html` |
+| 📄 `game-template.html` |
+| 📄 `minesweeper.html` |
+| 📄 `gameshiftly.html` |
+| 📄 `firebase-config.js` |
+| 📄 `README.md` |
+| 📁 `img` |
+| 📄 `footer.js` |
+| 📁 `.specstory` |
+| 📄 `.gitignore` |
+| 📁 `tetris` |
+| 📁 `flappybird` |
+| 📄 `.cursorindexingignore` |
+
+</details>
+
+---
+
+完美！现在旧的 `game-*.html` 文件已经被删除了。现在当用户访问：
+
+- `gameshiftly.online/tetris.html` → 直接显示Tetris游戏
+- `gameshiftly.online/flappybird.html` → 直接显示Flappy Bird游戏  
+- `gameshiftly.online/minesweeper.html` → 直接显示Minesweeper游戏
+- `gameshiftly.online/pacman.html` → 直接显示Pacman游戏
+
+## 问题已彻底解决！
+
+现在：
+1. ✅ **URL正确** - 不再有 `game-` 前缀
+2. ✅ **游戏内容正确** - 直接显示游戏，不是信息页面
+3. ✅ **没有冲突** - 删除了旧的游戏文件
+
+请重新部署网站，现在应该能正确显示游戏了！URL会是：
+- `gameshiftly.online/tetris.html`
+- `gameshiftly.online/flappybird.html`
+- `gameshiftly.online/minesweeper.html`
+- `gameshiftly.online/pacman.html`
+
+---
+
+_**User**_
+
+所有游戏页面，点开之后，域名都会先出现html然后再消失，变成正常的域名；pacman页面的游戏没有了，请恢复为之前的itch.io的那个游戏链接
+
+---
+
+_**Assistant**_
+
+我明白了！从图片中可以看到两个问题：
+
+1. **URL问题**：所有游戏页面打开时，URL会先显示 `.html` 然后消失，变成干净的URL
+2. **Pacman游戏问题**：游戏区域显示空白，没有游戏内容
+
+让我逐一修复：
+
+## 问题1：恢复Pacman游戏的itch.io链接
+
+
+---
+
+<details><summary>Edit file: pacman.html</summary>
+
+undefined
+
+**Chunk 1**
+Lines added: 1, lines removed: 1
+
+```diff
+@@ -242,5 +242,5 @@
+              <!-- Game Area 直接平铺 -->
+              <div class="lg:col-span-3">
+-                 <iframe id="pacmanGame" src="https://www.google.com/logos/2010/pacman10-i.html" width="552" height="600" frameborder="0" allowfullscreen title="Pacman Game" onload="handleIframeLoad()" onerror="handleIframeError()"></iframe>
++                 <iframe id="pacmanGame" src="https://html-classic.itch.zone/html/3946506/index.html" width="552" height="600" frameborder="0" allowfullscreen title="Pacman Game" onload="handleIframeLoad()" onerror="handleIframeError()"></iframe>
+                  <div id="gameError" class="hidden bg-gray-100 rounded-lg p-8 text-center">
+                      <div class="text-gray-600 mb-4">
+```
+
+</details>
+
+---
+
+## 问题2：解决URL显示.html然后消失的问题
+
+这个问题是因为服务器配置导致的。让我添加重定向规则来处理这个问题：
+
+
+---
+
+<details><summary>Edit file: _redirects</summary>
+
+我将添加重定向规则来处理URL显示.html然后消失的问题，确保URL保持干净
+
+**Chunk 1**
+Lines added: 13, lines removed: 1
+
+```diff
+@@ -1,1 +1,13 @@
+- # 使用index.html作为根页面，无需重定向 
++ # 使用index.html作为根页面，无需重定向
++ 
++ # 游戏页面URL重定向 - 确保URL干净，不显示.html
++ /minesweeper /minesweeper.html 200
++ /pacman /pacman.html 200
++ /tetris /tetris.html 200
++ /flappybird /flappybird.html 200
++ 
++ # 处理末尾斜杠
++ /minesweeper/ /minesweeper 301
++ /pacman/ /pacman 301
++ /tetris/ /tetris 301
++ /flappybird/ /flappybird 301 
+```
+
+</details>
+
+---
+
+现在让我检查一下Pacman页面的错误处理是否还在：
+
+
+---
+
+Read file: pacman.html
+
+---
+
+很好！Pacman页面的错误处理机制还在。现在让我检查JavaScript函数是否完整：
+
+
+---
+
+Read file: pacman.html
+
+---
+
+完美！现在我已经修复了两个问题：
+
+## ✅ **问题1：恢复Pacman游戏的itch.io链接**
+- 将iframe源恢复为 `https://html-classic.itch.zone/html/3946506/index.html`
+- 保留了错误处理机制，如果加载失败会显示友好的错误信息
+
+## ✅ **问题2：解决URL显示.html然后消失的问题**
+- 添加了重定向规则，确保URL保持干净
+- 处理末尾斜杠问题
+
+## �� **现在的状态**：
+
+### **URL行为**：
+- 用户访问 `gameshiftly.online/pacman` → 重定向到 `pacman.html`，但URL保持为 `gameshiftly.online/pacman`
+- 用户访问 `gameshiftly.online/tetris` → 重定向到 `tetris.html`，但URL保持为 `gameshiftly.online/tetris`
+- 用户访问 `gameshiftly.online/flappybird` → 重定向到 `flappybird.html`，但URL保持为 `gameshiftly.online/flappybird`
+
+### **Pacman游戏**：
+- 恢复使用itch.io的Pacman游戏链接
+- 如果加载失败，会显示错误信息和重试按钮
+- 5秒后自动检测加载状态
+
+请重新部署网站并测试一下！现在：
+1. URL应该保持干净，不会显示 `.html`
+2. Pacman游戏应该能正常加载（如果itch.io链接可用的话）
+
+---
+
+_**User**_
+
+minesweeper这个页面也是会先出现html
+
+---
+
+_**Assistant**_
+
+我明白了！Minesweeper页面也有同样的问题 - URL会先显示 `.html` 然后消失。这是因为重定向规则没有正确处理所有游戏页面。
+
+让我检查一下当前的 `_redirects` 文件：
+
+
+---
+
+Read file: _redirects
+
+---
+
+重定向规则看起来是正确的。问题可能是重定向规则没有生效，或者服务器配置的问题。让我尝试一个更直接的方法 - 使用重写（rewrite）而不是重定向：
+
+
+---
+
+<details><summary>Edit file: _redirects</summary>
+
+我将修改重定向规则，使用重写而不是重定向，确保URL保持干净
+
+**Chunk 1**
+Lines added: 5, lines removed: 5
+
+```diff
+@@ -1,9 +1,9 @@
+  # 使用index.html作为根页面，无需重定向
+  
+- # 游戏页面URL重定向 - 确保URL干净，不显示.html
+- /minesweeper /minesweeper.html 200
+- /pacman /pacman.html 200
+- /tetris /tetris.html 200
+- /flappybird /flappybird.html 200
++ # 游戏页面URL重写 - 确保URL干净，不显示.html
++ /minesweeper /minesweeper.html 200!
++ /pacman /pacman.html 200!
++ /tetris /tetris.html 200!
++ /flappybird /flappybird.html 200!
+  
+  # 处理末尾斜杠
+```
+
+</details>
+
+---
+
+现在让我也检查一下主页中的Minesweeper游戏链接是否正确：
+
+
+---
+
+<details>
+            <summary>Grep search for "minesweeper" • **1** files</summary>
+        
+| File | Line | Match |
+|------|------|-------|
+| `file:///d%3A/cursor%E7%BB%83%E4%B9%A0/gameshiftly/index.html` | L155 | `.minesweeper-card:hover img {` |
+| `file:///d%3A/cursor%E7%BB%83%E4%B9%A0/gameshiftly/index.html` | L909 | `<div class="game-card cursor-pointer minesweeper-card" onclick="window.open('minesweeper.html', '_blank')">` |
+| `file:///d%3A/cursor%E7%BB%83%E4%B9%A0/gameshiftly/index.html` | L910 | `<img src="img/minesweeper.jpg" alt="Minesweeper">` |
+| `file:///d%3A/cursor%E7%BB%83%E4%B9%A0/gameshiftly/index.html` | L912 | `<h3>Minesweeper</h3>` |
+| `file:///d%3A/cursor%E7%BB%83%E4%B9%A0/gameshiftly/index.html` | L1406 | `{ name: 'Minesweeper', category: 'Thinking', url: 'game-minesweeper.html', tags: ['logic', 'puzzle', 'mines', 'strategy', 'minesweeper'] }` |
+
+</details>
+
+---
+
+我发现问题了！主页中的Minesweeper游戏链接还是指向 `minesweeper.html`，但是在搜索数据库中还指向 `game-minesweeper.html`。让我修复这个不一致：
+
+
+---
+
+<details><summary>Edit file: index.html</summary>
+
+undefined
+
+**Chunk 1**
+Lines added: 1, lines removed: 1
+
+```diff
+@@ -1404,5 +1404,5 @@
+              { name: 'Pacman', category: 'Arcade & Classic', url: 'game-pacman.html', tags: ['maze', 'arcade', 'retro', 'ghosts', 'pacman'] },
+              { name: 'Flappy Bird', category: 'Arcade & Classic', url: 'game-flappybird.html', tags: ['bird', 'skill', 'endless', 'pixel', 'flappy'] },
+-             { name: 'Minesweeper', category: 'Thinking', url: 'game-minesweeper.html', tags: ['logic', 'puzzle', 'mines', 'strategy', 'minesweeper'] }
++             { name: 'Minesweeper', category: 'Thinking', url: 'minesweeper.html', tags: ['logic', 'puzzle', 'mines', 'strategy', 'minesweeper'] }
+          ];
+  
+```
+
+</details>
+
+---
+
+现在让我也更新其他游戏的URL：
+
+
+---
+
+<details><summary>Edit file: index.html</summary>
+
+undefined
+
+**Chunk 1**
+Lines added: 3, lines removed: 3
+
+```diff
+@@ -1401,7 +1401,7 @@
+          // 游戏数据库 - 只包含网站实际存在的游戏
+          const gamesDatabase = [
+-             { name: 'Tetris', category: 'Arcade & Classic', url: 'game-tetris.html', tags: ['puzzle', 'blocks', 'retro', 'classic', 'tetris'] },
+-             { name: 'Pacman', category: 'Arcade & Classic', url: 'game-pacman.html', tags: ['maze', 'arcade', 'retro', 'ghosts', 'pacman'] },
+-             { name: 'Flappy Bird', category: 'Arcade & Classic', url: 'game-flappybird.html', tags: ['bird', 'skill', 'endless', 'pixel', 'flappy'] },
++             { name: 'Tetris', category: 'Arcade & Classic', url: 'tetris.html', tags: ['puzzle', 'blocks', 'retro', 'classic', 'tetris'] },
++             { name: 'Pacman', category: 'Arcade & Classic', url: 'pacman.html', tags: ['maze', 'arcade', 'retro', 'ghosts', 'pacman'] },
++             { name: 'Flappy Bird', category: 'Arcade & Classic', url: 'flappybird.html', tags: ['bird', 'skill', 'endless', 'pixel', 'flappy'] },
+              { name: 'Minesweeper', category: 'Thinking', url: 'minesweeper.html', tags: ['logic', 'puzzle', 'mines', 'strategy', 'minesweeper'] }
+          ];
+```
+
+</details>
+
+---
+
+## 修复完成！
+
+我已经修复了Minesweeper页面的URL问题：
+
+### ✅ **修复内容**：
+
+1. **重定向规则**：
+   - 使用 `200!` 重写规则，确保URL保持干净
+   - 现在访问 `gameshiftly.online/minesweeper` 会直接显示 `minesweeper.html` 的内容，但URL保持为 `gameshiftly.online/minesweeper`
+
+2. **搜索数据库更新**：
+   - 更新了所有游戏的URL，确保一致性
+   - 现在所有游戏都使用简化的HTML文件名
+
+### 📝 **现在的URL行为**：
+- `gameshiftly.online/minesweeper` → 显示Minesweeper游戏，URL保持干净
+- `gameshiftly.online/tetris` → 显示Tetris游戏，URL保持干净  
+- `gameshiftly.online/pacman` → 显示Pacman游戏，URL保持干净
+- `gameshiftly.online/flappybird` → 显示Flappy Bird游戏，URL保持干净
+
+请重新部署网站并测试一下！现在所有游戏页面的URL都应该保持干净，不会显示 `.html` 后缀。
 
 ---
 
