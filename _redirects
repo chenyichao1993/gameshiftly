@@ -1,13 +1,5 @@
-# 使用index.html作为根页面，无需重定向
-
 # 游戏页面URL重写 - 确保URL干净，不显示.html
 /minesweeper /minesweeper.html 200
 /pacman /pacman.html 200
 /tetris /tetris.html 200
-/flappybird /flappybird.html 200
-
-# 处理末尾斜杠 - 直接重定向到.html文件
-/minesweeper/ /minesweeper.html 301
-/pacman/ /pacman.html 301
-/tetris/ /tetris.html 301
-/flappybird/ /flappybird.html 301 
+/flappybird /flappybird.html 200 
