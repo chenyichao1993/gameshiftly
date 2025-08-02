@@ -1,0 +1,5 @@
+# 游戏页面URL重写 - 隐藏.html后缀
+/minesweeper /minesweeper.html 200
+/pacman /pacman.html 200
+/tetris /tetris.html 200
+/flappybird /flappybird.html 200 
