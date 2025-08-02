@@ -16,6 +16,8 @@
     <!-- Firebase配置 -->
     <script src="firebase-config.js"></script>
     
+    <script src="header.js"></script>
+    <script src="modals.js"></script>
     <script src="footer.js"></script>
     <style>
         /* 隐藏和美化滚动条 */
@@ -168,55 +170,8 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- 顶部导航栏 -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <!-- 左侧Logo和菜单 -->
-                <div class="flex items-center space-x-4 lg:space-x-8">
-                    <button class="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
-                    
-                    <!-- Logo -->
-                    <a href="index.html" class="flex items-center space-x-2 lg:space-x-3 hover:opacity-80 transition-opacity">
-                        <div class="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
-                            <span class="text-white font-bold text-lg lg:text-xl">GS</span>
-                        </div>
-                        <div class="hidden sm:block">
-                            <h1 class="text-lg lg:text-2xl font-bold text-red-600">GameShiftly</h1>
-                            <p class="text-xs text-gray-500">Free Online Games</p>
-                        </div>
-                    </a>
-                </div>
-                
-                <!-- 搜索框 -->
-                <div class="flex-1 max-w-md lg:max-w-2xl mx-4 lg:mx-8 hidden md:block">
-                    <div class="relative">
-                        <input type="text" 
-                               id="searchInput"
-                               placeholder="Search our games" 
-                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-sm lg:text-base">
-                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
-                        <!-- 搜索建议下拉框 -->
-                        <div id="searchSuggestions" class="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 z-50 hidden max-h-60 overflow-y-auto">
-                            <!-- 搜索建议内容将在这里动态生成 -->
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 右侧按钮 -->
-                <div class="flex items-center space-x-2 lg:space-x-4">
-                    <button onclick="showLoginModal()" class="text-gray-600 hover:text-gray-900 px-2 lg:px-4 py-2 rounded-lg hover:bg-gray-100 text-sm lg:text-base">
-                        Log in
-                    </button>
-                    <button onclick="showRegisterModal()" class="bg-red-600 text-white px-2 lg:px-4 py-2 rounded-lg hover:bg-red-700 transition text-sm lg:text-base">
-                        Register
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
+    <!-- 头部容器 -->
+    <div id="header-container"></div>
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
@@ -288,17 +243,9 @@
                 <div class="game-info-card">
                     <h3 class="text-lg font-semibold mb-3">Related Games</h3>
                     <div class="space-y-2">
-                        <div class="related-game" onclick="goToGame('flappybird.html')">
-                            <img src="img/flappybird.png" alt="Flappy Bird">
-                            <div><div class="font-medium">Flappy Bird</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
-                        </div>
                         <div class="related-game" onclick="goToGame('minesweeper.html')">
                             <img src="img/minesweeper.jpg" alt="Minesweeper">
                             <div><div class="font-medium">Minesweeper</div><div class="text-sm text-gray-500">Thinking</div></div>
-                        </div>
-                        <div class="related-game" onclick="goToGame('tetris.html')">
-                            <img src="img/tetris.jpg" alt="Tetris">
-                            <div><div class="font-medium">Tetris</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
                         </div>
                     </div>
                 </div>
@@ -375,6 +322,9 @@
     </div>
     
 
+    
+    <!-- 模态框容器 -->
+    <div id="modals-container"></div>
     
     <div id="footer-container"></div>
     <script>
@@ -828,15 +778,8 @@
             }, 3000);
         }
         
-        // 点击模态框外部关闭
+        // 点击share弹窗外部关闭
         document.addEventListener('click', function(e) {
-            // 关闭登录和注册模态框
-            if (e.target.classList.contains('modal-overlay')) {
-                e.target.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            }
-            
-            // 关闭share弹窗
             const shareModal = document.getElementById('shareModal');
             if (shareModal && !shareModal.classList.contains('hidden') && e.target === shareModal) {
                 hideShareModal();

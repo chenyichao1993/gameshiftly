@@ -144,13 +144,7 @@
             animation: pacman-eat 1s infinite;
         }
         
-        .tetris-card:hover img {
-            animation: tetris-rotate 2s infinite;
-        }
-        
-        .flappybird-card:hover img {
-            animation: flappy-bounce 0.8s infinite;
-        }
+
         
         .minesweeper-card:hover img {
             animation: mine-pulse 1.5s infinite;
@@ -161,17 +155,7 @@
             50% { transform: scale(1.15) rotate(5deg); }
         }
         
-        @keyframes tetris-rotate {
-            0% { transform: scale(1.1) rotate(0deg); }
-            25% { transform: scale(1.1) rotate(1deg); }
-            75% { transform: scale(1.1) rotate(-1deg); }
-            100% { transform: scale(1.1) rotate(0deg); }
-        }
-        
-        @keyframes flappy-bounce {
-            0%, 100% { transform: scale(1.1) translateY(0); }
-            50% { transform: scale(1.1) translateY(-2px); }
-        }
+
         
         @keyframes mine-pulse {
             0%, 100% { transform: scale(1.1); filter: brightness(1); }
@@ -1266,35 +1250,7 @@
                                     <div class="game-card-preview"></div>
                                 </div>
                                 
-                                <div class="game-card cursor-pointer tetris-card" onclick="window.open('tetris.html', '_blank')">
-                                    <img src="img/tetris.jpg" alt="Tetris">
-                                    <div class="game-card-info">
-                                        <h3>Tetris</h3>
-                                        <div class="flex items-center justify-between">
-                                            <div class="rating">
-                                                <i class="fas fa-star"></i>
-                                                <span>9.0</span>
-                                            </div>
-                                                                                        <span class="category-tag">Arcade & Classic</span>
-                                        </div>
-                                    </div>
-                                    <div class="game-card-preview"></div>
-                                </div>
-                                
-                                <div class="game-card cursor-pointer flappybird-card" onclick="window.open('flappybird.html', '_blank')">
-                                    <img src="img/flappybird.png" alt="Flappy Bird">
-                                    <div class="game-card-info">
-                                        <h3>Flappy Bird</h3>
-                                        <div class="flex items-center justify-between">
-                                            <div class="rating">
-                                                <i class="fas fa-star"></i>
-                                                <span>8.8</span>
-                                            </div>
-                                            <span class="category-tag">Arcade & Classic</span>
-                                        </div>
-                                    </div>
-                                    <div class="game-card-preview"></div>
-                                </div>
+
                                 
                                 <!-- 暂时没有更多可用的街机经典游戏 -->
                                 
@@ -1400,9 +1356,7 @@
         
         // 游戏数据库 - 只包含网站实际存在的游戏
         const gamesDatabase = [
-            { name: 'Tetris', category: 'Arcade & Classic', url: 'tetris.html', tags: ['puzzle', 'blocks', 'retro', 'classic', 'tetris'] },
             { name: 'Pacman', category: 'Arcade & Classic', url: 'pacman.html', tags: ['maze', 'arcade', 'retro', 'ghosts', 'pacman'] },
-            { name: 'Flappy Bird', category: 'Arcade & Classic', url: 'flappybird.html', tags: ['bird', 'skill', 'endless', 'pixel', 'flappy'] },
             { name: 'Minesweeper', category: 'Thinking', url: 'minesweeper.html', tags: ['logic', 'puzzle', 'mines', 'strategy', 'minesweeper'] }
         ];
 
