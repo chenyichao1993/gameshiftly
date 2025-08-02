@@ -6,8 +6,8 @@
 /tetris /tetris.html 200
 /flappybird /flappybird.html 200
 
-# 处理末尾斜杠
-/minesweeper/ /minesweeper 301
-/pacman/ /pacman 301
-/tetris/ /tetris 301
-/flappybird/ /flappybird 301 
+# 处理末尾斜杠 - 直接重定向到.html文件
+/minesweeper/ /minesweeper.html 301
+/pacman/ /pacman.html 301
+/tetris/ /tetris.html 301
+/flappybird/ /flappybird.html 301 

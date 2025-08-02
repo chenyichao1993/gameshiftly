@@ -8128,3 +8128,59 @@ _**Assistant**_
 
 ---
 
+_**User**_
+
+打不开了
+
+---
+
+_**Assistant**_
+
+我看到问题了！现在出现了重定向循环错误（ERR_TOO_MANY_REDIRECTS）。这是因为 `_redirects` 文件中的规则造成了无限重定向。
+
+问题在于我们同时有：
+1. `/minesweeper /minesweeper.html 200` - 将 `/minesweeper` 重定向到 `/minesweeper.html`
+2. `/minesweeper/ /minesweeper 301` - 将 `/minesweeper/` 重定向到 `/minesweeper`
+
+这造成了循环重定向。让我修复这个问题：
+
+
+---
+
+<details><summary>Edit file: _redirects</summary>
+
+undefined
+
+**Chunk 1**
+Lines added: 5, lines removed: 5
+
+```diff
+@@ -7,7 +7,7 @@
+  /flappybird /flappybird.html 200
+  
+- # 处理末尾斜杠
+- /minesweeper/ /minesweeper 301
+- /pacman/ /pacman 301
+- /tetris/ /tetris 301
+- /flappybird/ /flappybird 301 
++ # 处理末尾斜杠 - 直接重定向到.html文件
++ /minesweeper/ /minesweeper.html 301
++ /pacman/ /pacman.html 301
++ /tetris/ /tetris.html 301
++ /flappybird/ /flappybird.html 301 
+```
+
+</details>
+
+---
+
+现在我已经修复了重定向循环问题。修改的关键是：
+
+1. **保持 200 规则不变**：`/minesweeper /minesweeper.html 200` - 这确保访问 `/minesweeper` 时显示 `minesweeper.html` 的内容，但URL保持为 `/minesweeper`
+
+2. **修复 301 规则**：将 `/minesweeper/ /minesweeper 301` 改为 `/minesweeper/ /minesweeper.html 301` - 这样当有人访问 `/minesweeper/` 时，直接重定向到 `.html` 文件，避免循环
+
+现在重新部署，网站应该能正常访问了，不会再出现重定向循环错误。
+
+---
+
