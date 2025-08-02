@@ -943,8 +943,9 @@
         
         function handleIframeError() {
             console.log('Pacman game iframe failed to load');
-            document.getElementById('pacmanGame').classList.add('hidden');
-            document.getElementById('gameError').classList.remove('hidden');
+            // 不隐藏iframe，让它继续尝试加载
+            // document.getElementById('pacmanGame').classList.add('hidden');
+            // document.getElementById('gameError').classList.remove('hidden');
         }
         
         function retryLoadGame() {
@@ -958,22 +959,29 @@
             iframe.src = iframe.src;
         }
         
-        // 检查iframe是否在5秒内加载完成
-        setTimeout(function() {
+        // 页面加载完成后检查iframe状态
+        document.addEventListener('DOMContentLoaded', function() {
             const iframe = document.getElementById('pacmanGame');
             const errorDiv = document.getElementById('gameError');
             
-            try {
-                // 尝试访问iframe内容，如果失败说明加载有问题
-                if (iframe.contentWindow && iframe.contentWindow.location.href) {
-                    console.log('Iframe loaded successfully');
+            // 3秒后检查iframe是否正常加载
+            setTimeout(function() {
+                try {
+                    // 尝试访问iframe内容
+                    if (iframe.contentWindow && iframe.contentWindow.location.href) {
+                        console.log('Pacman iframe loaded successfully');
+                        errorDiv.classList.add('hidden');
+                    } else {
+                        throw new Error('Iframe not loaded');
+                    }
+                } catch (e) {
+                    console.log('Pacman iframe loading issue detected:', e);
+                    // 不隐藏iframe，让它继续尝试加载
+                    // iframe.classList.add('hidden');
+                    // errorDiv.classList.remove('hidden');
                 }
-            } catch (e) {
-                console.log('Iframe loading issue detected:', e);
-                iframe.classList.add('hidden');
-                errorDiv.classList.remove('hidden');
-            }
-        }, 5000);
+            }, 3000);
+        });
     </script>
 </body>
 </html> 
