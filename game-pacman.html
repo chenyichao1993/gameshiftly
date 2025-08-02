@@ -241,7 +241,17 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
             <!-- Game Area 直接平铺 -->
             <div class="lg:col-span-3">
-                <iframe src="https://html-classic.itch.zone/html/3946506/index.html" width="552" height="600" frameborder="0" allowfullscreen title="Pacman Game"></iframe>
+                <iframe id="pacmanGame" src="https://html-classic.itch.zone/html/3946506/index.html" width="552" height="600" frameborder="0" allowfullscreen title="Pacman Game" onload="handleIframeLoad()" onerror="handleIframeError()"></iframe>
+                <div id="gameError" class="hidden bg-gray-100 rounded-lg p-8 text-center">
+                    <div class="text-gray-600 mb-4">
+                        <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Game Loading Issue</h3>
+                        <p class="mb-4">The Pacman game is temporarily unavailable. Please try refreshing the page or check back later.</p>
+                        <button onclick="retryLoadGame()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                            <i class="fas fa-redo mr-2"></i>Retry
+                        </button>
+                    </div>
+                </div>
             </div>
             <!-- Sidebar -->
             <div class="lg:col-span-1">
@@ -264,15 +274,15 @@
                 <div class="game-info-card">
                     <h3 class="text-lg font-semibold mb-3">Related Games</h3>
                     <div class="space-y-2">
-                        <div class="related-game" onclick="goToGame('game-flappybird.html')">
+                        <div class="related-game" onclick="goToGame('flappybird')">
                             <img src="img/flappybird.png" alt="Flappy Bird">
                             <div><div class="font-medium">Flappy Bird</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
                         </div>
-                        <div class="related-game" onclick="goToGame('game-minesweeper.html')">
+                        <div class="related-game" onclick="goToGame('minesweeper')">
                             <img src="img/minesweeper.jpg" alt="Minesweeper">
                             <div><div class="font-medium">Minesweeper</div><div class="text-sm text-gray-500">Thinking</div></div>
                         </div>
-                        <div class="related-game" onclick="goToGame('game-tetris.html')">
+                        <div class="related-game" onclick="goToGame('tetris')">
                             <img src="img/tetris.jpg" alt="Tetris">
                             <div><div class="font-medium">Tetris</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
                         </div>
@@ -923,5 +933,47 @@
             </div>
         </div>
     </div>
+    
+    <script>
+        // 处理iframe加载问题
+        function handleIframeLoad() {
+            console.log('Pacman game iframe loaded successfully');
+            document.getElementById('gameError').classList.add('hidden');
+        }
+        
+        function handleIframeError() {
+            console.log('Pacman game iframe failed to load');
+            document.getElementById('pacmanGame').classList.add('hidden');
+            document.getElementById('gameError').classList.remove('hidden');
+        }
+        
+        function retryLoadGame() {
+            const iframe = document.getElementById('pacmanGame');
+            const errorDiv = document.getElementById('gameError');
+            
+            iframe.classList.remove('hidden');
+            errorDiv.classList.add('hidden');
+            
+            // 重新加载iframe
+            iframe.src = iframe.src;
+        }
+        
+        // 检查iframe是否在5秒内加载完成
+        setTimeout(function() {
+            const iframe = document.getElementById('pacmanGame');
+            const errorDiv = document.getElementById('gameError');
+            
+            try {
+                // 尝试访问iframe内容，如果失败说明加载有问题
+                if (iframe.contentWindow && iframe.contentWindow.location.href) {
+                    console.log('Iframe loaded successfully');
+                }
+            } catch (e) {
+                console.log('Iframe loading issue detected:', e);
+                iframe.classList.add('hidden');
+                errorDiv.classList.remove('hidden');
+            }
+        }, 5000);
+    </script>
 </body>
 </html> 

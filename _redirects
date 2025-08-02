@@ -1,1 +1,7 @@
-# 使用index.html作为根页面，无需重定向 
+# 使用index.html作为根页面，无需重定向
+
+# 游戏页面URL重写 - 去掉game-前缀
+/minesweeper /game-minesweeper.html 200!
+/pacman /game-pacman.html 200!
+/tetris /game-tetris.html 200!
+/flappybird /game-flappybird.html 200! 
