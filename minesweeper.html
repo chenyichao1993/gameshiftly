@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minesweeper - GameShiftly</title>
     <meta name="description" content="Play Minesweeper online for free! Uncover all the safe squares without detonating any mines. Test your logic and luck!">
-    <link rel="canonical" href="https://gameshiftly.online/game-minesweeper.html">
+    <link rel="canonical" href="https://gameshiftly.online/minesweeper.html">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="footer.js"></script>
@@ -264,15 +264,15 @@
                 <div class="game-info-card">
                     <h3 class="text-lg font-semibold mb-3">Related Games</h3>
                     <div class="space-y-2">
-                        <div class="related-game" onclick="goToGame('game-flappybird.html')">
+                        <div class="related-game" onclick="goToGame('flappybird.html')">
                             <img src="img/flappybird.png" alt="Flappy Bird">
                             <div><div class="font-medium">Flappy Bird</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
                         </div>
-                        <div class="related-game" onclick="goToGame('game-pacman.html')">
+                        <div class="related-game" onclick="goToGame('pacman.html')">
                             <img src="img/Pacman.jpg" alt="Pacman">
                             <div><div class="font-medium">Pacman</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
                         </div>
-                        <div class="related-game" onclick="goToGame('game-tetris.html')">
+                        <div class="related-game" onclick="goToGame('tetris.html')">
                             <img src="img/tetris.jpg" alt="Tetris">
                             <div><div class="font-medium">Tetris</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
                         </div>
@@ -531,10 +531,10 @@
         
         // 游戏数据库 - 只包含网站实际存在的游戏
         const gamesDatabase = [
-            { name: 'Tetris', category: 'Arcade & Classic', url: 'game-tetris.html', tags: ['puzzle', 'blocks', 'retro', 'classic', 'tetris'] },
-            { name: 'Pacman', category: 'Arcade & Classic', url: 'game-pacman.html', tags: ['maze', 'arcade', 'retro', 'ghosts', 'pacman'] },
-            { name: 'Flappy Bird', category: 'Arcade & Classic', url: 'game-flappybird.html', tags: ['bird', 'skill', 'endless', 'pixel', 'flappy'] },
-            { name: 'Minesweeper', category: 'Thinking', url: 'game-minesweeper.html', tags: ['logic', 'puzzle', 'mines', 'strategy', 'minesweeper'] }
+            { name: 'Tetris', category: 'Arcade & Classic', url: 'tetris.html', tags: ['puzzle', 'blocks', 'retro', 'classic', 'tetris'] },
+            { name: 'Pacman', category: 'Arcade & Classic', url: 'pacman.html', tags: ['maze', 'arcade', 'retro', 'ghosts', 'pacman'] },
+            { name: 'Flappy Bird', category: 'Arcade & Classic', url: 'flappybird.html', tags: ['bird', 'skill', 'endless', 'pixel', 'flappy'] },
+            { name: 'Minesweeper', category: 'Thinking', url: 'minesweeper.html', tags: ['logic', 'puzzle', 'mines', 'strategy', 'minesweeper'] }
         ];
 
         // 搜索功能

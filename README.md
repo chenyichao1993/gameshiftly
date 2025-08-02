@@ -159,12 +159,15 @@ CREATE TABLE users (
 
 ```
 gameshiftly/
-├── gameshiftly.html          # 主页面
-├── game-tetris.html          # Tetris游戏页面
-├── game-pacman.html          # Pacman游戏页面
-├── game-flappybird.html      # Flappy Bird游戏页面
-├── game-minesweeper.html     # Minesweeper游戏页面
-├── game-template.html        # 游戏页面模板
+├── index.html                # 主页面
+├── tetris.html               # Tetris游戏页面
+├── pacman.html               # Pacman游戏页面
+├── flappybird.html           # Flappy Bird游戏页面
+├── minesweeper.html          # Minesweeper游戏页面
+├── _redirects                # URL重定向配置
+├── tetris/                   # Tetris游戏资源
+├── flappybird/               # Flappy Bird游戏资源
+├── img/                      # 游戏图片资源
 ├── auth.js                   # 前端认证脚本
 ├── server.js                 # 后端服务器
 ├── package.json              # 项目配置
@@ -176,9 +179,10 @@ gameshiftly/
 
 ### 添加新游戏
 
-1. 复制 `game-template.html` 创建新游戏页面
-2. 在 `gameshiftly.html` 中添加游戏卡片
+1. 复制现有游戏页面（如 `tetris.html`）创建新游戏页面
+2. 在 `index.html` 中添加游戏卡片
 3. 更新搜索数据库中的游戏列表
+4. 在 `_redirects` 文件中添加URL重写规则
 
 ### 自定义样式
 
