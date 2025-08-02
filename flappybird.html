@@ -277,7 +277,7 @@
                             <li>• Click or tap to flap</li>
                             <li>• Space bar to flap</li>
                             <li>• Avoid the pipes</li>
-                        </ul>
+            </ul>
                     </div>
                 </div>
                 <!-- Related Games -->
@@ -343,13 +343,13 @@
                         <input type="text" id="shareLink" value="https://gameshiftly.online/flappybird.html" class="flex-1 p-2 border border-gray-300 rounded-l-lg" readonly>
                         <button onclick="copyShareLink()" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-r-lg hover:bg-gray-200 transition">
                             <i class="fas fa-copy"></i>
-                        </button>
+                    </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    
     <!-- Login Modal -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
@@ -391,11 +391,11 @@
         function shareGame() {
             document.getElementById('shareModal').classList.remove('hidden');
         }
-
+        
         function hideShareModal() {
             document.getElementById('shareModal').classList.add('hidden');
         }
-
+        
         function shareToSocial(platform) {
             const url = encodeURIComponent(window.location.href);
             const text = encodeURIComponent('Check out this awesome Flappy Bird game!');
@@ -469,15 +469,15 @@
         function showLoginModal() {
             document.getElementById('loginModal').style.display = 'block';
         }
-
+        
         function hideLoginModal() {
             document.getElementById('loginModal').style.display = 'none';
         }
-
+        
         function showRegisterModal() {
             document.getElementById('registerModal').style.display = 'block';
         }
-
+        
         function hideRegisterModal() {
             document.getElementById('registerModal').style.display = 'none';
         }
