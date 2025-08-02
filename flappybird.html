@@ -951,52 +951,19 @@
     </div>
     
     <script>
-        // 处理Flappy Bird游戏加载问题
+        // 简单的Flappy Bird游戏加载处理
         function handleFlappybirdLoad() {
             console.log('Flappy Bird game iframe loaded successfully');
-            document.getElementById('flappybirdError').classList.add('hidden');
         }
         
         function handleFlappybirdError() {
             console.log('Flappy Bird game iframe failed to load');
-            // 不隐藏iframe，让它继续尝试加载
-            // document.getElementById('flappybirdGame').classList.add('hidden');
-            // document.getElementById('flappybirdError').classList.remove('hidden');
         }
         
         function retryFlappybirdGame() {
             const iframe = document.getElementById('flappybirdGame');
-            const errorDiv = document.getElementById('flappybirdError');
-            
-            iframe.classList.remove('hidden');
-            errorDiv.classList.add('hidden');
-            
-            // 重新加载iframe
             iframe.src = iframe.src;
         }
-        
-        // 页面加载完成后检查iframe状态
-        document.addEventListener('DOMContentLoaded', function() {
-            const iframe = document.getElementById('flappybirdGame');
-            const errorDiv = document.getElementById('flappybirdError');
-            
-                    // 5秒后检查iframe是否正常加载
-        setTimeout(function() {
-            try {
-                if (iframe.contentWindow && iframe.contentWindow.location.href) {
-                    console.log('Flappy Bird iframe loaded successfully');
-                    errorDiv.classList.add('hidden');
-                } else {
-                    throw new Error('Iframe not loaded');
-                }
-            } catch (e) {
-                console.log('Flappy Bird iframe loading issue detected:', e);
-                // 不隐藏iframe，让它继续尝试加载
-                // iframe.style.display = 'none';
-                // errorDiv.classList.remove('hidden');
-            }
-        }, 5000);
-        });
     </script>
 </body>
 </html> 
