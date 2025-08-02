@@ -1,1 +1,1 @@
-# 移除重定向配置，让根路径直接显示index.html 
+/ /gameshiftly.html 200! 
