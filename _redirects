@@ -1,5 +1,0 @@
-# 游戏页面URL重写 - 确保URL干净，不显示.html
-/minesweeper /minesweeper.html 200
-/pacman /pacman.html 200
-/tetris /tetris.html 200
-/flappybird /flappybird.html 200 
