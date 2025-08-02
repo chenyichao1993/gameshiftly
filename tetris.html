@@ -189,26 +189,51 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Header -->
-    <header class="bg-white shadow-sm border-b">
+    <!-- 顶部导航栏 -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
-                    <a href="index.html" class="flex items-center space-x-2">
-                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                            <span class="text-white font-bold text-sm">G</span>
+            <div class="flex items-center justify-between h-16">
+                <!-- 左侧Logo和菜单 -->
+                <div class="flex items-center space-x-4 lg:space-x-8">
+                    <button class="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    
+                    <!-- Logo -->
+                    <a href="index.html" class="flex items-center space-x-2 lg:space-x-3 hover:opacity-80 transition-opacity">
+                        <div class="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-lg lg:text-xl">GS</span>
                         </div>
-                        <span class="text-xl font-bold text-gray-900">GameShiftly</span>
+                        <div class="hidden sm:block">
+                            <h1 class="text-lg lg:text-2xl font-bold text-red-600">GameShiftly</h1>
+                            <p class="text-xs text-gray-500">Free Online Games</p>
+                        </div>
                     </a>
                 </div>
-                <nav class="hidden md:flex space-x-8">
-                    <a href="index.html" class="text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium">Home</a>
-                    <a href="#" class="text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium">Games</a>
-                    <a href="#" class="text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium">About</a>
-                </nav>
-                <div class="flex items-center space-x-4">
-                    <button onclick="showLoginModal()" class="text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium">Login</button>
-                    <button onclick="showRegisterModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700">Register</button>
+                
+                <!-- 搜索框 -->
+                <div class="flex-1 max-w-md lg:max-w-2xl mx-4 lg:mx-8 hidden md:block">
+                    <div class="relative">
+                        <input type="text" 
+                               id="searchInput"
+                               placeholder="Search our games" 
+                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-sm lg:text-base">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        <!-- 搜索建议下拉框 -->
+                        <div id="searchSuggestions" class="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 z-50 hidden max-h-60 overflow-y-auto">
+                            <!-- 搜索建议内容将在这里动态生成 -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 右侧按钮 -->
+                <div class="flex items-center space-x-2 lg:space-x-4">
+                    <button onclick="showLoginModal()" class="text-gray-600 hover:text-gray-900 px-2 lg:px-4 py-2 rounded-lg hover:bg-gray-100 text-sm lg:text-base">
+                        Log in
+                    </button>
+                    <button onclick="showRegisterModal()" class="bg-red-600 text-white px-2 lg:px-4 py-2 rounded-lg hover:bg-red-700 transition text-sm lg:text-base">
+                        Register
+                    </button>
                 </div>
             </div>
         </div>
@@ -491,11 +516,16 @@
         window.onclick = function(event) {
             const loginModal = document.getElementById('loginModal');
             const registerModal = document.getElementById('registerModal');
+            const shareModal = document.getElementById('shareModal');
+            
             if (event.target === loginModal) {
                 hideLoginModal();
             }
             if (event.target === registerModal) {
                 hideRegisterModal();
+            }
+            if (shareModal && event.target === shareModal) {
+                hideShareModal();
             }
         }
 
@@ -511,5 +541,8 @@
             }
         });
     </script>
+    
+    <!-- 页脚容器 -->
+    <div id="footer-container"></div>
 </body>
 </html> 

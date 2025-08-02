@@ -168,27 +168,35 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Header Navigation -->
+    <!-- 顶部导航栏 -->
     <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
-                    <a href="index.html" class="flex items-center space-x-2">
-                        <div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
-                            <span class="text-white font-bold text-sm">GS</span>
+            <div class="flex items-center justify-between h-16">
+                <!-- 左侧Logo和菜单 -->
+                <div class="flex items-center space-x-4 lg:space-x-8">
+                    <button class="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    
+                    <!-- Logo -->
+                    <a href="index.html" class="flex items-center space-x-2 lg:space-x-3 hover:opacity-80 transition-opacity">
+                        <div class="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-lg lg:text-xl">GS</span>
                         </div>
-                        <div>
-                            <div class="text-red-600 font-bold text-lg">GameShiftly</div>
-                            <div class="text-gray-500 text-xs">Free Online Games</div>
+                        <div class="hidden sm:block">
+                            <h1 class="text-lg lg:text-2xl font-bold text-red-600">GameShiftly</h1>
+                            <p class="text-xs text-gray-500">Free Online Games</p>
                         </div>
                     </a>
                 </div>
-                <div class="hidden md:flex flex-1 max-w-md mx-8">
-                    <div class="relative w-full">
+                
+                <!-- 搜索框 -->
+                <div class="flex-1 max-w-md lg:max-w-2xl mx-4 lg:mx-8 hidden md:block">
+                    <div class="relative">
                         <input type="text" 
                                id="searchInput"
                                placeholder="Search our games" 
-                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-sm lg:text-base">
                         <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
                         <!-- 搜索建议下拉框 -->
                         <div id="searchSuggestions" class="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 z-50 hidden max-h-60 overflow-y-auto">
@@ -196,9 +204,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <button onclick="showLoginModal()" class="text-gray-600 hover:text-gray-900">Log in</button>
-                    <button onclick="showRegisterModal()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Register</button>
+                
+                <!-- 右侧按钮 -->
+                <div class="flex items-center space-x-2 lg:space-x-4">
+                    <button onclick="showLoginModal()" class="text-gray-600 hover:text-gray-900 px-2 lg:px-4 py-2 rounded-lg hover:bg-gray-100 text-sm lg:text-base">
+                        Log in
+                    </button>
+                    <button onclick="showRegisterModal()" class="bg-red-600 text-white px-2 lg:px-4 py-2 rounded-lg hover:bg-red-700 transition text-sm lg:text-base">
+                        Register
+                    </button>
                 </div>
             </div>
         </div>
@@ -816,9 +830,16 @@
         
         // 点击模态框外部关闭
         document.addEventListener('click', function(e) {
+            // 关闭登录和注册模态框
             if (e.target.classList.contains('modal-overlay')) {
                 e.target.classList.add('hidden');
                 document.body.style.overflow = 'auto';
+            }
+            
+            // 关闭share弹窗
+            const shareModal = document.getElementById('shareModal');
+            if (shareModal && !shareModal.classList.contains('hidden') && e.target === shareModal) {
+                hideShareModal();
             }
         });
         function toggleFavorite() { const icon = document.getElementById('favoriteIcon'); const text = document.getElementById('favoriteText'); if (icon.classList.contains('text-red-500')) { icon.classList.remove('text-red-500'); text.textContent = 'Favorite'; } else { icon.classList.add('text-red-500'); text.textContent = 'Favorited'; } }
