@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bird - GameShiftly</title>
+    <meta name="description" content="Play Flappy Bird online for free! Tap or click to keep the bird flying and avoid the pipes. How far can you go?">
+    <link rel="canonical" href="https://gameshiftly.online/game-flappybird.html">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    
+    <!-- Firebase配置 -->
+    <script src="firebase-config.js"></script>
+    
+    <script src="footer.js"></script>
+    <style>
+        /* 隐藏和美化滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 隐藏Firefox滚动条 */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+        }
+        
+        /* 确保页面高度适应视口 */
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* 侧边栏滚动优化 */
+        .game-info-card {
+            max-height: none;
+            overflow: visible;
+        }
+        
+        /* iframe滚动条隐藏 */
+        iframe {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        iframe::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .game-canvas-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .game-canvas {
+            width: 100%;
+            aspect-ratio: 3/2;
+            background: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .game-canvas iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+            display: block;
+            background: transparent;
+        }
+        .game-controls {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            justify-content: center;
+        }
+        .control-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .control-btn.primary {
+            background: #dc2626;
+            color: white;
+        }
+        .control-btn.primary:hover {
+            background: #b91c1c;
+        }
+        .control-btn.secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        .control-btn.secondary:hover {
+            background: #e5e7eb;
+        }
+        .game-info-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+        .game-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #e5e7eb;
+            color: #374151;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .related-game {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 0.5rem;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+        .related-game:hover {
+            transform: translateY(-2px);
+        }
+        .related-game img {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        @media (max-width: 1024px) {
+            .game-canvas { aspect-ratio: 16/9; }
+        }
+        @media (max-width: 900px) {
+            .game-canvas { aspect-ratio: 16/9; }
+        }
+        @media (max-width: 768px) {
+            .game-canvas { aspect-ratio: 1/1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">GS</span>
+                        </div>
+                        <div>
+                            <div class="text-red-600 font-bold text-lg">GameShiftly</div>
+                            <div class="text-gray-500 text-xs">Free Online Games</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="hidden md:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <input type="text" 
+                               id="searchInput"
+                               placeholder="Search our games" 
+                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        <!-- 搜索建议下拉框 -->
+                        <div id="searchSuggestions" class="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 z-50 hidden max-h-60 overflow-y-auto">
+                            <!-- 搜索建议内容将在这里动态生成 -->
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="showLoginModal()" class="text-gray-600 hover:text-gray-900">Log in</button>
+                    <button onclick="showRegisterModal()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Register</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Flappy Bird</h1>
+                <div class="flex items-center space-x-4 text-sm text-gray-600">
+                    <div class="flex items-center">
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <span>8.2</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-gamepad mr-1" id="categoryIcon"></i>
+                        <span id="categoryText">Arcade & Classic</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-play mr-1"></i>
+                        <span>2.1M plays</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2 mt-4 lg:mt-0">
+                <button class="control-btn secondary" onclick="shareGame()">
+                    <i class="fas fa-share"></i>
+                    Share
+                </button>
+                <button class="control-btn secondary" onclick="toggleFavorite()">
+                    <i class="fas fa-heart" id="favoriteIcon"></i>
+                    <span id="favoriteText">Favorite</span>
+                </button>
+                <button class="control-btn secondary" onclick="toggleFullscreen()">
+                    <i class="fas fa-expand" id="fullscreenIcon"></i>
+                    <span id="fullscreenText">Fullscreen</span>
+                </button>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Game Area 直接平铺 -->
+            <div class="lg:col-span-3">
+                <iframe src="flappybird/index.html" width="100%" height="600" style="border:none;"></iframe>
+            </div>
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <!-- Game Information -->
+                <div class="game-info-card">
+                    <h3 class="text-lg font-semibold mb-3">Game Information</h3>
+                    <p class="text-gray-600 mb-4">
+                        Tap or click to keep the bird flying and avoid the pipes. How far can you go?
+                    </p>
+                    <div class="mb-4">
+                        <h4 class="font-medium mb-2">Game Tags</h4>
+                        <div>
+                            <span class="game-tag">Arcade & Classic</span>
+                            <span class="game-tag">Skill</span>
+                            <span class="game-tag">Endless</span>
+                            <span class="game-tag">Bird</span>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h4 class="font-medium mb-2">Controls</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Click or tap to flap</li>
+                            <li>• Avoid pipes and ground</li>
+            </ul>
+                    </div>
+                </div>
+                <!-- Related Games -->
+                <div class="game-info-card">
+                    <h3 class="text-lg font-semibold mb-3">Related Games</h3>
+                    <div class="space-y-2">
+                        <div class="related-game" onclick="goToGame('game-minesweeper.html')">
+                            <img src="img/minesweeper.jpg" alt="Minesweeper">
+                            <div><div class="font-medium">Minesweeper</div><div class="text-sm text-gray-500">Thinking</div></div>
+                        </div>
+                        <div class="related-game" onclick="goToGame('game-pacman.html')">
+                            <img src="img/Pacman.jpg" alt="Pacman">
+                            <div><div class="font-medium">Pacman</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
+                        </div>
+                        <div class="related-game" onclick="goToGame('game-tetris.html')">
+                            <img src="img/tetris.jpg" alt="Tetris">
+                            <div><div class="font-medium">Tetris</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Share Modal -->
+    <div id="shareModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+            <div class="flex items-center justify-between p-6 border-b">
+                <h3 class="text-lg font-semibold">Share Game</h3>
+                <button onclick="hideShareModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <!-- Social Media -->
+                <div class="mb-6">
+                    <h4 class="text-sm font-medium text-gray-700 mb-3">Social Media</h4>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="shareToSocial('facebook')" class="flex items-center justify-center p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                            <i class="fab fa-facebook-f mr-2"></i>
+                            Facebook
+                        </button>
+                        <button onclick="shareToSocial('twitter')" class="flex items-center justify-center p-3 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition">
+                            <i class="fab fa-twitter mr-2"></i>
+                            Twitter
+                        </button>
+                        <button onclick="shareToSocial('instagram')" class="flex items-center justify-center p-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition">
+                            <i class="fab fa-instagram mr-2"></i>
+                            Instagram
+                        </button>
+                        <button onclick="shareToSocial('reddit')" class="flex items-center justify-center p-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition">
+                            <i class="fab fa-reddit mr-2"></i>
+                            Reddit
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Messaging -->
+                <div class="mb-6">
+                    <h4 class="text-sm font-medium text-gray-700 mb-3">Messaging</h4>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="shareToSocial('whatsapp')" class="flex items-center justify-center p-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                            <i class="fab fa-whatsapp mr-2"></i>
+                            WhatsApp
+                        </button>
+                        <button onclick="shareToSocial('telegram')" class="flex items-center justify-center p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                            <i class="fab fa-telegram mr-2"></i>
+                            Telegram
+                        </button>
+                        <button onclick="shareToSocial('discord')" class="flex items-center justify-center p-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                            <i class="fab fa-discord mr-2"></i>
+                            Discord
+                        </button>
+                        <button onclick="shareToSocial('snapchat')" class="flex items-center justify-center p-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition">
+                            <i class="fab fa-snapchat mr-2"></i>
+                            Snapchat
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Copy Link -->
+                <div class="flex gap-3">
+                    <button onclick="copyGameLink()" class="flex-1 flex items-center justify-center p-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition">
+                        <i class="fas fa-link mr-2"></i>
+                        Copy Link
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <div id="footer-container"></div>
+    <script>
+        // 分类图标映射
+        const categoryIcons = {
+            'Driving': 'fas fa-car',
+            'Shooting': 'fas fa-crosshairs',
+            'For Girls': 'fas fa-heart',
+            'Fighting': 'fas fa-fist-raised',
+            'Thinking': 'fas fa-brain',
+            'Management & Sim': 'fas fa-city',
+            'Skill': 'fas fa-bullseye',
+            'Action & Adventure': 'fas fa-running',
+            'Strategy & RPG': 'fas fa-chess',
+            'Sports': 'fas fa-futbol',
+            'Fun & Crazy': 'fas fa-laugh',
+            'Arcade & Classic': 'fas fa-gamepad'
+        };
+        function setCategory(category) {
+            const iconElement = document.getElementById('categoryIcon');
+            const textElement = document.getElementById('categoryText');
+            if (categoryIcons[category]) {
+                iconElement.className = categoryIcons[category] + ' mr-1';
+                textElement.textContent = category;
+            }
+        }
+        setCategory('Arcade & Classic');
+        function goToGame(game) { window.location.href = game; }
+        function toggleFullscreen() {
+            const iframe = document.querySelector('iframe');
+            if (document.fullscreenElement) { document.exitFullscreen(); } else { iframe.requestFullscreen(); }
+        }
+        function shareGame() {
+            // 移动端优先使用原生分享API
+            if (navigator.share && /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                navigator.share({
+                    title: 'Flappy Bird - GameShiftly',
+                    text: 'Check out this awesome Flappy Bird game on GameShiftly! 🎮',
+                    url: window.location.href
+                }).catch(err => {
+                    console.log('Native sharing failed, falling back to modal');
+                    showShareModal();
+                });
+            } else {
+                showShareModal();
+            }
+        }
+        
+        function showShareModal() {
+            const modal = document.getElementById('shareModal');
+            modal.classList.remove('hidden');
+        }
+        
+        function hideShareModal() {
+            const modal = document.getElementById('shareModal');
+            modal.classList.add('hidden');
+        }
+        
+        function shareToSocial(platform) {
+            const gameUrl = window.location.href;
+            const gameTitle = 'Flappy Bird - GameShiftly';
+            const gameText = 'Check out this awesome Flappy Bird game on GameShiftly! 🎮';
+            const isLocal = window.location.protocol === 'file:';
+            
+            switch(platform) {
+                case 'facebook':
+                    if (isLocal) {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Facebook manually.');
+                    } else {
+                        const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(gameUrl)}`;
+                        shareWithFallback('facebook', shareUrl, () => {
+                            copyToClipboard(gameUrl);
+                            showToast('Link copied! Please share it on Facebook manually.');
+                        });
+                    }
+                    break;
+                    
+                case 'twitter':
+                    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(gameText)}&url=${encodeURIComponent(gameUrl)}`;
+                    shareWithFallback('twitter', twitterUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Twitter manually.');
+                    });
+                    break;
+                    
+                case 'instagram':
+                    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                        const instagramUrl = `instagram://library?AssetPath=${encodeURIComponent(gameUrl)}`;
+                        window.location.href = instagramUrl;
+                        setTimeout(() => {
+                            copyToClipboard(gameUrl);
+                            showToast('Link copied! Open Instagram to share.');
+                        }, 1000);
+                    } else {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Open Instagram to share.');
+                    }
+                    break;
+                    
+                case 'reddit':
+                    const redditUrl = `https://reddit.com/submit?url=${encodeURIComponent(gameUrl)}&title=${encodeURIComponent(gameTitle)}`;
+                    shareWithFallback('reddit', redditUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Reddit manually.');
+                    });
+                    break;
+                    
+                case 'whatsapp':
+                    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(gameText + ' ' + gameUrl)}`;
+                    shareWithFallback('whatsapp', whatsappUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on WhatsApp manually.');
+                    });
+                    break;
+                    
+                case 'telegram':
+                    const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(gameUrl)}&text=${encodeURIComponent(gameText)}`;
+                    shareWithFallback('telegram', telegramUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Telegram manually.');
+                    });
+                    break;
+                    
+                case 'discord':
+                    const discordUrl = `https://discord.com/channels/@me?content=${encodeURIComponent(gameText + ' ' + gameUrl)}`;
+                    shareWithFallback('discord', discordUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Discord manually.');
+                    });
+                    break;
+                    
+                case 'snapchat':
+                    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                        const snapchatUrl = `snapchat://share?text=${encodeURIComponent(gameText)}&url=${encodeURIComponent(gameUrl)}`;
+                        window.location.href = snapchatUrl;
+                        setTimeout(() => {
+                            copyToClipboard(gameUrl);
+                            showToast('Link copied! Open Snapchat to share.');
+                        }, 1000);
+                    } else {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Open Snapchat to share.');
+                    }
+                    break;
+            }
+            
+            hideShareModal();
+        }
+        
+        function shareWithFallback(platform, shareUrl, fallbackAction) {
+            const newWindow = window.open(shareUrl, '_blank');
+            
+            if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+                fallbackAction();
+            }
+        }
+        
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 ease-in-out';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'scale-95');
+            }, 2500);
+            
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.remove();
+                }
+            }, 3000);
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                console.log('Link copied to clipboard');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+        
+        function copyGameLink() {
+            const gameUrl = window.location.href;
+            copyToClipboard(gameUrl);
+            hideShareModal();
+            showToast('Game link copied to clipboard!');
+        }
+        
+        // 游戏数据库 - 只包含网站实际存在的游戏
+        const gamesDatabase = [
+            { name: 'Tetris', category: 'Arcade & Classic', url: 'game-tetris.html', tags: ['puzzle', 'blocks', 'retro', 'classic', 'tetris'] },
+            { name: 'Pacman', category: 'Arcade & Classic', url: 'game-pacman.html', tags: ['maze', 'arcade', 'retro', 'ghosts', 'pacman'] },
+            { name: 'Flappy Bird', category: 'Arcade & Classic', url: 'game-flappybird.html', tags: ['bird', 'skill', 'endless', 'pixel', 'flappy'] },
+            { name: 'Minesweeper', category: 'Thinking', url: 'game-minesweeper.html', tags: ['logic', 'puzzle', 'mines', 'strategy', 'minesweeper'] }
+        ];
+
+        // 搜索功能
+        function initializeSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchSuggestions = document.getElementById('searchSuggestions');
+            
+            if (!searchInput) return;
+            
+            // 搜索输入事件
+            searchInput.addEventListener('input', function() {
+                const query = this.value.trim().toLowerCase();
+                
+                if (query.length < 2) {
+                    searchSuggestions.classList.add('hidden');
+                    return;
+                }
+                
+                // 搜索游戏
+                const results = searchGames(query);
+                displaySearchResults(results);
+            });
+            
+            // 点击外部关闭搜索建议
+            document.addEventListener('click', function(e) {
+                if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
+                    searchSuggestions.classList.add('hidden');
+                }
+            });
+            
+            // 回车键搜索
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const query = this.value.trim();
+                    if (query) {
+                        performSearch(query);
+                    }
+                }
+            });
+        }
+        
+        // 搜索游戏函数
+        function searchGames(query) {
+            return gamesDatabase.filter(game => {
+                const nameMatch = game.name.toLowerCase().includes(query);
+                const categoryMatch = game.category.toLowerCase().includes(query);
+                const tagMatch = game.tags.some(tag => tag.toLowerCase().includes(query));
+                
+                return nameMatch || categoryMatch || tagMatch;
+            }).slice(0, 8); // 限制显示8个结果
+        }
+        
+        // 显示搜索结果
+        function displaySearchResults(results) {
+            const searchSuggestions = document.getElementById('searchSuggestions');
+            
+            if (results.length === 0) {
+                searchSuggestions.innerHTML = `
+                    <div class="p-4 text-gray-500 text-center">
+                        <div class="text-sm">No games found for your search</div>
+                    </div>
+                `;
+            } else {
+                searchSuggestions.innerHTML = results.map(game => `
+                    <div class="search-result-item p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0" 
+                         onclick="goToGame('${game.url}')">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center mr-3">
+                                <i class="fas fa-gamepad text-white text-xs"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">${game.name}</div>
+                                <div class="text-sm text-gray-500">${game.category}</div>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-xs text-green-600 bg-green-100 px-2 py-1 rounded mr-2">Available</span>
+                                <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            searchSuggestions.classList.remove('hidden');
+        }
+        
+        // 执行搜索
+        function performSearch(query) {
+            const results = searchGames(query);
+            if (results.length > 0) {
+                // 如果有结果，跳转到第一个游戏
+                goToGame(results[0].url);
+            } else {
+                // 如果没有结果，显示提示
+                alert('No games found for: ' + query);
+            }
+        }
+        
+        // 跳转到游戏页面
+        function goToGame(url) {
+            if (url && url !== '#') {
+                window.location.href = url;
+            }
+        }
+        
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded, initializing search...');
+            initializeSearch();
+            console.log('Search initialized');
+        });
+        
+        // 登录和注册模态框功能
+        function showLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hideLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function showRegisterModal() {
+            const modal = document.getElementById('registerModal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hideRegisterModal() {
+            const modal = document.getElementById('registerModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            
+            // Email validation
+            if (!email) {
+                showToast('Please enter your email address');
+                return;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showToast('Please enter a valid email address');
+                return;
+            }
+            
+            // Password validation
+            if (!password) {
+                showToast('Please enter your password');
+                return;
+            }
+            
+            // 这里可以添加实际的登录逻辑
+            showToast('Login successful! Welcome back!');
+            hideLoginModal();
+            
+            // 清空表单
+            document.getElementById('loginForm').reset();
+        }
+        
+        function handleRegister(event) {
+            event.preventDefault();
+            const username = document.getElementById('registerUsername').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const termsAccepted = document.getElementById('termsCheckbox').checked;
+            
+            // Username validation
+            if (!username) {
+                showToast('Please enter a username');
+                return;
+            }
+            
+            if (username.length < 3) {
+                showToast('Username must be at least 3 characters long');
+                return;
+            }
+            
+            // Email validation
+            if (!email) {
+                showToast('Please enter your email address');
+                return;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showToast('Please enter a valid email address');
+                return;
+            }
+            
+            // Password validation
+            if (!password) {
+                showToast('Please enter a password');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showToast('Password must be at least 6 characters long');
+                return;
+            }
+            
+            // Confirm password validation
+            if (!confirmPassword) {
+                showToast('Please confirm your password');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showToast('Passwords do not match');
+                return;
+            }
+            
+            // Terms validation
+            if (!termsAccepted) {
+                showToast('Please agree to the Terms of Service and Privacy Policy');
+                return;
+            }
+            
+            // 这里可以添加实际的注册逻辑
+            showToast('Registration successful! Welcome to GameShiftly!');
+            hideRegisterModal();
+            
+            // 清空表单
+            document.getElementById('registerForm').reset();
+        }
+        
+        function showToast(message) {
+            // 创建toast元素
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 scale-95';
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            // 显示动画
+            setTimeout(() => {
+                toast.classList.remove('scale-95');
+            }, 100);
+            
+            // 3秒后隐藏
+            setTimeout(() => {
+                toast.classList.add('scale-95');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+        
+        // 点击模态框外部关闭
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                e.target.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        function toggleFavorite() { const icon = document.getElementById('favoriteIcon'); const text = document.getElementById('favoriteText'); if (icon.classList.contains('text-red-500')) { icon.classList.remove('text-red-500'); text.textContent = 'Favorite'; } else { icon.classList.add('text-red-500'); text.textContent = 'Favorited'; } }
+    </script>
+    
+    <!-- 登录模态框 -->
+    <div id="loginModal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Log In</h2>
+                <button onclick="hideLoginModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <form id="loginForm" onsubmit="handleLogin(event)" novalidate>
+                <div class="mb-4">
+                    <label for="loginEmail" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" id="loginEmail" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                </div>
+                
+                <div class="mb-6">
+                    <label for="loginPassword" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input type="password" id="loginPassword" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                </div>
+                
+                <div class="flex items-center justify-between mb-6">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="rounded border-gray-300 text-red-600 focus:ring-red-500">
+                        <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                    </label>
+                    <a href="#" class="text-sm text-red-600 hover:text-red-700">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition">
+                    Log In
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray-600">
+                    Don't have an account? 
+                    <a href="#" onclick="hideLoginModal(); showRegisterModal();" class="text-red-600 hover:text-red-700 font-medium">
+                        Sign up
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 注册模态框 -->
+    <div id="registerModal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Create Account</h2>
+                <button onclick="hideRegisterModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <form id="registerForm" onsubmit="handleRegister(event)" novalidate>
+                <div class="mb-4">
+                    <label for="registerUsername" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                    <input type="text" id="registerUsername" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="registerEmail" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" id="registerEmail" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="registerPassword" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input type="password" id="registerPassword" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                </div>
+                
+                <div class="mb-6">
+                    <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                    <input type="password" id="confirmPassword" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                </div>
+                
+                <div class="mb-6">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="termsCheckbox" class="rounded border-gray-300 text-red-600 focus:ring-red-500">
+                        <span class="ml-2 text-sm text-gray-600">
+                            I agree to the 
+                            <a href="#" class="text-red-600 hover:text-red-700">Terms of Service</a> 
+                            and 
+                            <a href="#" class="text-red-600 hover:text-red-700">Privacy Policy</a>
+                        </span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition">
+                    Create Account
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray-600">
+                    Already have an account? 
+                    <a href="#" onclick="hideRegisterModal(); showLoginModal();" class="text-red-600 hover:text-red-700 font-medium">
+                        Log in
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
