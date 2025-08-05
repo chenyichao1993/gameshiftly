@@ -152,16 +152,16 @@ function displaySearchResults(results) {
 }
 
 // 执行搜索
-function performSearch(query) {
-    const results = searchGames(query);
-    if (results.length > 0) {
-        // 如果有结果，跳转到第一个游戏
-        goToGame(results[0].url);
-    } else {
-        // 如果没有结果，显示提示
-        alert('No games found for: ' + query);
-    }
-}
+        function performSearch(query) {
+            const results = searchGames(query);
+            if (results.length > 0) {
+                // 如果有结果，跳转到第一个游戏
+                goToGame(results[0].url);
+            } else {
+                // 如果没有结果，显示提示
+                alert('No games found for: ' + query);
+            }
+        }
 
 // 跳转到游戏页面
 function goToGame(url) {
