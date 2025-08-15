@@ -6,14 +6,16 @@
     <title>Minesweeper - GameShiftly</title>
     <meta name="description" content="Play Minesweeper online for free! Uncover all the safe squares without detonating any mines. Test your logic and luck!">
     <link rel="canonical" href="https://gameshiftly.online/minesweeper.html">
-    
-    <!-- 全局Google Analytics自动加载器 -->
-    <script src="global-analytics.js"></script>
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="header.js"></script>
-    <script src="modals.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    
+    <!-- Firebase配置 -->
+    <script src="firebase-config.js"></script>
+    
     <script src="footer.js"></script>
     <style>
         /* 隐藏和美化滚动条 */
@@ -166,8 +168,41 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- 头部容器 -->
-    <div id="header-container"></div>
+    <!-- Header Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">GS</span>
+                        </div>
+                        <div>
+                            <div class="text-red-600 font-bold text-lg">GameShiftly</div>
+                            <div class="text-gray-500 text-xs">Free Online Games</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="hidden md:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <input type="text" 
+                               id="searchInput"
+                               placeholder="Search our games" 
+                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        <!-- 搜索建议下拉框 -->
+                        <div id="searchSuggestions" class="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 z-50 hidden max-h-60 overflow-y-auto">
+                            <!-- 搜索建议内容将在这里动态生成 -->
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="showLoginModal()" class="text-gray-600 hover:text-gray-900">Log in</button>
+                    <button onclick="showRegisterModal()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Register</button>
+                </div>
+            </div>
+        </div>
+    </header>
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
@@ -184,7 +219,7 @@
                     </div>
                     <div class="flex items-center">
                         <i class="fas fa-play mr-1"></i>
-                        <span>1.5M plays</span>
+                        <span>1.2M plays</span>
                     </div>
                 </div>
             </div>
@@ -206,40 +241,50 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
             <!-- Game Area 直接平铺 -->
             <div class="lg:col-span-3">
-                <iframe src="https://html-classic.itch.zone/html/2820951/index.html" width="100%" height="600" style="border:none;"></iframe>
+                <iframe id="minesweeperGame" src="https://html-classic.itch.zone/html/2820951/index.html" width="100%" height="600" style="border:none;" onload="handleMinesweeperLoad()" onerror="handleMinesweeperError()"></iframe>
+                <div id="minesweeperError" class="hidden bg-gray-100 rounded-lg p-8 text-center">
+                    <div class="text-gray-600 mb-4">
+                        <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Game Loading Issue</h3>
+                        <p class="mb-4">The Minesweeper game is temporarily unavailable. Please try refreshing the page or check back later.</p>
+                        <button onclick="retryMinesweeperGame()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                            <i class="fas fa-redo mr-2"></i>Retry
+                        </button>
+                    </div>
+                </div>
             </div>
             <!-- Sidebar -->
             <div class="lg:col-span-1">
                 <!-- Game Information -->
                 <div class="game-info-card">
                     <h3 class="text-lg font-semibold mb-3">Game Information</h3>
-                    <p class="text-gray-600 mb-4">
-                        Uncover all the safe squares without detonating any mines. Test your logic and luck!
-                    </p>
+                    <p class="text-gray-600 mb-4">Uncover all the safe squares without detonating any mines. Test your logic and luck!</p>
                     <div class="mb-4">
                         <h4 class="font-medium mb-2">Game Tags</h4>
-                        <div>
-                            <span class="game-tag">Thinking</span>
-                            <span class="game-tag">Logic</span>
-                            <span class="game-tag">Puzzle</span>
-                            <span class="game-tag">Classic</span>
-                        </div>
+                        <div><span class="game-tag">Thinking</span><span class="game-tag">Logic</span><span class="game-tag">Puzzle</span><span class="game-tag">Classic</span></div>
                     </div>
                     <div class="mb-4">
                         <h4 class="font-medium mb-2">Controls</h4>
                         <ul class="text-sm text-gray-600 space-y-1">
                             <li>• Left click to reveal</li>
                             <li>• Right click to flag</li>
-            </ul>
+                        </ul>
                     </div>
                 </div>
-                <!-- Related Games -->
                 <div class="game-info-card">
                     <h3 class="text-lg font-semibold mb-3">Related Games</h3>
                     <div class="space-y-2">
                         <div class="related-game" onclick="goToGame('pacman.html')">
-                            <img src="img/Pacman.jpg" alt="Pacman">
+                            <img src="img/pacman.jpg" alt="Pacman">
                             <div><div class="font-medium">Pacman</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
+                        </div>
+                        <div class="related-game" onclick="goToGame('tetris.html')">
+                            <img src="img/tetris.jpg" alt="Tetris">
+                            <div><div class="font-medium">Tetris</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
+                        </div>
+                        <div class="related-game" onclick="goToGame('flappybird.html')">
+                            <img src="img/flappybird.png" alt="Flappy Bird">
+                            <div><div class="font-medium">Flappy Bird</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
                         </div>
                     </div>
                 </div>
@@ -343,16 +388,25 @@
             }
         }
         setCategory('Thinking');
+        function goToGame(game) { window.location.href = game; }
         function toggleFullscreen() {
             const iframe = document.querySelector('iframe');
-            if (document.fullscreenElement) {
-                document.exitFullscreen();
-            } else {
-                iframe.requestFullscreen();
-            }
+            if (document.fullscreenElement) { document.exitFullscreen(); } else { iframe.requestFullscreen(); }
         }
         function shareGame() {
-            showShareModal();
+            // 移动端优先使用原生分享API
+            if (navigator.share && /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                navigator.share({
+                    title: 'Minesweeper - GameShiftly',
+                    text: 'Check out this awesome Minesweeper game on GameShiftly! 🎮',
+                    url: window.location.href
+                }).catch(err => {
+                    console.log('Native sharing failed, falling back to modal');
+                    showShareModal();
+                });
+            } else {
+                showShareModal();
+            }
         }
         
         function showShareModal() {
@@ -369,31 +423,100 @@
             const gameUrl = window.location.href;
             const gameTitle = 'Minesweeper - GameShiftly';
             const gameText = 'Check out this awesome Minesweeper game on GameShiftly! 🎮';
+            const isLocal = window.location.protocol === 'file:';
             
             switch(platform) {
                 case 'facebook':
-                    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(gameUrl)}`;
-                    window.open(facebookUrl, '_blank');
+                    if (isLocal) {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Facebook manually.');
+                    } else {
+                        const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(gameUrl)}`;
+                        shareWithFallback('facebook', shareUrl, () => {
+                            copyToClipboard(gameUrl);
+                            showToast('Link copied! Please share it on Facebook manually.');
+                        });
+                    }
                     break;
+                    
                 case 'twitter':
                     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(gameText)}&url=${encodeURIComponent(gameUrl)}`;
-                    window.open(twitterUrl, '_blank');
+                    shareWithFallback('twitter', twitterUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Twitter manually.');
+                    });
                     break;
+                    
+                case 'instagram':
+                    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                        // 移动端尝试直接分享
+                        const instagramUrl = `instagram://library?AssetPath=${encodeURIComponent(gameUrl)}`;
+                        window.location.href = instagramUrl;
+                        setTimeout(() => {
+                            copyToClipboard(gameUrl);
+                            showToast('Link copied! Open Instagram to share.');
+                        }, 1000);
+                    } else {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Open Instagram to share.');
+                    }
+                    break;
+                    
+                case 'reddit':
+                    const redditUrl = `https://reddit.com/submit?url=${encodeURIComponent(gameUrl)}&title=${encodeURIComponent(gameTitle)}`;
+                    shareWithFallback('reddit', redditUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Reddit manually.');
+                    });
+                    break;
+                    
                 case 'whatsapp':
                     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(gameText + ' ' + gameUrl)}`;
-                    window.open(whatsappUrl, '_blank');
+                    shareWithFallback('whatsapp', whatsappUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on WhatsApp manually.');
+                    });
                     break;
+                    
                 case 'telegram':
                     const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(gameUrl)}&text=${encodeURIComponent(gameText)}`;
-                    window.open(telegramUrl, '_blank');
+                    shareWithFallback('telegram', telegramUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Telegram manually.');
+                    });
+                    break;
+                    
+                case 'discord':
+                    const discordUrl = `https://discord.com/channels/@me?content=${encodeURIComponent(gameText + ' ' + gameUrl)}`;
+                    shareWithFallback('discord', discordUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Discord manually.');
+                    });
+                    break;
+                    
+                case 'snapchat':
+                    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                        // 移动端尝试直接分享
+                        const snapchatUrl = `snapchat://share?text=${encodeURIComponent(gameText)}&url=${encodeURIComponent(gameUrl)}`;
+                        window.location.href = snapchatUrl;
+                        setTimeout(() => {
+                            copyToClipboard(gameUrl);
+                            showToast('Link copied! Open Snapchat to share.');
+                        }, 1000);
+                    } else {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Open Snapchat to share.');
+                    }
                     break;
             }
+            
             hideShareModal();
         }
         
         function shareWithFallback(platform, shareUrl, fallbackAction) {
             const newWindow = window.open(shareUrl, '_blank');
             
+            // 检测窗口是否被阻止或失败
             if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
                 fallbackAction();
             }
@@ -405,6 +528,7 @@
             toast.textContent = message;
             document.body.appendChild(toast);
             
+            // 动画效果
             setTimeout(() => {
                 toast.classList.add('opacity-0', 'scale-95');
             }, 2500);
@@ -426,18 +550,17 @@
         
         function copyGameLink() {
             const gameUrl = window.location.href;
-            navigator.clipboard.writeText(gameUrl).then(() => {
-                alert('Link copied to clipboard!');
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
+            copyToClipboard(gameUrl);
             hideShareModal();
+            showToast('Game link copied to clipboard!');
         }
         
         // 游戏数据库 - 只包含网站实际存在的游戏
         const gamesDatabase = [
+            { name: 'Minesweeper', category: 'Thinking', url: 'minesweeper.html', tags: ['logic', 'puzzle', 'mines', 'strategy', 'minesweeper'] },
             { name: 'Pacman', category: 'Arcade & Classic', url: 'pacman.html', tags: ['maze', 'arcade', 'retro', 'ghosts', 'pacman'] },
-            { name: 'Minesweeper', category: 'Thinking', url: 'minesweeper.html', tags: ['logic', 'puzzle', 'mines', 'strategy', 'minesweeper'] }
+            { name: 'Tetris', category: 'Arcade & Classic', url: 'tetris.html', tags: ['puzzle', 'blocks', 'retro', 'classic', 'tetris'] },
+            { name: 'Flappy Bird', category: 'Arcade & Classic', url: 'flappybird.html', tags: ['bird', 'skill', 'endless', 'pixel', 'flappy'] }
         ];
 
         // 搜索功能
@@ -536,13 +659,12 @@
             }
         }
         
-        // 点击share弹窗外部关闭
-        document.addEventListener('click', function(e) {
-            const shareModal = document.getElementById('shareModal');
-            if (shareModal && !shareModal.classList.contains('hidden') && e.target === shareModal) {
-                hideShareModal();
+        // 跳转到游戏页面
+        function goToGame(url) {
+            if (url && url !== '#') {
+                window.location.href = url;
             }
-        });
+        }
         
         // 页面加载完成后的初始化
         document.addEventListener('DOMContentLoaded', function() {
@@ -550,20 +672,313 @@
             initializeSearch();
             console.log('Search initialized');
         });
-        function toggleFavorite() {
-            const icon = document.getElementById('favoriteIcon');
-            const text = document.getElementById('favoriteText');
-            if (icon.classList.contains('text-red-500')) {
-                icon.classList.remove('text-red-500');
-                text.textContent = 'Favorite';
-            } else {
-                icon.classList.add('text-red-500');
-                text.textContent = 'Favorited';
-            }
+        
+        // 登录和注册模态框功能
+        function showLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
         }
+        
+        function hideLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function showRegisterModal() {
+            const modal = document.getElementById('registerModal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hideRegisterModal() {
+            const modal = document.getElementById('registerModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            
+            // Email validation
+            if (!email) {
+                showToast('Please enter your email address');
+                return;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showToast('Please enter a valid email address');
+                return;
+            }
+            
+            // Password validation
+            if (!password) {
+                showToast('Please enter your password');
+                return;
+            }
+            
+            // 这里可以添加实际的登录逻辑
+            showToast('Login successful! Welcome back!');
+            hideLoginModal();
+            
+            // 清空表单
+            document.getElementById('loginForm').reset();
+        }
+        
+        function handleRegister(event) {
+            event.preventDefault();
+            const username = document.getElementById('registerUsername').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const termsAccepted = document.getElementById('termsCheckbox').checked;
+            
+            // Username validation
+            if (!username) {
+                showToast('Please enter a username');
+                return;
+            }
+            
+            if (username.length < 3) {
+                showToast('Username must be at least 3 characters long');
+                return;
+            }
+            
+            // Email validation
+            if (!email) {
+                showToast('Please enter your email address');
+                return;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showToast('Please enter a valid email address');
+                return;
+            }
+            
+            // Password validation
+            if (!password) {
+                showToast('Please enter a password');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showToast('Password must be at least 6 characters long');
+                return;
+            }
+            
+            // Confirm password validation
+            if (!confirmPassword) {
+                showToast('Please confirm your password');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showToast('Passwords do not match');
+                return;
+            }
+            
+            // Terms validation
+            if (!termsAccepted) {
+                showToast('Please agree to the Terms of Service and Privacy Policy');
+                return;
+            }
+            
+            // 这里可以添加实际的注册逻辑
+            showToast('Registration successful! Welcome to GameShiftly!');
+            hideRegisterModal();
+            
+            // 清空表单
+            document.getElementById('registerForm').reset();
+        }
+        
+        function showToast(message) {
+            // 创建toast元素
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 scale-95';
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            // 显示动画
+            setTimeout(() => {
+                toast.classList.remove('scale-95');
+            }, 100);
+            
+            // 3秒后隐藏
+            setTimeout(() => {
+                toast.classList.add('scale-95');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+        
+        // 点击模态框外部关闭
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                e.target.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        function toggleFavorite() { const icon = document.getElementById('favoriteIcon'); const text = document.getElementById('favoriteText'); if (icon.classList.contains('text-red-500')) { icon.classList.remove('text-red-500'); text.textContent = 'Favorite'; } else { icon.classList.add('text-red-500'); text.textContent = 'Favorited'; } }
     </script>
     
-    <!-- 模态框容器 -->
-    <div id="modals-container"></div>
+    <!-- 登录模态框 -->
+    <div id="loginModal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Log In</h2>
+                <button onclick="hideLoginModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <form id="loginForm" onsubmit="handleLogin(event)" novalidate>
+                <div class="mb-4">
+                    <label for="loginEmail" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" id="loginEmail" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                </div>
+                
+                <div class="mb-6">
+                    <label for="loginPassword" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input type="password" id="loginPassword" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                </div>
+                
+                <div class="flex items-center justify-between mb-6">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="rounded border-gray-300 text-red-600 focus:ring-red-500">
+                        <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                    </label>
+                    <a href="#" class="text-sm text-red-600 hover:text-red-700">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition">
+                    Log In
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray-600">
+                    Don't have an account? 
+                    <a href="#" onclick="hideLoginModal(); showRegisterModal();" class="text-red-600 hover:text-red-700 font-medium">
+                        Sign up
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 注册模态框 -->
+    <div id="registerModal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Create Account</h2>
+                <button onclick="hideRegisterModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <form id="registerForm" onsubmit="handleRegister(event)" novalidate>
+                <div class="mb-4">
+                    <label for="registerUsername" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                    <input type="text" id="registerUsername" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="registerEmail" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" id="registerEmail" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="registerPassword" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input type="password" id="registerPassword" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                </div>
+                
+                <div class="mb-6">
+                    <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                    <input type="password" id="confirmPassword" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                </div>
+                
+                <div class="mb-6">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="termsCheckbox" class="rounded border-gray-300 text-red-600 focus:ring-red-500">
+                        <span class="ml-2 text-sm text-gray-600">
+                            I agree to the 
+                            <a href="#" class="text-red-600 hover:text-red-700">Terms of Service</a> 
+                            and 
+                            <a href="#" class="text-red-600 hover:text-red-700">Privacy Policy</a>
+                        </span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition">
+                    Create Account
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray-600">
+                    Already have an account? 
+                    <a href="#" onclick="hideRegisterModal(); showLoginModal();" class="text-red-600 hover:text-red-700 font-medium">
+                        Log in
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 处理Minesweeper游戏加载问题
+        function handleMinesweeperLoad() {
+            console.log('Minesweeper game iframe loaded successfully');
+            document.getElementById('minesweeperError').classList.add('hidden');
+        }
+        
+        function handleMinesweeperError() {
+            console.log('Minesweeper game iframe failed to load');
+            document.getElementById('minesweeperGame').classList.add('hidden');
+            document.getElementById('minesweeperError').classList.remove('hidden');
+        }
+        
+        function retryMinesweeperGame() {
+            const iframe = document.getElementById('minesweeperGame');
+            const errorDiv = document.getElementById('minesweeperError');
+            
+            iframe.classList.remove('hidden');
+            errorDiv.classList.add('hidden');
+            
+            // 重新加载iframe
+            iframe.src = iframe.src;
+        }
+        
+        // 检查iframe是否在5秒内加载完成
+        setTimeout(function() {
+            const iframe = document.getElementById('minesweeperGame');
+            const errorDiv = document.getElementById('minesweeperError');
+            
+            try {
+                // 尝试访问iframe内容，如果失败说明加载有问题
+                if (iframe.contentWindow && iframe.contentWindow.location.href) {
+                    console.log('Minesweeper iframe loaded successfully');
+                }
+            } catch (e) {
+                console.log('Minesweeper iframe loading issue detected:', e);
+                iframe.classList.add('hidden');
+                errorDiv.classList.remove('hidden');
+            }
+        }, 5000);
+    </script>
 </body>
-</html> 
+</html>

@@ -6,10 +6,6 @@
     <title>Pacman - GameShiftly</title>
     <meta name="description" content="Play Pacman online for free! Enjoy the classic arcade game in your browser.">
     <link rel="canonical" href="https://gameshiftly.online/pacman.html">
-    
-    <!-- 全局Google Analytics自动加载器 -->
-    <script src="global-analytics.js"></script>
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -20,8 +16,6 @@
     <!-- Firebase配置 -->
     <script src="firebase-config.js"></script>
     
-    <script src="header.js"></script>
-    <script src="modals.js"></script>
     <script src="footer.js"></script>
     <style>
         /* 隐藏和美化滚动条 */
@@ -174,8 +168,41 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- 头部容器 -->
-    <div id="header-container"></div>
+    <!-- Header Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">GS</span>
+                        </div>
+                        <div>
+                            <div class="text-red-600 font-bold text-lg">GameShiftly</div>
+                            <div class="text-gray-500 text-xs">Free Online Games</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="hidden md:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <input type="text" 
+                               id="searchInput"
+                               placeholder="Search our games" 
+                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        <!-- 搜索建议下拉框 -->
+                        <div id="searchSuggestions" class="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 z-50 hidden max-h-60 overflow-y-auto">
+                            <!-- 搜索建议内容将在这里动态生成 -->
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="showLoginModal()" class="text-gray-600 hover:text-gray-900">Log in</button>
+                    <button onclick="showRegisterModal()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Register</button>
+                </div>
+            </div>
+        </div>
+    </header>
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
@@ -214,13 +241,13 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
             <!-- Game Area 直接平铺 -->
             <div class="lg:col-span-3">
-                <iframe id="pacmanGame" src="https://html-classic.itch.zone/html/3946506/index.html" width="552" height="600" frameborder="0" allowfullscreen title="Pacman Game" onload="handleIframeLoad()" onerror="handleIframeError()"></iframe>
-                <div id="gameError" class="hidden bg-gray-100 rounded-lg p-8 text-center">
+                <iframe id="pacmanGame" src="https://html-classic.itch.zone/html/3946506/index.html" width="100%" height="600" style="border:none;" onload="handlePacmanLoad()" onerror="handlePacmanError()"></iframe>
+                <div id="pacmanError" class="hidden bg-gray-100 rounded-lg p-8 text-center">
                     <div class="text-gray-600 mb-4">
                         <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
                         <h3 class="text-xl font-semibold mb-2">Game Loading Issue</h3>
                         <p class="mb-4">The Pacman game is temporarily unavailable. Please try refreshing the page or check back later.</p>
-                        <button onclick="retryLoadGame()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                        <button onclick="retryPacmanGame()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
                             <i class="fas fa-redo mr-2"></i>Retry
                         </button>
                     </div>
@@ -241,7 +268,7 @@
                         <ul class="text-sm text-gray-600 space-y-1">
                             <li>• Arrow keys to move</li>
                             <li>• Eat dots, avoid ghosts</li>
-            </ul>
+                        </ul>
                     </div>
                 </div>
                 <div class="game-info-card">
@@ -250,6 +277,14 @@
                         <div class="related-game" onclick="goToGame('minesweeper.html')">
                             <img src="img/minesweeper.jpg" alt="Minesweeper">
                             <div><div class="font-medium">Minesweeper</div><div class="text-sm text-gray-500">Thinking</div></div>
+                        </div>
+                        <div class="related-game" onclick="goToGame('tetris.html')">
+                            <img src="img/tetris.jpg" alt="Tetris">
+                            <div><div class="font-medium">Tetris</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
+                        </div>
+                        <div class="related-game" onclick="goToGame('flappybird.html')">
+                            <img src="img/flappybird.png" alt="Flappy Bird">
+                            <div><div class="font-medium">Flappy Bird</div><div class="text-sm text-gray-500">Arcade & Classic</div></div>
                         </div>
                     </div>
                 </div>
@@ -327,9 +362,6 @@
     
 
     
-    <!-- 模态框容器 -->
-    <div id="modals-container"></div>
-    
     <div id="footer-container"></div>
     <script>
         // 分类图标映射
@@ -356,16 +388,25 @@
             }
         }
         setCategory('Arcade & Classic');
+        function goToGame(game) { window.location.href = game; }
         function toggleFullscreen() {
             const iframe = document.querySelector('iframe');
-            if (document.fullscreenElement) {
-                document.exitFullscreen();
-            } else {
-                iframe.requestFullscreen();
-            }
+            if (document.fullscreenElement) { document.exitFullscreen(); } else { iframe.requestFullscreen(); }
         }
         function shareGame() {
-            showShareModal();
+            // 移动端优先使用原生分享API
+            if (navigator.share && /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                navigator.share({
+                    title: 'Pacman - GameShiftly',
+                    text: 'Check out this awesome Pacman game on GameShiftly! 🎮',
+                    url: window.location.href
+                }).catch(err => {
+                    console.log('Native sharing failed, falling back to modal');
+                    showShareModal();
+                });
+            } else {
+                showShareModal();
+            }
         }
         
         function showShareModal() {
@@ -382,41 +423,143 @@
             const gameUrl = window.location.href;
             const gameTitle = 'Pacman - GameShiftly';
             const gameText = 'Check out this awesome Pacman game on GameShiftly! 🎮';
+            const isLocal = window.location.protocol === 'file:';
             
             switch(platform) {
                 case 'facebook':
-                    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(gameUrl)}`;
-                    window.open(facebookUrl, '_blank');
+                    if (isLocal) {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Facebook manually.');
+                    } else {
+                        const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(gameUrl)}`;
+                        shareWithFallback('facebook', shareUrl, () => {
+                            copyToClipboard(gameUrl);
+                            showToast('Link copied! Please share it on Facebook manually.');
+                        });
+                    }
                     break;
+                    
                 case 'twitter':
                     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(gameText)}&url=${encodeURIComponent(gameUrl)}`;
-                    window.open(twitterUrl, '_blank');
+                    shareWithFallback('twitter', twitterUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Twitter manually.');
+                    });
                     break;
+                    
+                case 'instagram':
+                    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                        // 移动端尝试直接分享
+                        const instagramUrl = `instagram://library?AssetPath=${encodeURIComponent(gameUrl)}`;
+                        window.location.href = instagramUrl;
+                        setTimeout(() => {
+                            copyToClipboard(gameUrl);
+                            showToast('Link copied! Open Instagram to share.');
+                        }, 1000);
+                    } else {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Open Instagram to share.');
+                    }
+                    break;
+                    
+                case 'reddit':
+                    const redditUrl = `https://reddit.com/submit?url=${encodeURIComponent(gameUrl)}&title=${encodeURIComponent(gameTitle)}`;
+                    shareWithFallback('reddit', redditUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Reddit manually.');
+                    });
+                    break;
+                    
                 case 'whatsapp':
                     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(gameText + ' ' + gameUrl)}`;
-                    window.open(whatsappUrl, '_blank');
+                    shareWithFallback('whatsapp', whatsappUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on WhatsApp manually.');
+                    });
                     break;
+                    
                 case 'telegram':
                     const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(gameUrl)}&text=${encodeURIComponent(gameText)}`;
-                    window.open(telegramUrl, '_blank');
+                    shareWithFallback('telegram', telegramUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Telegram manually.');
+                    });
+                    break;
+                    
+                case 'discord':
+                    const discordUrl = `https://discord.com/channels/@me?content=${encodeURIComponent(gameText + ' ' + gameUrl)}`;
+                    shareWithFallback('discord', discordUrl, () => {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Please share it on Discord manually.');
+                    });
+                    break;
+                    
+                case 'snapchat':
+                    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                        // 移动端尝试直接分享
+                        const snapchatUrl = `snapchat://share?text=${encodeURIComponent(gameText)}&url=${encodeURIComponent(gameUrl)}`;
+                        window.location.href = snapchatUrl;
+                        setTimeout(() => {
+                            copyToClipboard(gameUrl);
+                            showToast('Link copied! Open Snapchat to share.');
+                        }, 1000);
+                    } else {
+                        copyToClipboard(gameUrl);
+                        showToast('Link copied! Open Snapchat to share.');
+                    }
                     break;
             }
+            
             hideShareModal();
+        }
+        
+        function shareWithFallback(platform, shareUrl, fallbackAction) {
+            const newWindow = window.open(shareUrl, '_blank');
+            
+            // 检测窗口是否被阻止或失败
+            if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+                fallbackAction();
+            }
+        }
+        
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 ease-in-out';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            // 动画效果
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'scale-95');
+            }, 2500);
+            
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.remove();
+                }
+            }, 3000);
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                console.log('Link copied to clipboard');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
         }
         
         function copyGameLink() {
             const gameUrl = window.location.href;
-            navigator.clipboard.writeText(gameUrl).then(() => {
-                alert('Link copied to clipboard!');
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
+            copyToClipboard(gameUrl);
             hideShareModal();
+            showToast('Game link copied to clipboard!');
         }
         
         // 游戏数据库 - 只包含网站实际存在的游戏
         const gamesDatabase = [
             { name: 'Pacman', category: 'Arcade & Classic', url: 'pacman.html', tags: ['maze', 'arcade', 'retro', 'ghosts', 'pacman'] },
+            { name: 'Tetris', category: 'Arcade & Classic', url: 'tetris.html', tags: ['puzzle', 'blocks', 'retro', 'classic', 'tetris'] },
+            { name: 'Flappy Bird', category: 'Arcade & Classic', url: 'flappybird.html', tags: ['bird', 'skill', 'endless', 'pixel', 'flappy'] },
             { name: 'Minesweeper', category: 'Thinking', url: 'minesweeper.html', tags: ['logic', 'puzzle', 'mines', 'strategy', 'minesweeper'] }
         ];
 
@@ -516,12 +659,44 @@
             }
         }
         
+        // 跳转到游戏页面
+        function goToGame(url) {
+            if (url && url !== '#') {
+                window.location.href = url;
+            }
+        }
+        
         // 页面加载完成后的初始化
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Page loaded, initializing search...');
             initializeSearch();
             console.log('Search initialized');
         });
+        
+        // 登录和注册模态框功能
+        function showLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hideLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function showRegisterModal() {
+            const modal = document.getElementById('registerModal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hideRegisterModal() {
+            const modal = document.getElementById('registerModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
         
         function handleLogin(event) {
             event.preventDefault();
@@ -643,24 +818,15 @@
             }, 3000);
         }
         
-        // 点击share弹窗外部关闭
+        // 点击模态框外部关闭
         document.addEventListener('click', function(e) {
-            const shareModal = document.getElementById('shareModal');
-            if (shareModal && !shareModal.classList.contains('hidden') && e.target === shareModal) {
-                hideShareModal();
+            if (e.target.classList.contains('modal-overlay')) {
+                e.target.classList.add('hidden');
+                document.body.style.overflow = 'auto';
             }
         });
-        function toggleFavorite() {
-            const icon = document.getElementById('favoriteIcon');
-            const text = document.getElementById('favoriteText');
-            if (icon.classList.contains('text-red-500')) {
-                icon.classList.remove('text-red-500');
-                text.textContent = 'Favorite';
-            } else {
-                icon.classList.add('text-red-500');
-                text.textContent = 'Favorited';
-            }
-        }
+        
+        function toggleFavorite() { const icon = document.getElementById('favoriteIcon'); const text = document.getElementById('favoriteText'); if (icon.classList.contains('text-red-500')) { icon.classList.remove('text-red-500'); text.textContent = 'Favorite'; } else { icon.classList.add('text-red-500'); text.textContent = 'Favorited'; } }
     </script>
     
     <!-- 登录模态框 -->
@@ -774,22 +940,21 @@
     </div>
     
     <script>
-        // 处理iframe加载问题
-        function handleIframeLoad() {
+        // 处理Pacman游戏加载问题
+        function handlePacmanLoad() {
             console.log('Pacman game iframe loaded successfully');
-            document.getElementById('gameError').classList.add('hidden');
+            document.getElementById('pacmanError').classList.add('hidden');
         }
         
-        function handleIframeError() {
+        function handlePacmanError() {
             console.log('Pacman game iframe failed to load');
-            // 不隐藏iframe，让它继续尝试加载
-            // document.getElementById('pacmanGame').classList.add('hidden');
-            // document.getElementById('gameError').classList.remove('hidden');
+            document.getElementById('pacmanGame').classList.add('hidden');
+            document.getElementById('pacmanError').classList.remove('hidden');
         }
         
-        function retryLoadGame() {
+        function retryPacmanGame() {
             const iframe = document.getElementById('pacmanGame');
-            const errorDiv = document.getElementById('gameError');
+            const errorDiv = document.getElementById('pacmanError');
             
             iframe.classList.remove('hidden');
             errorDiv.classList.add('hidden');
@@ -798,29 +963,22 @@
             iframe.src = iframe.src;
         }
         
-        // 页面加载完成后检查iframe状态
-        document.addEventListener('DOMContentLoaded', function() {
-            const iframe = document.getElementById('pacmanGame');
-            const errorDiv = document.getElementById('gameError');
-            
-                    // 5秒后检查iframe是否正常加载
+        // 检查iframe是否在5秒内加载完成
         setTimeout(function() {
+            const iframe = document.getElementById('pacmanGame');
+            const errorDiv = document.getElementById('pacmanError');
+            
             try {
-                // 尝试访问iframe内容
+                // 尝试访问iframe内容，如果失败说明加载有问题
                 if (iframe.contentWindow && iframe.contentWindow.location.href) {
                     console.log('Pacman iframe loaded successfully');
-                    errorDiv.classList.add('hidden');
-                } else {
-                    throw new Error('Iframe not loaded');
                 }
             } catch (e) {
                 console.log('Pacman iframe loading issue detected:', e);
-                // 不隐藏iframe，让它继续尝试加载
-                // iframe.classList.add('hidden');
-                // errorDiv.classList.remove('hidden');
+                iframe.classList.add('hidden');
+                errorDiv.classList.remove('hidden');
             }
         }, 5000);
-        });
     </script>
 </body>
-</html> 
+</html>
